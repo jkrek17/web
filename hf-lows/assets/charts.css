@@ -1,0 +1,194 @@
+/* Chart-specific styling for docs/assets/js/charts.js.
+   Base chart classes (.c-grid, .c-axis, .c-tick, .c-axis-title, .c-label,
+   .c-mean, .c-threshold, .c-bar, .c-hit, .chart-legend, .chart-empty,
+   .chart-footnote) live in app.css and are not touched here - this file only
+   adds new classes charts.js uses for hover feedback and direct labels, plus
+   a couple of additive rules on top of the existing ones. Every colour comes
+   from the shared custom properties; the value after the comma in var() is a
+   fallback only, kept in sync with app.css's light values. */
+
+/* ------------------------------------------------------------- empty state
+   .chart-empty already gets its padding/font/colour from app.css; this only
+   adds the box treatment so a "no events match" result reads as deliberate,
+   at the same footprint the live chart would have taken. */
+.chart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--border-strong, #d8d6cf);
+  border-radius: var(--radius, 6px);
+  background: var(--surface-sunk, #f2f2ee);
+}
+.chart-empty p { margin: 0; max-width: 32ch; }
+.chart-empty p::before {
+  content: '';
+  display: block;
+  width: 26px;
+  height: 26px;
+  margin: 0 auto 10px;
+  border: 2px dashed var(--ink-muted, #898781);
+  border-radius: 50%;
+  opacity: .55;
+}
+
+/* --------------------------------------------------------- direct labels
+   Values written straight onto the mark - used sparingly (see charts.js:
+   column totals when there's room, histogram bars only when there are few
+   or it's the peak, the deepest fix on a trace). */
+.c-value {
+  fill: var(--ink-2, #52514e);
+  font-size: 10.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------- crosshair
+   A guide line that slides to the hovered column/bin/fix, hidden until then. */
+.c-crosshair {
+  stroke: var(--ink-muted, #898781);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0;
+  pointer-events: none;
+}
+.c-crosshair.is-visible { opacity: .55; }
+
+/* Scatter hover drops a dashed line to each axis so an overplotted point's
+   exact value can be read off without guessing between gridlines. */
+.c-guide {
+  stroke: var(--ink-muted, #898781);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: 0;
+  pointer-events: none;
+}
+.c-guide.is-visible { opacity: .6; }
+
+/* A meaningful zero on a signed histogram domain (deepening vs. filling)
+   gets its own quiet marker, distinct from the regular grid. */
+.c-zero {
+  stroke: var(--ink-muted, #898781);
+  stroke-width: 1;
+  stroke-dasharray: 1 2;
+  opacity: .8;
+}
+
+/* The scatter's median reference - explicitly labelled as a median, never a
+   fitted trend. */
+.c-median {
+  stroke: var(--ink-2, #52514e);
+  stroke-width: 1;
+  stroke-dasharray: 5 3;
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------ scatter dots */
+.c-dot { opacity: 1; }
+.c-dot-hit { fill: transparent; pointer-events: all; }
+svg.is-hovering .c-dot { opacity: .3; }
+svg.is-hovering .c-dot.is-hover { opacity: 1; }
+.c-dot.is-hover { stroke-width: 1.4; }
+
+/* ---------------------------------------------------- hover motion, guarded
+   Bars/points already snap to their dimmed/lit state instantly; the only
+   things that would otherwise animate are the crosshair/guide fade and the
+   dim/highlight opacity swap, and both are skipped under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .c-crosshair, .c-guide { transition: opacity .12s ease-out; }
+  .c-dot, .c-bar { transition: opacity .12s ease-out, r .12s ease-out; }
+}
+
+/* ------------------------------------------------ index + activity (stacked)
+   charts.indexSeries (charts.js). One accent hue for "the thing being
+   examined" (the index line, the events in the chosen subset) against the
+   muted ink for everything else - the emphasis form, not a categorical one.
+   Contrast of both marks against the surface is >= 3:1 in each theme
+   (WCAG, light/dark: accent 10.4/8.5, muted 3.5/4.8; accent vs muted CVD separation ΔE 25.6/16.6 from the dataviz validator), and
+   neither carries the meaning alone: the subset is also the base of every
+   bar, the defining seasons are also capped, and the legend names each. */
+.c-line { fill: none; stroke: var(--accent); stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
+.c-line.c-line-thin { stroke-width: 1.25; }
+.c-bar-sub { fill: var(--accent); }
+.c-bar-rest { fill: var(--ink-muted); }
+
+/* Seasons that define the subset: a faint wash plus a 3px cap, so the shading
+   is a shape as well as a tint. */
+.c-band { fill: var(--accent); fill-opacity: .1; pointer-events: none; }
+.c-band-cap { fill: var(--accent); pointer-events: none; }
+
+/* Reference lines (thresholds, tercile cuts): quiet dashed ink, labelled. A
+   surface-coloured halo (paint-order: stroke) keeps the label readable where
+   it crosses the line or a bar, with no backing rect to measure. */
+.c-ref { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 5 3; opacity: .8; }
+.c-ref-label { paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.c-grid-v { opacity: .55; }
+
+/* Legend keys for this chart. The legend always shows every mark in use. */
+.chart-legend .c-key { width: 14px; height: 10px; border-radius: 2px; }
+.chart-legend .c-key-line { height: 0; border-top: 2px solid var(--accent); border-radius: 0; background: none; }
+.chart-legend .c-key-ref { height: 0; border-top: 1px dashed var(--ink-2); border-radius: 0; background: none; }
+.chart-legend .c-key-sub { background: var(--accent); }
+.chart-legend .c-key-rest { background: var(--ink-muted); }
+.chart-legend .c-key-band {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-top: 3px solid var(--accent); height: 12px; border-radius: 0;
+}
+
+/* ------------------------------------------------------ coefficient plot
+   charts.coefPlot (charts.js). The emphasis form: one accent for what the
+   sample CAN resolve, muted ink for what it cannot, a neutral band for the
+   detection floor. Shape carries the state first (filled dot / hollow ring /
+   no dot) and the row's own words second; colour is the third channel.
+   Accent vs muted ink: >= 3:1 on both surfaces, normal-vision delta E 28.1
+   light / 17.2 dark, CVD 25.6 / 16.6 (dataviz validator). Every colour is a
+   token, so both themes follow. */
+.c-coef { overflow: visible; }
+.c-zero-line { stroke: var(--ink-2); stroke-width: 1.25; }
+.c-grid-zero-ghost { opacity: 0; }
+.c-ends { fill: var(--ink-2); font-size: var(--fs-xs, 11px); }
+.c-group { fill: var(--ink-2); font-size: var(--fs-micro, 10.5px); font-weight: 650; text-transform: uppercase; letter-spacing: .05em; }
+
+.c-coef-hit { fill: transparent; cursor: default; }
+.c-coef-row:hover .c-coef-hit,
+.c-coef-row:focus .c-coef-hit { fill: var(--surface-2, #f4f4f1); }
+.c-coef-row:focus { outline: none; }
+.c-coef-row:focus-visible .c-coef-hit { stroke: var(--accent); stroke-width: 2; fill: var(--surface-2, #f4f4f1); }
+
+.c-coef-label { fill: var(--ink); font-size: 12.5px; font-weight: 650; }
+.c-coef-state { fill: var(--ink-2); font-size: 11px; font-weight: 500; }
+.c-coef-row.is-detected .c-coef-state { fill: var(--ink); font-weight: 650; }
+.c-coef-val { fill: var(--ink); font-size: 12.5px; }
+.c-coef-sub { fill: var(--ink-2); font-size: 10.5px; font-variant-numeric: tabular-nums; }
+
+/* The floor: a quiet band and two firm ends, so "inside it" is a shape. */
+.c-floor { fill: var(--ink-muted); fill-opacity: .28; }
+.c-floor-end { stroke: var(--ink-muted); stroke-width: 1.5; }
+.c-floor-label { fill: var(--ink-2); font-size: 10px; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.c-mark { stroke: var(--ink-2); stroke-width: 1.5; }
+
+/* interval and estimate. Detected: accent, filled. Below floor: muted, hollow.
+   The 2px surface ring keeps a dot legible where it crosses a whisker or band. */
+.c-ci { stroke-width: 2; stroke-linecap: round; }
+.c-ci-cap { stroke-width: 2; stroke-linecap: round; }
+.c-coef-row.is-detected .c-ci, .c-coef-row.is-detected .c-ci-cap { stroke: var(--accent); }
+.c-coef-row.is-below .c-ci, .c-coef-row.is-below .c-ci-cap { stroke: var(--ink-muted); }
+.c-coef-row.is-detected .c-pt { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
+.c-coef-row.is-below .c-pt { fill: var(--surface); stroke: var(--ink-muted); stroke-width: 2.5; }
+.c-na { fill: var(--ink-muted); font-size: 11px; font-style: italic; }
+
+/* legend keys */
+.c-coef-legend { margin-top: var(--sp-3, 12px); row-gap: var(--sp-1, 4px); }
+.chart-legend .c-key-pt-on { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); }
+.chart-legend .c-key-pt-off { width: 11px; height: 11px; border-radius: 50%; background: var(--surface); border: 2.5px solid var(--ink-muted); box-sizing: border-box; }
+.chart-legend .c-key-floor { width: 18px; height: 12px; border-radius: 0; background: color-mix(in srgb, var(--ink-muted) 28%, transparent); border-left: 1.5px solid var(--ink-muted); border-right: 1.5px solid var(--ink-muted); }
+.chart-legend .c-key-ci { width: 18px; height: 0; border-top: 2px solid var(--ink-2); border-radius: 0; background: none; }
+
+@media (forced-colors: active) {
+  .c-floor { fill: none; stroke: CanvasText; stroke-dasharray: 3 2; }
+  .c-coef-row.is-detected .c-pt { fill: Highlight; }
+  .c-coef-row.is-below .c-pt { fill: Canvas; stroke: CanvasText; }
+  .c-coef-row.is-detected .c-ci, .c-coef-row.is-detected .c-ci-cap { stroke: Highlight; }
+  .c-coef-row.is-below .c-ci, .c-coef-row.is-below .c-ci-cap { stroke: CanvasText; }
+}

@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Phillies Retool Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: the same navy scoreboard band as the lineup study, then the plan in the order
+   a front office would execute it: moves, the roster they produce, the value, the cost, the clock. */
+:root{
+  --paper:#f2f4f8;--surface:#ffffff;--surface-2:#eef1f6;--ink:#0f1d36;--ink-2:#3d4a61;--muted:#667288;
+  --line:#dbe1ea;--line-strong:#b9c3d2;--red:#d4202f;--red-ink:#b3141f;--navy:#002d72;--blue:#2a78d6;
+  --hero-bg:#0a2350;--hero-ink:#ffffff;--hero-2:#c4d3ec;--hero-line:rgba(255,255,255,.18);
+  --chip-trade-bg:#e6f0fb;--chip-trade:#1c5cab;--chip-sign-bg:#fdecee;--chip-sign:#b3141f;--chip-move-bg:#eef1f6;--chip-move:#3d4a61;
+  --field:#e3efe6;--field-line:#b7d0bd;--dirt:#ead9c4;
+  --shadow:0 1px 2px rgba(15,29,54,.06),0 8px 24px rgba(15,29,54,.06);
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0b1220;--surface:#121b2d;--surface-2:#18233a;--ink:#e9eef7;--ink-2:#c3cde0;--muted:#8f9bb2;
+  --line:#243149;--line-strong:#34445f;--red:#ee3a48;--red-ink:#ff8a93;--navy:#8fb4ff;--blue:#3987e5;
+  --hero-bg:#081530;--hero-ink:#ffffff;--hero-2:#aebfdc;--hero-line:rgba(255,255,255,.14);
+  --chip-trade-bg:#15325c;--chip-trade:#9ec5f4;--chip-sign-bg:#4a1a22;--chip-sign:#ff9aa2;--chip-move-bg:#18233a;--chip-move:#c3cde0;
+  --field:#14281d;--field-line:#24432f;--dirt:#3a2e22;
+  --shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0b1220;--surface:#121b2d;--surface-2:#18233a;--ink:#e9eef7;--ink-2:#c3cde0;--muted:#8f9bb2;
+  --line:#243149;--line-strong:#34445f;--red:#ee3a48;--red-ink:#ff8a93;--navy:#8fb4ff;--blue:#3987e5;
+  --hero-bg:#081530;--hero-ink:#ffffff;--hero-2:#aebfdc;--hero-line:rgba(255,255,255,.14);
+  --chip-trade-bg:#15325c;--chip-trade:#9ec5f4;--chip-sign-bg:#4a1a22;--chip-sign:#ff9aa2;--chip-move-bg:#18233a;--chip-move:#c3cde0;
+  --field:#14281d;--field-line:#24432f;--dirt:#3a2e22;
+  --shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--body);font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:.01em;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,4.2vw,44px);line-height:1;font-weight:700;text-transform:uppercase}
+h3{font-size:22px;line-height:1.05;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.kicker{display:block;font:700 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.lead{color:var(--ink-2);max-width:70ch;margin:10px 0 0}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+.hero{background:var(--hero-bg);color:var(--hero-ink);padding-block:44px 34px;border-bottom:6px solid var(--red)}
+.hero .kicker{color:#ff9aa2}
+.hero h1{font-size:clamp(44px,7vw,86px);line-height:.9;font-weight:800;text-transform:uppercase;margin:12px 0 16px}
+.hero h1 span{color:#ff5a67}
+.hero p{color:var(--hero-2);max-width:66ch;margin:0}
+.hero p strong{color:var(--hero-ink)}
+.hero-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--hero-line);margin-top:26px}
+.hero-facts div{padding:14px 14px 0 0}
+.hero-facts strong{display:block;font:700 36px/1 var(--display)}
+.hero-facts span{display:block;font-size:13px;color:var(--hero-2);margin-top:4px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:22px;overflow-x:auto;padding-block:11px}
+nav.toc a{font:700 13px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+nav.toc a:hover{color:var(--red)}
+main{padding-bottom:72px}
+main section{padding-block:56px 0}
+.section-head{margin-bottom:22px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow);min-width:0}
+.fine{font-size:13px;color:var(--muted)}
+/* moves */
+.moves{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:move}
+.move{display:grid;grid-template-columns:52px minmax(0,1fr) 220px;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow)}
+.move .n{font:800 34px/1 var(--display);color:var(--red)}
+.move h3{font-size:23px}
+.chip{display:inline-block;font:700 11px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;margin-right:6px;vertical-align:3px}
+.chip.trade{background:var(--chip-trade-bg);color:var(--chip-trade)}
+.chip.sign{background:var(--chip-sign-bg);color:var(--chip-sign)}
+.chip.move-c{background:var(--chip-move-bg);color:var(--chip-move)}
+.move p{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+.move p b{color:var(--ink)}
+.move .side{border-left:1px solid var(--line);padding-left:16px;font-size:14px;color:var(--ink-2)}
+.move .side strong{display:block;font:700 26px/1 var(--display);color:var(--ink)}
+.move .side span{display:block;color:var(--muted);font-size:12.5px;margin-bottom:8px}
+/* lineup */
+.roster-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line-strong);border-top:8px solid var(--navy);border-radius:6px;box-shadow:var(--shadow);min-width:0}
+.card header{padding:14px 16px 10px;border-bottom:2px solid var(--ink)}
+.card header h3{font-size:24px}
+.card header span{font-size:12.5px;color:var(--muted)}
+.card ol{list-style:none;margin:0;padding:0}
+.card li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:8px 16px;border-bottom:1px solid var(--line);font-size:15px}
+.card li:last-child{border-bottom:0}
+.card li b{font:800 22px/1 var(--display);color:var(--red)}
+.card li em{font-style:normal;font-weight:700;font-size:13px;color:var(--ink-2)}
+.card li .new{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--red-ink);margin-left:6px}
+.field-wrap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:var(--shadow)}
+.field-wrap svg{display:block;width:100%;height:auto}
+.f-grass{fill:var(--field)}.f-dirt{fill:var(--dirt)}.f-line{stroke:var(--field-line);stroke-width:2;fill:none}
+.f-name{fill:var(--ink);font:700 16px var(--body)}.f-pos{fill:var(--red);font:800 15px var(--display);letter-spacing:.06em}
+.f-sub{fill:var(--muted);font:600 13px var(--body)}
+.staff{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+.staff .panel h3{font-size:19px;margin-bottom:8px}
+.staff ul{list-style:none;margin:0;padding:0;font-size:14.5px}
+.staff li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.staff li:last-child{border-bottom:0}
+.staff li span{color:var(--muted);font-size:13px;text-align:right}
+/* value chart */
+.value-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
+.chart-wrap{overflow-x:auto}
+svg.chart{display:block;width:100%;min-width:520px;height:auto;font-family:var(--body)}
+.grid{stroke:var(--line);stroke-width:1}.zero{stroke:var(--line-strong);stroke-width:1.5}
+.tick{fill:var(--muted);font-size:12px}.rowlabel{fill:var(--ink);font-size:14px;font-weight:600}
+.bar{fill:var(--blue)}.err{stroke:var(--ink-2);stroke-width:1.5}.vlabel{fill:var(--ink);font-size:13px;font-weight:700}
+.bigstat strong{display:block;font:800 64px/1 var(--display);color:var(--red)}
+.bigstat span{display:block;color:var(--ink-2)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:14.5px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--surface-2);color:var(--ink-2);font:700 12px var(--body);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+tr.total td{font-weight:700;background:var(--surface-2)}
+/* timeline */
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.timeline li:last-child{border-bottom:0}
+.timeline time{font:700 18px/1.1 var(--display);text-transform:uppercase;color:var(--navy)}
+.timeline li.freeze time{color:var(--red)}
+.timeline p{margin:0;color:var(--ink-2)}
+.miller{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;position:relative}
+.step time{display:block;font:700 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.step h4{font-size:21px;text-transform:uppercase;margin:4px 0 6px}
+.step p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.risks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.risk{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:14px 16px}
+.risk h4{font-size:19px;text-transform:uppercase}
+.risk p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2)}
+.method{columns:2;column-gap:36px;color:var(--ink-2);font-size:15px}
+.method p{margin:0 0 12px;break-inside:avoid}
+.method strong{color:var(--ink)}
+footer.page{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding-block:26px}
+#tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:7px 10px;border-radius:6px;max-width:280px;box-shadow:var(--shadow)}
+@media (max-width:980px){.roster-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.field-wrap{grid-column:1 / -1}.value-grid{grid-template-columns:minmax(0,1fr)}.miller{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){
+  .hero-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .move{grid-template-columns:36px minmax(0,1fr)}.move .side{grid-column:2;border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:10px}
+  .roster-grid,.staff,.risks,.miller{grid-template-columns:minmax(0,1fr)}
+  .timeline li{grid-template-columns:minmax(0,1fr);gap:4px}.method{columns:1}
+}
+
+.compare td{min-width:180px}.compare th[scope=row]{white-space:nowrap;font-weight:700;color:var(--ink)}
+.compare thead th:nth-child(3){color:var(--red)}
+nav.toc a.ext{margin-left:auto;color:var(--red)}
+.tree{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.branch{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--navy);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column}
+.branch.stop{border-top-color:var(--red)}
+.b-when{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.branch h4{font-size:22px;text-transform:uppercase;margin:4px 0 6px}
+.branch p{margin:0 0 10px;font-size:14px;color:var(--ink-2);flex:1}
+.branch dl{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0;border-top:1px solid var(--line);padding-top:8px}
+.branch dt{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.branch dd{margin:0;font:700 22px/1.1 var(--display)}
+.bar.s-full{fill:var(--blue)}.bar.s-alt{fill:var(--red)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.value-grid.stack{grid-template-columns:minmax(0,1fr)}
+.legend .l-full{background:var(--blue)}.legend .l-alt{background:var(--red)}
+@media (max-width:980px){.tree{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.tree{grid-template-columns:minmax(0,1fr)}}
+</style></head>
+<body>
+<header class="hero"><div class="wrap">
+<span class="kicker">Philadelphia Phillies · 2026-27 offseason · alternative plan</span>
+<h1>Keep the core. <span>Get younger around it.</span></h1>
+<p>The full plan buys about 10 wins with a record payroll. This alternative keeps <strong>Bryce Harper</strong> and <strong>Kyle Schwarber</strong>, because no club offered young talent worth their bats. It trades <strong>Aaron Nola</strong> for a 27-year-old center fielder if the price is right, gives everyday jobs to <strong>Justin Crawford</strong>, <strong>Andrew Painter</strong> and, by midseason, <strong>Aidan Miller</strong>, and keeps every top prospect. It lands about <strong>three wins short of the full plan</strong> for about <strong>$40M less in 2027 payroll</strong>, and sets up the real sell-high decisions for the July deadline.</p>
+<div class="hero-facts">
+<div><strong>~90</strong><span>projected 2027 wins with the Nola trade (87–93); about 89 without</span></div>
+<div><strong>~$345M</strong><span>luxury-tax payroll (about $360M if Nola stays)</span></div>
+<div><strong>4</strong><span>young everyday players: Crawford 23, Painter 24, Cowser 27, Miller 22 by midseason</span></div>
+<div><strong>0</strong><span>prospects traded; Rincon, Wood, Miller all stay</span></div>
+</div></div></header>
+
+<nav class="toc" aria-label="Sections"><div class="wrap">
+<a href="#compare">Compared</a><a href="#market">Why keep the stars</a><a href="#moves">The moves</a><a href="#tree">If they say no</a><a href="#roster">2027 roster</a><a href="#value">Wins</a><a href="#july">July and beyond</a><a href="#risks">Risks</a><a href="#method">Method</a><a class="ext" href="https://jkrek17.github.io/web/phillies/offseason/">Full plan →</a>
+</div></nav>
+
+<main class="wrap">
+<section id="compare">
+<div class="section-head"><span class="kicker">Side by side</span><h2>Full plan vs keep-the-core retool</h2>
+<p class="lead">Both are measured on the same basis: the 2026 team's true talent (83 wins by runs scored and allowed), the same aging- and park-adjusted projections, and the same run model.</p></div>
+<div class="table-wrap"><table class="compare">
+<thead><tr><th></th><th>Full plan</th><th>Retool</th></tr></thead>
+<tbody>
+<tr><th scope="row">2027 wins</th><td><strong>~93</strong> (90–96)</td><td><strong>~90</strong> with the Nola trade (87–93); ~89 if Nola stays</td></tr>
+<tr><th scope="row">2027 luxury-tax payroll</th><td>$380–395M</td><td>about $345M ($360M if Nola stays)</td></tr>
+<tr><th scope="row">New 2027 cash vs 2026</th><td>about +$235M</td><td>about +$50–80M, plus up to $60M of Nola's salary paid through 2030 if he is traded</td></tr>
+<tr><th scope="row">Draft picks lost</th><td>2nd, 3rd, 5th and 6th</td><td>2nd and 5th</td></tr>
+<tr><th scope="row">Prospects traded</th><td>Bryan Rincon</td><td>none</td></tr>
+<tr><th scope="row">Young everyday players</th><td>Miller (mid-2027)</td><td>Crawford, Painter, Cowser, Miller (mid-2027)</td></tr>
+<tr><th scope="row">Average age, regular nine</th><td>31.3</td><td>30.6 (Harper, Schwarber and Turner stay)</td></tr>
+<tr><th scope="row">Chance it happens</th><td>mostly free agents: good odds most of it lands</td><td>everything but the Nola trade is free agency; the Nola trade is a long shot and optional</td></tr>
+</tbody></table></div>
+<p class="fine">Keeping the three 34-year-olds means the 2027 lineup is only slightly younger than the full plan's. The age drops in 2028, when Miller, Crawford and Painter are established and Stott, Duran and Wheeler come off the books.</p>
+</section>
+
+<section id="market">
+<div class="section-head"><span class="kicker">What the market offered</span><h2>Why Harper and Schwarber stay</h2>
+<p class="lead">We shopped both stars to Baltimore, the Yankees and the Red Sox. Every offer needed the Phillies to keep paying a large share of the salary, and none brought back a young player clearly worth a 45-homer bat.</p></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Deal explored</th><th class="num">Salary kept</th><th>Return</th><th>What our model says</th><th class="num">Odds</th></tr></thead>
+<tbody>
+<tr><td>Schwarber to Baltimore</td><td class="num">$50–55M</td><td>3B Coby Mayo (25)</td><td>Average bat (.322), .297 OBP, 30% strikeouts</td><td class="num">25–35%</td></tr>
+<tr><td>Schwarber to the Yankees</td><td class="num">$75M</td><td>SP Will Warren + CF Spencer Jones</td><td>Warren is a league-average starter; Jones projects below average (.300, weak glove)</td><td class="num">6–8%</td></tr>
+<tr><td>Schwarber to Boston</td><td class="num">$50M</td><td>3B Curtis Mead + OF Jarren Duran</td><td>Mead hits (.351) but fields poorly; Duran projects at .292</td><td class="num">10–12%</td></tr>
+<tr><td>Harper to the Yankees</td><td class="num">$50M</td><td>Warren + 1B Luis García Jr.</td><td>The best return: García (.344) nearly replaces Harper's bat, but he has one year of control left</td><td class="num">~5%</td></tr>
+</tbody></table></div>
+<p class="fine">Neither the Yankees (Ben Rice, García, Stanton) nor Boston (Contreras, Yoshida) has an open first base or DH spot, so a star adds only about one win for them, and they hold back their best young players (Schlittler, Lombard, Anthony, Arias). The Harper deal is worth revisiting only if Harper himself asks for it.</p>
+</section>
+
+<section id="moves">
+<div class="section-head"><span class="kicker">In priority order</span><h2>The moves</h2>
+<p class="lead">Short, targeted signings around the core, one optional trade, and a clear plan for the July deadline. No prospects spent.</p></div>
+<ol class="moves">
+<li class="move"><span class="n">1</span><div><h3>Hire the manager and set the budget</h3><p>Before free agency opens; the lockout leaves about four weeks after the World Series.</p></div>
+<div class="side"><strong>October</strong><span>No lockout effect</span></div></li>
+
+<li class="move"><span class="n">2</span><div><h3><span class="chip sign">Sign</span>Seiya Suzuki, right field</h3><p><b>3 years, $75–80M, plus a club option.</b> Right field is empty, and he is the best two-way fit on the market (.345 projected wOBA, 22.5% chase, +8 fielding runs). The only signing that costs draft picks (2nd and 5th).</p></div>
+<div class="side"><strong>~$26M</strong><span>per year · QO picks</span>about +20 runs</div></li>
+
+<li class="move"><span class="n">3</span><div><h3><span class="chip sign">Sign</span>Carson Kelly, catcher</h3><p><b>2 years, about $15M.</b> About the same total value as Ryan Jeffers (weaker bat, better glove) at half the price and no draft-pick cost. He has a mutual option with the Cubs, so Jeffers or a Realmuto/Marchán split is the fallback.</p></div>
+<div class="side"><strong>~$7.5M</strong><span>per year · no picks</span></div></li>
+
+<li class="move"><span class="n">4</span><div><h3><span class="chip sign">Sign</span>Alec Bohm, third base, one year</h3><p><b>1 year, about $9M.</b> A bridge, not an answer: his bat projects at about average and his glove cost about 6 runs in 2026. The one-year term keeps third base open for Miller or Carson DeMartini in 2028. No prospect spent (the full plan traded Rincon for Isaac Paredes).</p></div>
+<div class="side"><strong>~$9M</strong><span>1 year</span></div></li>
+
+<li class="move"><span class="n">5</span><div><h3><span class="chip trade">Trade</span>Aaron Nola to Baltimore for CF Colton Cowser</h3><p><b>Phillies give Nola plus up to $60M</b> of his salary (about $15M a year through 2030); above that, keep him. <b>Baltimore says yes</b> because it needs a starter and Nola costs it about $10M a year; <b>Nola might waive</b> because Baltimore is close and contending. Cowser (27, controlled through 2029) was +9 fielding runs in 2026 and fixes center field's defense, though he hits lefties poorly. Our model sees Nola as a league-average starter now, so a one-year veteran replaces most of his value.</p></div>
+<div class="side"><strong>~15%</strong><span>our estimate</span>saves ~$6M a year</div></li>
+
+<li class="move"><span class="n">6</span><div><h3><span class="chip sign">Sign</span>Bullpen: Bednar, Vesia, Mayza</h3><p><b>David Bednar 3 years, $39M; Alex Vesia 2 years, $18M; Tim Mayza 1 year, $4M.</b> About 150 innings of 5.90 ERA relief to replace, and Brad Keller is out. Promote Luke Bowlan and McFarlane.</p></div>
+<div class="side"><strong>~$26M</strong><span>per year combined</span>about +20 runs</div></li>
+
+<li class="move"><span class="n">7</span><div><h3><span class="chip move-c">Youth</span>Crawford in left, Painter in the rotation, Miller on the way</h3><p><b>Justin Crawford (23)</b> plays left field against right-handers and keeps developing in the majors; Derek Hill plays against lefties. <b>Andrew Painter (24)</b> holds a rotation spot all year. <b>Aidan Miller (22)</b> is protected on the 40-man roster and takes over second or third base by midseason if his back holds up. Then trade Brandon Marsh for a reliever.</p></div>
+<div class="side"><strong>−$7.5M</strong><span>Marsh traded</span></div></li>
+
+<li class="move"><span class="n">8</span><div><h3><span class="chip sign">Sign</span>One veteran starter and Edmundo Sosa</h3><p><b>One starter on a 1-year deal at $8–10M</b> (Nick Martinez, Kyle Freeland, or Brandon Woodruff as an incentive flier) plus Nestor Cortes on a minor-league deal; Gage Wood is expected by mid-2027. <b>Sosa</b> returns as the utility infielder.</p></div>
+<div class="side"><strong>~$13M</strong><span>combined</span></div></li>
+</ol>
+<p class="fine">Kept: Harper, Schwarber, Turner, Wheeler, Realmuto (backup catcher). Let walk: Luis Arraez, Adolis García, José Alvarado. Protected on the 40-man roster: Miller, Rincon, Escobar.</p>
+</section>
+
+<section id="tree">
+<div class="section-head"><span class="kicker">The decision tree</span><h2>If they say no</h2>
+<p class="lead">Only the Nola trade needs another club and a player's consent, and the plan works without it.</p></div>
+<div class="tree">
+<div class="branch"><span class="b-when">Baltimore says yes</span><h4>Nola for Cowser</h4><p>Cowser in center, Crawford in left, a veteran starter in Nola's spot.</p><dl><div><dt>2027 wins</dt><dd>~90</dd></div><div><dt>Tax payroll</dt><dd>~$345M</dd></div></dl></div>
+<div class="branch"><span class="b-when">No Nola trade</span><h4>Nola stays</h4><p>Crawford in center, Marsh in left; Nola works on his fastball and sinker.</p><dl><div><dt>2027 wins</dt><dd>~89</dd></div><div><dt>Tax payroll</dt><dd>~$360M</dd></div></dl></div>
+<div class="branch"><span class="b-when">Harper asks out</span><h4>Harper to New York</h4><p>Only if Harper requests it: Harper plus $50M for Will Warren and Luis García Jr. About neutral for 2027.</p><dl><div><dt>2027 wins</dt><dd>~89–90</dd></div><div><dt>Odds</dt><dd>~5%</dd></div></dl></div>
+<div class="branch stop"><span class="b-when">Under .500 in July</span><h4>Sell at the deadline</h4><p>Duran, Stott and Marsh have one year of control each and need no consent. Revisit Turner then too.</p><dl><div><dt>When</dt><dd>July 2027</dd></div><div><dt>Cost</dt><dd>2027 only</dd></div></dl></div>
+</div>
+</section>
+
+<section id="roster">
+<div class="section-head"><span class="kicker">What it produces</span><h2>The 2027 roster</h2>
+<p class="lead">With the Nola trade done and Marsh traded. Batting orders are the run model's best arrangement for each starter hand.</p></div>
+<div class="roster-grid">
+<article class="card"><header><h3>vs right-handers</h3><span>4.84 runs per 9 innings (2026 regulars: 4.73)</span></header><ol>
+<li><b>1</b><span>Bryce Harper</span><em>1B</em></li>
+<li><b>2</b><span>Kyle Schwarber</span><em>DH</em></li>
+<li><b>3</b><span>Seiya Suzuki<span class="new">new</span></span><em>RF</em></li>
+<li><b>4</b><span>Bryson Stott</span><em>2B</em></li>
+<li><b>5</b><span>Colton Cowser<span class="new">new</span></span><em>CF</em></li>
+<li><b>6</b><span>Trea Turner</span><em>SS</em></li>
+<li><b>7</b><span>Carson Kelly<span class="new">new</span></span><em>C</em></li>
+<li><b>8</b><span>Alec Bohm</span><em>3B</em></li>
+<li><b>9</b><span>Justin Crawford</span><em>LF</em></li>
+</ol></article>
+<article class="card"><header><h3>vs left-handers</h3><span>4.68 runs per 9 innings (2026 regulars: 4.25)</span></header><ol>
+<li><b>1</b><span>Bryce Harper</span><em>1B</em></li>
+<li><b>2</b><span>Seiya Suzuki<span class="new">new</span></span><em>RF</em></li>
+<li><b>3</b><span>Kyle Schwarber</span><em>DH</em></li>
+<li><b>4</b><span>Colton Cowser<span class="new">new</span></span><em>CF</em></li>
+<li><b>5</b><span>Alec Bohm</span><em>3B</em></li>
+<li><b>6</b><span>Trea Turner</span><em>SS</em></li>
+<li><b>7</b><span>Derek Hill</span><em>LF</em></li>
+<li><b>8</b><span>Carson Kelly<span class="new">new</span></span><em>C</em></li>
+<li><b>9</b><span>Bryson Stott</span><em>2B</em></li>
+</ol></article>
+<div class="field-wrap" role="img" aria-label="Defensive alignment: Kelly catching, Harper first, Stott second, Turner short, Bohm third, Crawford or Hill in left, Cowser in center, Suzuki in right, Schwarber DH">
+<svg viewBox="0 0 400 380" aria-hidden="true">
+<path class="f-grass" d="M200 360 L20 180 A255 255 0 0 1 380 180 Z"/>
+<path class="f-dirt" d="M200 352 L105 257 A134 134 0 0 1 295 257 Z"/>
+<path class="f-grass" d="M200 318 L148 266 L200 214 L252 266 Z"/>
+<path class="f-line" d="M200 360 L20 180 M200 360 L380 180"/>
+<text class="f-pos" x="200" y="56" text-anchor="middle">CF</text><text class="f-name" x="200" y="72" text-anchor="middle">Cowser</text>
+<text class="f-pos" x="78" y="118" text-anchor="middle">LF</text><text class="f-name" x="78" y="134" text-anchor="middle">Crawford</text><text class="f-sub" x="78" y="148" text-anchor="middle">Hill vs LHP</text>
+<text class="f-pos" x="322" y="118" text-anchor="middle">RF</text><text class="f-name" x="322" y="134" text-anchor="middle">Suzuki</text>
+<text class="f-pos" x="150" y="190" text-anchor="middle">SS</text><text class="f-name" x="150" y="206" text-anchor="middle">Turner</text>
+<text class="f-pos" x="252" y="190" text-anchor="middle">2B</text><text class="f-name" x="252" y="206" text-anchor="middle">Stott</text><text class="f-sub" x="252" y="220" text-anchor="middle">Miller next</text>
+<text class="f-pos" x="104" y="268" text-anchor="middle">3B</text><text class="f-name" x="104" y="284" text-anchor="middle">Bohm</text><text class="f-sub" x="104" y="298" text-anchor="middle">1 year</text>
+<text class="f-pos" x="296" y="268" text-anchor="middle">1B</text><text class="f-name" x="296" y="284" text-anchor="middle">Harper</text>
+<text class="f-pos" x="200" y="372" text-anchor="middle">C · Kelly</text>
+<text class="f-pos" x="336" y="340" text-anchor="middle">DH</text><text class="f-name" x="336" y="356" text-anchor="middle">Schwarber</text>
+</svg></div>
+</div>
+<div class="staff">
+<div class="panel"><h3>Rotation</h3><ul>
+<li>Cristopher Sánchez<span>LHP</span></li><li>Jesús Luzardo<span>LHP · through 2031</span></li>
+<li>Zack Wheeler<span>RHP · 37, final year</span></li><li>Andrew Painter<span>RHP · 24, year 2</span></li>
+<li>Veteran 1-year starter<span>new · Nola's spot</span></li><li>Cortes, Gage Wood<span>depth · Wood mid-2027</span></li></ul></div>
+<div class="panel"><h3>Bullpen</h3><ul>
+<li>Jhoan Duran<span>closer · FA after 2027</span></li><li>David Bednar<span>new · RHP</span></li>
+<li>Alex Vesia<span>new · LHP</span></li><li>Tim Mayza<span>LHP</span></li>
+<li>Luke Bowlan<span>RHP · 97.1 mph</span></li><li>McFarlane, Shugart, Kilian<span>depth</span></li></ul></div>
+<div class="panel"><h3>Bench and next</h3><ul>
+<li>J.T. Realmuto<span>C · RH bat</span></li><li>Derek Hill<span>OF · starts vs LHP</span></li>
+<li>Edmundo Sosa<span>UT infield</span></li><li>Otto Kemp<span>1B/3B/OF</span></li>
+<li>Aidan Miller<span>Triple-A; 2B or 3B by midseason</span></li></ul></div>
+</div>
+</section>
+
+<section id="value">
+<div class="section-head"><span class="kicker">The payoff</span><h2>Where the wins come from</h2>
+<p class="lead">Runs gained over 162 games against the 2026 team's true talent, with the Nola trade done. The retool scores fewer runs than the full plan but fields better.</p></div>
+<div class="value-grid">
+<div class="panel"><div class="chart-wrap">
+<svg class="chart" viewBox="0 0 640 280" role="img" aria-labelledby="w-t"><title id="w-t">Runs gained by component, full plan versus retool</title>
+<line class="grid" x1="235" x2="235" y1="16" y2="230"/><line class="grid" x1="323" x2="323" y1="16" y2="230"/><line class="grid" x1="411" x2="411" y1="16" y2="230"/><line class="grid" x1="499" x2="499" y1="16" y2="230"/>
+<line class="zero" x1="191" x2="191" y1="16" y2="230"/>
+<text class="tick" x="191" y="250" text-anchor="middle">0</text><text class="tick" x="279" y="250" text-anchor="middle">20</text><text class="tick" x="367" y="250" text-anchor="middle">40</text><text class="tick" x="455" y="250" text-anchor="middle">60</text><text class="tick" x="543" y="250" text-anchor="middle">80</text>
+<text class="rowlabel" x="12" y="50">Offense</text>
+<rect class="bar s-full" x="191" y="30" width="312" height="18" rx="4" tabindex="0" data-tip="Offense, full plan: +71 runs"/><text class="vlabel" x="509" y="44">+71</text>
+<rect class="bar s-alt" x="191" y="50" width="158" height="18" rx="4" tabindex="0" data-tip="Offense, retool: +36 runs (Suzuki, Kelly, Cowser; Harper and Schwarber stay)"/><text class="vlabel" x="355" y="64">+36</text>
+<text class="rowlabel" x="12" y="104">Defense</text>
+<rect class="bar s-full" x="191" y="84" width="35" height="18" rx="4" tabindex="0" data-tip="Defense, full plan: +8 runs"/><text class="vlabel" x="232" y="98">+8</text>
+<rect class="bar s-alt" x="191" y="104" width="70" height="18" rx="4" tabindex="0" data-tip="Defense, retool: +16 runs (Cowser in center, Crawford in left, Suzuki in right, Turner's rebound at short)"/><text class="vlabel" x="267" y="118">+16</text>
+<text class="rowlabel" x="12" y="158">Bullpen</text>
+<rect class="bar s-full" x="191" y="138" width="88" height="18" rx="4" tabindex="0" data-tip="Bullpen, full plan: +20 runs"/><text class="vlabel" x="285" y="152">+20</text>
+<rect class="bar s-alt" x="191" y="158" width="88" height="18" rx="4" tabindex="0" data-tip="Bullpen, retool: +20 runs (same signings)"/><text class="vlabel" x="285" y="172">+20</text>
+<text class="rowlabel" x="12" y="212">Rotation</text>
+<rect class="bar s-full" x="191" y="192" width="26" height="18" rx="4" tabindex="0" data-tip="Rotation, full plan: +6 runs"/><text class="vlabel" x="223" y="206">+6</text>
+<rect class="bar s-alt" x="191" y="212" width="2" height="18" rx="1" tabindex="0" data-tip="Rotation, retool: 0 runs (Nola replaced by a one-year starter); +6 if Nola stays"/><text class="vlabel" x="199" y="226">0</text>
+</svg></div>
+<div class="legend"><span><i class="l-full"></i>Full plan</span><span><i class="l-alt"></i>Retool</span></div>
+<p class="fine">Combined error is about ±30 runs; season luck adds about ±6 wins on top.</p></div>
+<div class="panel bigstat"><strong>+72</strong><span>runs, about <b>+7 wins</b>: from an 83-win base to about <b>90</b> (87–93). Without the Nola trade, about +59 runs and 89 wins. The full plan is +105 runs and about 93.</span>
+<p class="fine">The gap to the full plan is mostly offense: no Paredes, Jeffers or Torres, and Bohm instead of a new third baseman. In exchange, the retool keeps Rincon and both later draft picks, and spends about $40M less.</p></div>
+</div>
+</section>
+
+<section id="july">
+<div class="section-head"><span class="kicker">The longer view</span><h2>July and beyond</h2>
+<p class="lead">This plan gets younger in steps rather than in one winter, because the stars' trade value right now is too low to sell.</p></div>
+<div class="miller">
+<div class="step"><time>Winter 2026</time><h4>Young regulars</h4><p>Crawford in left, Painter in the rotation, Cowser in center if the Nola deal lands. Miller and Rincon protected.</p></div>
+<div class="step"><time>Mid-2027</time><h4>Miller arrives</h4><p>Takes second or third base if his back holds up; Gage Wood joins the rotation.</p></div>
+<div class="step"><time>July 2027</time><h4>The fork</h4><p>Contending: extend Duran or Stott and add. Under .500: sell Duran, Stott and Marsh, each a one-year rental needing no consent, and revisit Turner after a better half raises his value.</p></div>
+<div class="step"><time>2028</time><h4>The turnover</h4><p>Wheeler, Stott, Duran and Bohm come off the books. The core becomes Harper, Schwarber, Suzuki, Luzardo and Sánchez plus Miller, Crawford, Painter, Wood and Cowser.</p></div>
+</div>
+</section>
+
+<section id="risks">
+<div class="section-head"><span class="kicker">What could go wrong</span><h2>Risks</h2></div>
+<div class="risks">
+<div class="risk"><h4>An aging core stays</h4><p>Harper, Schwarber and Turner are 34, Wheeler 37. The projections include aging, but the downside tail is wide and this plan doesn't reduce it in 2027.</p></div>
+<div class="risk"><h4>Third base is a stopgap</h4><p>Bohm projects at about average with a below-average glove. If Miller isn't ready by midseason, third base stays a weak spot all year.</p></div>
+<div class="risk"><h4>The Nola trade may not happen</h4><p>It needs Nola's consent and Baltimore to pay something for a league-average starter on a long deal. Without it, center field stays with Crawford.</p></div>
+<div class="risk"><h4>Young players may not be ready</h4><p>Crawford hit .270 against lefties and Painter had a 5.40 ERA as a rookie. Giving them jobs is a bet on development.</p></div>
+<div class="risk"><h4>The 2028 rotation</h4><p>Wheeler retires after 2027. Sánchez, Luzardo, Painter and Wood need one more arm; the money this plan saves should be earmarked for it.</p></div>
+<div class="risk"><h4>The lockout</h4><p>Everything is designed to land before December 1. A long lockout shortens the season and lowers the value of one-year deals.</p></div>
+</div>
+</section>
+
+<section id="method">
+<div class="section-head"><span class="kicker">Transparency</span><h2>How this was built</h2></div>
+<div class="method">
+<p><strong>Research.</strong> Agents shopped Harper, Schwarber, Turner, Nola, Realmuto and Wheeler to every plausible buyer, then went deeper on the Yankees and Red Sox, and valued every young MLB-ready player at the Phillies' weak positions with our Statcast model. An advisor reviewed the first draft of this alternative, which sold Schwarber; that version was dropped because no offer clearly beat keeping him.</p>
+<p><strong>Basis.</strong> Same run model, aging and park adjustments, and 83-win true-talent baseline as the <a href="https://jkrek17.github.io/web/phillies/offseason/">full plan</a> and the <a href="https://jkrek17.github.io/web/phillies/">2026 lineup study</a>. Cowser projects at .321 wOBA and Bohm at .318. Contract values and trade odds are estimates as of October 3, 2026; no talks have been reported for any of these players.</p>
+</div>
+</section>
+</main>
+<footer class="page"><div class="wrap">Phillies 2027 offseason · keep-the-core alternative · built October 2026 · <a href="https://jkrek17.github.io/web/phillies/offseason/">full plan</a> · <a href="https://jkrek17.github.io/web/phillies/">2026 lineup study</a></div></footer>
+<div id="tip" role="tooltip" hidden></div>
+<script>
+(function(){var tip=document.getElementById('tip');
+function place(x,y){var w=tip.offsetWidth,h=tip.offsetHeight;tip.style.left=Math.min(window.innerWidth-w-8,Math.max(8,x+12))+'px';tip.style.top=Math.max(8,y-h-12)+'px';}
+document.addEventListener('mouseover',function(e){var el=e.target.closest('[data-tip]');if(!el)return;tip.textContent=el.getAttribute('data-tip');tip.hidden=false;place(e.clientX,e.clientY);});
+document.addEventListener('mousemove',function(e){if(!tip.hidden)place(e.clientX,e.clientY);});
+document.addEventListener('mouseout',function(e){if(e.target.closest('[data-tip]'))tip.hidden=true;});
+document.addEventListener('focusin',function(e){var el=e.target.closest('[data-tip]');if(!el)return;var r=el.getBoundingClientRect();tip.textContent=el.getAttribute('data-tip');tip.hidden=false;place(r.left+r.width/2,r.top);});
+document.addEventListener('focusout',function(){tip.hidden=true;});})();
+</script>
+</body></html>

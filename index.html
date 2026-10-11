@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Projects</title>
+<meta name="description" content="Every project published on this site.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<script>
+// The live map used to be the root page and keeps its view in the hash (and
+// test data in ?data=), so old links with either go on to the map.
+if (location.hash.length > 1 || /[?&]data=/.test(location.search)) location.replace('cyclone/' + location.search + location.hash);
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%222%22 width=%2212%22 height=%2212%22 rx=%222%22 fill=%22none%22 stroke=%22%237fb0ee%22 stroke-width=%221.2%22/%3E%3Cpath d=%22M5 6h6M5 8h6M5 10h4%22 stroke=%22%237fb0ee%22/%3E%3C/svg%3E">
+<style>
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-display: swap; src: url("cyclone/fonts/IBMPlexSans-Regular-Latin1.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 600; font-display: swap; src: url("cyclone/fonts/IBMPlexSans-SemiBold-Latin1.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("cyclone/fonts/IBMPlexMono-Regular-Latin1.woff2") format("woff2"); }
+:root {
+  --bg: #17181b; --raise: #222328; --rule: #34353b; --rule-strong: #4a4b52;
+  --text: #e9e8e3; --muted: #a8a6a0; --faint: #94928c; --accent: #7fb0ee; --warn: #e8c46a;
+  --sans: "IBM Plex Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--sans); }
+main { max-width: 720px; margin: 0 auto; padding: 48px 16px 64px; }
+h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+.lede { color: var(--muted); margin: 0 0 24px; }
+ul { list-style: none; margin: 0; padding: 0; }
+li.project { border-top: 1px solid var(--rule); padding: 12px 0; }
+li.project:last-child { border-bottom: 1px solid var(--rule); }
+li.project > ul { margin: 8px 0 0 12px; padding-left: 12px; border-left: 1px solid var(--rule-strong); }
+li.sub { padding: 4px 0; }
+a { color: inherit; text-decoration: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.name { color: var(--accent); font-weight: 600; }
+li.sub .name { font-weight: 400; }
+a:hover .name, a:focus-visible .name { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.path { color: var(--faint); font: 13px var(--mono); }
+.tag { color: var(--warn); border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; font: 11px/16px var(--mono); }
+li p { color: var(--muted); margin: 4px 0 0; font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Projects</h1>
+  <p class="lede">Everything published on this site.</p>
+  <ul>
+    <li class="project">
+      <a href="article/"><span class="name">Gridded Cyclone Phase Space in AWIPS</span><span class="path">/article/</span></a>
+      <p>A short academic article on computing Hart&#x27;s cyclone phase space as a gridded AWIPS II D2D derived parameter, with reproducible synthetic-field figures.</p>
+    </li>
+    <li class="project">
+      <a href="cyclone/"><span class="name">Cyclone Phase Space, live</span><span class="path">/cyclone/</span></a>
+      <p>A live global map of the gridded cyclone phase space products: the Hart class of every closed low, MSLP, and the thermal asymmetry and lower and upper thermal wind fields, with every tracked low and its phase diagrams, animated over the latest model cycle.</p>
+    </li>
+    <li class="project">
+      <a href="forecasters/"><span class="name">Cyclone Phase Space for the Forecast Desk</span><span class="path">/forecasters/</span></a>
+      <p>A plain-language guide to the gridded cyclone phase space products in AWIPS D2D: what the three numbers mean, how to read the class map, a worked real case, and where the products mislead.</p>
+    </li>
+    <li class="project">
+      <a href="hf-lows/"><span class="name">Hurricane Force Extratropical Low Archive</span><span class="path">/hf-lows/</span></a>
+      <p>Archive and climatology of hurricane force extratropical lows in the North Atlantic and North Pacific.</p>
+    </li>
+    <li class="project">
+      <a href="lsr/"><span class="name">NWS Local Storm Reports - Interactive Map</span> <span class="tag">test: main</span><span class="path">/lsr/</span></a>
+      <p>Interactive map of National Weather Service Local Storm Reports. View real-time and historical storm reports across the United States.</p>
+      <ul>
+        <li class="sub">
+      <a href="lsr/next/"><span class="name">NWS Local Storm Reports - Interactive Map</span> <span class="tag">test: next</span><span class="path">/lsr/next/</span></a>
+      <p>Interactive map of National Weather Service Local Storm Reports. View real-time and historical storm reports across the United States.</p></li>
+      </ul>
+    </li>
+    <li class="project">
+      <a href="ndfd/"><span class="name">Oceanic Forecast · NDFD &amp; OPC Surface</span><span class="path">/ndfd/</span></a>
+      <p>Oceanic weather forecast: NDFD wave and wind grids with OPC surface fronts and isobars on a 3D globe.</p>
+    </li>
+    <li class="project">
+      <a href="phillies/"><span class="name">Phillies 2026 Lineup Study</span><span class="path">/phillies/</span></a>
+      <ul>
+        <li class="sub">
+      <a href="phillies/offseason/"><span class="name">Phillies 2027 Offseason Plan</span><span class="path">/phillies/offseason/</span></a></li>
+      </ul>
+    </li>
+    <li class="project">
+      <a href="wind/"><span class="name">Wind · GFS particle forecast</span><span class="path">/wind/</span></a>
+    </li>
+  </ul>
+</main>
+</body>
+</html>
