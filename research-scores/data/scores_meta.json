@@ -1,0 +1,27 @@
+{
+  "generated_utc": "2026-10-16T13:41:36Z",
+  "kit_repo": "jkrek17/marine-research",
+  "kit_ref": "main",
+  "kit_sha": "9964b79ccead3c772e6f57d0579f6e880b840bcb",
+  "start": "2026-01-05",
+  "end": "2026-03-29",
+  "weeks_scored": [
+    "2026-W02",
+    "2026-W03",
+    "2026-W04",
+    "2026-W05",
+    "2026-W06",
+    "2026-W07",
+    "2026-W08",
+    "2026-W09",
+    "2026-W10",
+    "2026-W11",
+    "2026-W12",
+    "2026-W13"
+  ],
+  "run_presets_exit": 0,
+  "presets": {
+    "2026-10-16-pressure-d5-7": "ok",
+    "2026-10-16-warning-forecast": "ok"
+  }
+}
