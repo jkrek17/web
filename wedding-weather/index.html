@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Rain chances and temperatures for Greensboro, NC on Friday evening 23 and Saturday afternoon 24 October 2026, updated each morning.">
+<title>Greensboro Wedding Weather</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a card per event window up top, then the evidence. */
+:root{
+  --bg:#f4f6f9; --panel:#ffffff; --ink:#1d2740; --muted:#5b6680; --line:#d9dee8;
+  --accent:#9c4a63; --rain:#2f6aa6; --rain-soft:#dbe7f4; --dry:#3c7a5a;
+  --gefs:#2f6aa6; --ens:#9c4a63; --aifs:#3c7a5a;
+  --display:"Gloock", Georgia, "Times New Roman", serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121827; --panel:#1a2236; --ink:#e7ebf3; --muted:#a2acc2; --line:#2e3850;
+  --accent:#e08aa3; --rain:#7fb0e6; --rain-soft:#22344f; --dry:#7cc59c;
+  --gefs:#7fb0e6; --ens:#e08aa3; --aifs:#7cc59c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121827; --panel:#1a2236; --ink:#e7ebf3; --muted:#a2acc2; --line:#2e3850;
+  --accent:#e08aa3; --rain:#7fb0e6; --rain-soft:#22344f; --dry:#7cc59c;
+  --gefs:#7fb0e6; --ens:#e08aa3; --aifs:#7cc59c; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:40px}
+header{display:grid;gap:8px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,52px);line-height:1.05;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:400;font-size:28px;margin:0 0 6px;text-wrap:balance}
+p{margin:0;max-width:68ch}
+.lede{font-size:18px}
+.meta{font-size:13px;color:var(--muted)}
+section{display:grid;gap:14px}
+.windows{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:16px}
+.win{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px;min-width:0;align-content:start}
+.win .when{font-weight:700;font-size:15px}
+.win .when span{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.big .pct{font-family:var(--display);font-size:64px;line-height:1;color:var(--rain)}
+.big .lab{font-size:14px;color:var(--muted);max-width:24ch}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin:0}
+.facts div{display:grid}
+.facts dt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.facts dd{margin:0;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.facts dd small{font-weight:400;color:var(--muted);font-size:13px}
+.chip{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;padding:3px 10px;border-radius:99px;color:var(--dry);background:color-mix(in srgb,var(--dry) 14%,transparent)}
+.chip.wet{color:var(--rain);background:var(--rain-soft)}
+.note{font-size:14px;color:var(--muted)}
+.callout{border-left:3px solid var(--accent);padding:4px 0 4px 14px;display:grid;gap:8px}
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;overflow-x:auto;min-width:0}
+.chart svg{display:block;width:100%;height:auto}
+.chart h3{margin:0 0 4px;font-size:15px}
+.chart svg text{fill:var(--muted);font-family:var(--body);font-size:12px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.legend i.dash{background:none!important;border-top:2px dashed var(--muted);height:0}
+.tablewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+td.wet{color:var(--rain);font-weight:700}
+.mono{font-family:var(--mono);font-size:13px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.map{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
+.map svg{display:block;width:100%;height:auto}
+.map .cap{font-size:13px;color:var(--muted);padding:6px 4px 0}
+@media (max-width:600px){
+  .wrap{gap:30px;padding-block:18px 40px}
+  h1{font-size:32px} h2{font-size:24px} .lede{font-size:17px}
+  .win{padding:16px} .big .pct{font-size:52px}
+  .facts dd{font-size:16px}
+  .chart,.map{padding:8px}
+  th,td{padding:7px 8px}
+}
+@media print{
+  .wrap,section,.windows,.grid2,.win{display:block}
+  .wrap>*,section>*{margin-bottom:14px}
+  .win>*{margin-bottom:10px}
+  .win,.chart,.map{break-inside:avoid;margin-bottom:14px}
+  h2{break-after:avoid}
+}
+@page{size:4.5in 9.5in;margin:0.25in}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head><body>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow" id="eyebrow"></div>
+  <h1 id="headline"></h1>
+  <p class="meta" id="issued"></p>
+</header>
+
+<section>
+  <p class="lede" id="bottomline"></p>
+  <div class="windows" id="windows"></div>
+  <p class="note" id="leadnote"></p>
+</section>
+
+<section>
+  <h2>Why</h2>
+  <div class="callout" id="pattern"></div>
+  <div class="grid2" id="maps"></div>
+</section>
+
+<section>
+  <h2>How the forecast has changed</h2>
+  <p>Each dot is one model run, oldest on the left. The shaded band is the range: on the rain graphs, from the driest to the wettest of the three ensembles at each run; on the temperature graphs, from 1 in 10 colder to 1 in 10 warmer across all ensemble members. When the band narrows and the newest runs agree with the older ones, the forecast is settling down. The dashed line on the rain graphs is the combined chance, which counts the last three runs of every ensemble with the newest weighted most.</p>
+  <div class="grid2" id="lagcharts"></div>
+  <div class="legend" id="laglegend"></div>
+  <p class="note" id="trendnote"></p>
+</section>
+
+<section>
+  <h2>Rain chance through the event</h2>
+  <p>Share of runs in each ensemble with rain in each 6-hour block, from the newest runs. The shaded bands are your windows.</p>
+  <div class="chart" id="rainchart"></div>
+  <div class="legend" id="rainlegend"></div>
+</section>
+
+<section>
+  <h2>Temperature through the event</h2>
+  <p>Middle of each ensemble, with the American ensemble's range (1 in 10 colder to 1 in 10 warmer) shaded.</p>
+  <div class="chart" id="tempchart"></div>
+  <div class="legend" id="templegend"></div>
+</section>
+
+<section>
+  <h2>What is normal for these dates</h2>
+  <div class="tablewrap"><table id="clim"></table></div>
+  <p class="note" id="climnote"></p>
+</section>
+
+<footer id="foot"></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="data.js"></script>
+<script>
+(function(){
+const W = window.WX, C = W.cfg, T = W.content, $ = id => document.getElementById(id);
+const ENS = ["gefs","ens","aifs-ens"], DET = ["gfs","ifs","aifs"];
+const NAME = {gefs:"American ensemble", ens:"European ensemble", "aifs-ens":"European AI ensemble", gfs:"American model (GFS)", ifs:"European model (ECMWF)", aifs:"European AI model (AIFS)"};
+const COL = {gefs:"var(--gefs)", ens:"var(--ens)", "aifs-ens":"var(--aifs)"};
+const r0 = Math.round, pc = x => r0(100*x) + "%", avg = a => a.reduce((s,x)=>s+x,0)/a.length;
+const off = C.utc_offset;
+const U = s => new Date(s.endsWith("Z") ? s : s + "Z");
+const local = d => new Date(d.getTime() + off*3600e3);       // shift so getUTC* reads local time
+const hourLab = d => { const h = local(d).getUTCHours(); return h === 0 ? "midnight" : h === 12 ? "noon" : (h % 12) + (h < 12 ? " am" : " pm"); };
+const dayLab = d => ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][local(d).getUTCDay()];
+const cyc = c => { const d = new Date(Date.UTC(+c.slice(0,4), +c.slice(4,6)-1, +c.slice(6,8), +c.slice(8,10))); return d.getUTCDate() + " " + d.toLocaleString("en", {month:"short", timeZone:"UTC"}) + " " + c.slice(8,10) + "Z"; };
+const latest = m => (W.ens[m] || W.det[m] || [])[0];
+const has = m => !!latest(m);
+const E = ENS.filter(has);
+
+$("eyebrow").textContent = C.eyebrow; $("headline").textContent = C.headline;
+const iss = U(W.issued.replace("Z",""));
+$("issued").textContent = `Updated ${dayLab(iss)} ${local(iss).getUTCDate()} ${local(iss).toLocaleString("en",{month:"long",timeZone:"UTC"})}, ${hourLab(iss)} ${C.tz_name}. Times are ${C.tz_name}.`;
+$("bottomline").innerHTML = T.bottomline;
+$("leadnote").innerHTML = T.leadnote || "";
+
+// ---- window cards ----
+const winStats = (k, h, q) => { const v = E.map(m => latest(m).windows[k][q + "_" + h]).filter(Boolean); return v.length ? [avg(v.map(x=>x[0])), avg(v.map(x=>x[1])), avg(v.map(x=>x[2]))] : null; };
+$("windows").innerHTML = C.windows.map(w => {
+  const t = T.windows[w.key] || {}, B = W.blend[w.key], hs = [w.s, w.e];
+  const ts = hs.map(h => winStats(w.key, h, "t")), td = winStats(w.key, w.s, "td"), wi = winStats(w.key, w.s, "w");
+  const temp = ts[0] && ts[1] ? `${r0(ts[0][1])}°F at ${hourLab(U(w.s))}, ${r0(ts[1][1])}°F at ${hourLab(U(w.e))}` : "–";
+  const rng = ts[0] && ts[1] ? `${r0(Math.min(ts[0][0], ts[1][0]))}–${r0(Math.max(ts[0][2], ts[1][2]))}°F` : "–";
+  return `<article class="win">
+    <div class="when">${w.label}<span>${t.sub || ""}</span></div>
+    <div class="big"><div class="pct">${t.pct || pc(B.final)}</div><div class="lab">chance of rain<br>Normal for these hours: ${pc(W.clim[w.key].p_measurable)}</div></div>
+    <div><span class="chip ${B.final >= .3 ? "wet" : ""}">${t.conf || ""}</span></div>
+    <dl class="facts">
+      <div><dt>Temperature</dt><dd>${temp}</dd></div>
+      <div><dt>Could range</dt><dd>${rng}</dd></div>
+      <div><dt>Dew point</dt><dd>${t.td || (td ? r0(td[1]) + "°F" : "–")}</dd></div>
+      <div><dt>Wind</dt><dd>${t.wind || (wi ? "About " + r0(wi[1]) + " mph" : "–")}</dd></div>
+      <div><dt>Sky</dt><dd>${t.sky || "–"}</dd></div>
+      <div><dt>If it rains</dt><dd>${t.amt || "–"}</dd></div>
+    </dl>
+    <p class="note">${t.note || ""}</p>
+  </article>`; }).join("");
+
+$("pattern").innerHTML = T.pattern;
+
+// ---- maps ----
+function drawMap(el, grid, title){
+  const w = 440, h = 330;
+  const proj = d3.geoConicConformal().parallels([30,45]).rotate([-C.lon,0]).center([0,C.lat+6.4]).scale(900).translate([w/2,h/2+10]);
+  const path = d3.geoPath(proj);
+  const svg = d3.select(el).append("svg").attr("viewBox",`0 0 ${w} ${h}`).attr("role","img").attr("aria-label",title);
+  svg.append("rect").attr("width",w).attr("height",h).attr("fill","var(--panel)");
+  svg.append("path").attr("d",path(topojson.feature(GEO_WORLD, GEO_WORLD.objects.countries))).attr("fill","color-mix(in srgb, var(--dry) 10%, var(--panel))").attr("stroke","var(--muted)").attr("stroke-width",.5);
+  svg.append("path").attr("d",path(topojson.mesh(GEO_STATES, GEO_STATES.objects.states, (a,b)=>a!==b))).attr("fill","none").attr("stroke","var(--muted)").attr("stroke-width",.35);
+  const ny = grid.length, nx = grid[0].length, flat = grid.flat();
+  const P = ([x,y]) => proj([W.map.lon0 + x*0.25, W.map.lat0 - y*0.25]);
+  d3.contours().size([nx, ny]).thresholds(d3.range(960, 1052, 4))(flat).forEach(c => {
+    let d = "";
+    c.coordinates.forEach(poly => poly.forEach(ring => { let pen = false;
+      ring.forEach(pt => { const edge = pt[0] <= .5 || pt[1] <= .5 || pt[0] >= nx-.5 || pt[1] >= ny-.5, q = P(pt);
+        if (edge || !q) { pen = false; return; } d += (pen ? "L" : "M") + q[0].toFixed(1) + "," + q[1].toFixed(1); pen = true; }); }));
+    svg.append("path").attr("d",d).attr("fill","none").attr("stroke","var(--accent)").attr("stroke-width",1.1).attr("opacity",.85);
+  });
+  const mark = (i, L, col) => { const q = P([i % nx, Math.floor(i/nx)]); if (!q || q[0]<10 || q[0]>w-10 || q[1]<10 || q[1]>h-20) return;
+    svg.append("text").attr("x",q[0]).attr("y",q[1]).attr("text-anchor","middle").attr("dy","0.35em").attr("style",`fill:${col};font-family:var(--display);font-size:26px`).text(L);
+    svg.append("text").attr("x",q[0]).attr("y",q[1]+22).attr("text-anchor","middle").attr("style",`fill:${col};font-size:12px;font-weight:600`).text(r0(flat[i]) + " mb"); };
+  let hi = 0, lo = 0; flat.forEach((v,i)=>{ if (v > flat[hi]) hi = i; if (v < flat[lo]) lo = i; });
+  mark(hi, "H", "var(--rain)"); mark(lo, "L", "var(--accent)");
+  const g = proj([C.lon, C.lat]);
+  svg.append("circle").attr("cx",g[0]).attr("cy",g[1]).attr("r",4.5).attr("fill","var(--ink)");
+  svg.append("text").attr("x",g[0]+8).attr("y",g[1]+4).attr("style","fill:var(--ink);font-size:12px;font-weight:600").text(C.place);
+  d3.select(el).append("div").attr("class","cap").text(title);
+}
+Object.keys(W.map.fields).sort().forEach((k, i) => {
+  const d = document.createElement("div"); d.className = "map"; $("maps").appendChild(d);
+  const t = U(k);
+  try { drawMap(d, W.map.fields[k], `${dayLab(t)} ${hourLab(t)}: sea-level pressure, average of all ensemble runs (lines every 4 mb)`); } catch(e) { d.textContent = "Map could not be drawn."; }
+});
+
+// ---- charts ----
+function chart(el, o){
+  const avail = Math.max(300, (el.clientWidth || 760) - 24);
+  const w = Math.min(o.w || 760, avail), h = Math.round((o.h || 260) * (w < 500 ? 0.95 : 1)), m = {l:40, r:12, t:16, b:36};
+  const xticks = w < 500 && o.xticks.length > 5 ? o.xticks.filter((_, i) => i % 2 === 0) : o.xticks;
+  const x = (o.xscale || d3.scaleTime()).domain(o.xdom).range([m.l, w-m.r]);
+  const y = d3.scaleLinear().domain(o.ydom).range([h-m.b, m.t]);
+  const svg = d3.select(el).append("svg").attr("viewBox",`0 0 ${w} ${h}`);
+  (o.bands||[]).forEach(([a,b,lab]) => {
+    svg.append("rect").attr("x",x(a)).attr("y",m.t).attr("width",Math.max(x(b)-x(a),2)).attr("height",h-m.b-m.t).attr("fill","var(--rain-soft)");
+    svg.append("text").attr("x",(x(a)+x(b))/2).attr("y",m.t+12).attr("text-anchor","middle").attr("style","fill:var(--rain);font-size:11px;font-weight:600").text(lab); });
+  y.ticks(5).forEach(v => { svg.append("line").attr("x1",m.l).attr("x2",w-m.r).attr("y1",y(v)).attr("y2",y(v)).attr("stroke","var(--line)");
+    svg.append("text").attr("x",m.l-6).attr("y",y(v)+4).attr("text-anchor","end").text(o.yfmt(v)); });
+  xticks.forEach(([d,lab]) => svg.append("text").attr("x",x(d)).attr("y",h-m.b+18).attr("text-anchor","middle").text(lab));
+  (o.hlines||[]).forEach(([v,col,lab,left]) => { svg.append("line").attr("x1",m.l).attr("x2",w-m.r).attr("y1",y(v)).attr("y2",y(v)).attr("stroke",col).attr("stroke-width",1.5).attr("stroke-dasharray","5 4");
+    svg.append("text").attr("x",left ? m.l+4 : w-m.r).attr("y",left ? y(v)+14 : y(v)-5).attr("text-anchor",left ? "start" : "end").attr("style",`fill:${col};font-size:11px;font-weight:600`).text(lab); });
+  (o.areas||[]).forEach(a => svg.append("path").attr("d",d3.area().x(p=>x(p[0])).y0(p=>y(p[1])).y1(p=>y(p[2]))(a.pts)).attr("fill",a.col).attr("opacity",.16));
+  o.series.forEach(s => { if (s.pts.length > 1 && !s.dots) svg.append("path").attr("d",d3.line().x(p=>x(p[0])).y(p=>y(p[1]))(s.pts)).attr("fill","none").attr("stroke",s.col).attr("stroke-width",2.2);
+    s.pts.forEach(p => svg.append("circle").attr("cx",x(p[0])).attr("cy",y(p[1])).attr("r",s.dots ? 3 : 3.5).attr("fill",s.dots ? "var(--panel)" : s.col).attr("stroke",s.col).attr("stroke-width",s.dots ? 1.5 : 0)); });
+}
+// time-lagged: chance by run
+const allCycles = [...new Set(E.flatMap(m => W.ens[m].map(r => r.cycle)))].sort();
+const cdate = c => new Date(Date.UTC(+c.slice(0,4), +c.slice(4,6)-1, +c.slice(6,8), +c.slice(8,10)));
+const ymaxLag = Math.max(30, ...E.flatMap(m => W.ens[m].flatMap(r => C.windows.map(w => 100*r.windows[w.key].p01)))) ;
+const span = [cdate(allCycles[0]), cdate(allCycles[allCycles.length-1])];
+const lagX = [new Date(span[0]-3*3600e3), new Date(+span[1]+3*3600e3)];
+const lagTicks = allCycles.filter((c,i)=> allCycles.length < 6 || (allCycles.length - 1 - i) % 2 === 0).map(c => [cdate(c), c.slice(6,8).replace(/^0/,"") + "th " + c.slice(8,10) + "Z"]);
+// at each run time, the newest run of each ensemble not older than 12 h
+const asOf = (m, c) => W.ens[m].find(r => r.cycle <= c && cdate(c) - cdate(r.cycle) <= 12*3600e3);
+const band = f => allCycles.map(c => { const v = E.map(m => asOf(m, c)).filter(Boolean).map(f).filter(x => x != null).flat();
+  return v.length ? [cdate(c), Math.min(...v), Math.max(...v)] : null; }).filter(Boolean);
+const lagBox = title => { const box = document.createElement("div"); box.className = "chart small"; $("lagcharts").appendChild(box); box.innerHTML = `<h3>${title}</h3>`; return box; };
+C.windows.forEach(w => {
+  const B = W.blend[w.key];
+  chart(lagBox(w.short + ": chance of rain"), {w:420, h:230, xdom:lagX, ydom:[0, Math.ceil(ymaxLag/10)*10], yfmt:v=>v+"%", xticks:lagTicks,
+    hlines:[[100*B.lagged, "var(--ink)", "Combined " + pc(B.lagged)], [100*B.clim, "var(--muted)", "Normal " + pc(B.clim), true]],
+    areas:[{col:"var(--rain)", pts: band(r => 100*r.windows[w.key].p01)}],
+    series: E.map(m => ({col:COL[m], pts: W.ens[m].map(r => [cdate(r.cycle), 100*r.windows[w.key].p01]).reverse()}))});
+});
+C.windows.forEach(w => {
+  const key = "t_" + w.s, rng = band(r => r.windows[w.key][key] ? [r.windows[w.key][key][0], r.windows[w.key][key][2]] : null);
+  const det = DET.filter(has).flatMap(m => W.det[m].filter(r => r.cycle >= allCycles[0] && r.windows[w.key][key]).map(r => [cdate(r.cycle), r.windows[w.key][key][1]]));
+  const vals = rng.flatMap(p => [p[1], p[2]]).concat(det.map(p => p[1]));
+  chart(lagBox(`${w.short.replace(/\s.*$/,"")} ${hourLab(U(w.s))}: temperature`), {w:420, h:230, xdom:lagX, ydom:[Math.floor((Math.min(...vals)-2)/5)*5, Math.ceil((Math.max(...vals)+2)/5)*5], yfmt:v=>v+"°", xticks:lagTicks,
+    areas:[{col:"var(--accent)", pts: rng}],
+    series: E.map(m => ({col:COL[m], pts: W.ens[m].filter(r => r.windows[w.key][key]).map(r => [cdate(r.cycle), r.windows[w.key][key][1]]).reverse()}))
+      .concat([{col:"var(--muted)", dots:true, pts: det}])});
+});
+$("laglegend").innerHTML = E.map(m=>`<span><i style="background:${COL[m]}"></i>${NAME[m]}</span>`).join("") + `<span><i style="background:var(--muted);height:8px;width:8px;border-radius:50%"></i>Single-model runs (American, European, European AI)</span>`;
+const T0 = d3.min(E, m => d3.min(Object.keys(latest(m).rain_timeline), k => U(k))), T1 = d3.max(E, m => d3.max(Object.keys(latest(m).rain_timeline), k => U(k)));
+const xd = [new Date(+T0 + 3*3600e3), T1];
+const bands = C.windows.map(w => [U(w.s), U(w.e), w.short]);
+const xt = []; for (let t = new Date(xd[0]); t <= xd[1]; t = new Date(+t + 6*3600e3)) xt.push([t, (local(t).getUTCHours() < 6 ? dayLab(t) + " " : "") + hourLab(t)]);
+const rs = E.map(m => { const tl = latest(m).rain_timeline, pts = [];
+  Object.keys(tl).sort().forEach(k => { const end = U(k); if (end.getUTCHours() % 6) return;
+    let v = tl[k]; if (m === "gefs") { const prev = new Date(end - 3*3600e3).toISOString().slice(0,19); v = Math.max(v, tl[prev] || 0); }
+    pts.push([new Date(end - 3*3600e3), 100*v]); });
+  return {col:COL[m], pts:pts.filter(p => p[0] >= xd[0] && p[0] <= xd[1])}; });
+chart($("rainchart"), {xdom:xd, ydom:[0, Math.max(30, Math.ceil(d3.max(rs.flatMap(s=>s.pts), p=>p[1])/10)*10)], yfmt:v=>v+"%", bands, xticks:xt, series:rs});
+$("rainlegend").innerHTML = E.map(m=>`<span><i style="background:${COL[m]}"></i>${NAME[m]} (${latest(m).n} runs)</span>`).join("");
+const tsr = E.map(m => ({col:COL[m], pts:Object.entries(latest(m).temp_timeline).map(([k,v])=>[U(k),v[1]]).filter(p=>p[0]>=xd[0]&&p[0]<=xd[1])}));
+const gb = has("gefs") ? Object.entries(latest("gefs").temp_timeline).map(([k,v])=>[U(k),v[0],v[2]]).filter(p=>p[0]>=xd[0]&&p[0]<=xd[1]) : [];
+const tvals = tsr.flatMap(s=>s.pts.map(p=>p[1])).concat(gb.flatMap(p=>[p[1],p[2]]));
+chart($("tempchart"), {xdom:xd, ydom:[Math.floor(d3.min(tvals)/10)*10, Math.ceil(d3.max(tvals)/10)*10], yfmt:v=>v+"°", bands, xticks:xt, series:tsr, areas:[{col:"var(--gefs)",pts:gb}]});
+$("templegend").innerHTML = E.map(m=>`<span><i style="background:${COL[m]}"></i>${NAME[m]}</span>`).join("") + `<span>European models report every 6 hours at this range</span>`;
+
+const CL = W.clim;
+$("clim").innerHTML = `<thead><tr><th></th><th>Rain (0.01 in.+)</th><th>Rain 0.10 in.+</th><th>Average temp</th><th>Coolest 1 in 10</th><th>Warmest 1 in 10</th></tr></thead><tbody>` +
+  C.windows.map(w => { const c = CL[w.key]; return `<tr><td>${w.short.replace(/^\w+ /,"")}</td><td>${pc(c.p_measurable)}</td><td>${pc(c["p_ge_0.10"])}</td><td>${r0(c.t_mean)}°F</td><td>${r0(c.t_p10)}°F</td><td>${r0(c.t_p90)}°F</td></tr>`; }).join("") +
+  `<tr><td>Whole day</td><td>${pc(CL.day.p_measurable)}</td><td>${pc(CL.day["p_ge_0.25"])} <small>(0.25 in.+)</small></td><td>High ${r0(CL.day.hi_mean)}°, low ${r0(CL.day.lo_mean)}°</td><td>High ${r0(CL.day.hi_p10)}°</td><td>High ${r0(CL.day.hi_p90)}°</td></tr></tbody>`;
+$("climnote").textContent = `From hourly observations at ${C.place} airport, ${CL.day.dates}, ${CL.day.years[0]}–${CL.day.years[1]}.`;
+$("trendnote").innerHTML = T.trendnote || "";
+$("foot").innerHTML = T.footer || "";
+})();
+</script>
+
+</body></html>
