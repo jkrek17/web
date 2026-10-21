@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="wind-data" content="data/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#11161c" />
+    <title>Wind · GFS particle forecast</title>
+    <script>
+      // Set the theme before first paint so there is no flash of the wrong one.
+      (function () {
+        var theme = null;
+        try { theme = localStorage.getItem("wind-theme"); } catch (error) { /* storage unavailable */ }
+        if (theme !== "light" && theme !== "dark") {
+          theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23151b22'/%3E%3Cpath d='M5 11h15a3.5 3.5 0 1 0-3.5-3.5M5 17h20a3.5 3.5 0 1 1-3.5 3.5M5 23h11' fill='none' stroke='%235db4ff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="vendor/maplibre-gl.css?v=5.6.2" />
+    <link rel="stylesheet" href="styles.css?v=45" />
+  </head>
+  <body>
+    <main class="stage">
+      <div id="map"></div>
+
+      <header class="top">
+        <div class="top-left">
+          <div class="brand panel">
+            <button id="layer-open" class="layer-open" type="button" aria-expanded="false" aria-controls="layer-panel" aria-haspopup="true" title="Choose layer (L)">
+              <span class="mark">
+                <span id="layer-name" class="mark-name">Wind</span>
+                <span id="layer-level" class="mark-level">10 m</span>
+              </span>
+              <span class="layer-chevron" aria-hidden="true"></span>
+            </button>
+            <div id="layer-panel" class="layer-panel" hidden></div>
+          </div>
+          <div class="switch panel" role="tablist" aria-label="Forecast model">
+            <button id="model-gfs" type="button" role="tab" aria-selected="true" title="GFS (M)">GFS</button>
+            <button id="model-aigfs" type="button" role="tab" aria-selected="false" title="AIGFS (M)">AIGFS</button>
+          </div>
+        </div>
+        <div class="top-right">
+          <div class="tools panel">
+            <button id="settings-open" class="tool" type="button" aria-expanded="false" aria-controls="settings" aria-haspopup="dialog" title="Settings (S)">
+              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M2 4h7M13 4h1M2 8h2M8 8h6M2 12h8M14 12h0" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <circle cx="11" cy="4" r="1.8" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <circle cx="6" cy="8" r="1.8" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <circle cx="12" cy="12" r="1.8" fill="none" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+              <span class="tool-label">Settings</span>
+            </button>
+            <button id="help-open" class="tool" type="button" aria-haspopup="dialog" aria-label="Help and keyboard shortcuts" title="Help (?)">
+              <span class="tool-glyph" aria-hidden="true">?</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <aside id="legend" class="legend panel" data-orient="vertical" aria-label="Legend">
+        <div class="legend-head">
+          <div id="legend-title" class="legend-title">Wind speed</div>
+          <div id="legend-unit" class="legend-unit">kt</div>
+        </div>
+        <div class="legend-body">
+          <div id="legend-bar" class="legend-bar"></div>
+          <div id="legend-ticks" class="legend-ticks">
+            <span style="--p: 100">150 cat 5</span>
+            <span style="--p: 75.333">113 cat 4</span>
+            <span style="--p: 64">96 major</span>
+            <span style="--p: 42.667">64 hurricane</span>
+            <span style="--p: 32">48 storm</span>
+            <span style="--p: 22.667">34 gale</span>
+            <span style="--p: 10">15</span>
+            <span style="--p: 0">0</span>
+          </div>
+        </div>
+      </aside>
+
+      <div id="readout" class="readout panel" hidden>
+        <div id="readout-speed" class="readout-speed">–</div>
+        <div id="readout-dir" class="readout-dir">–</div>
+        <div id="readout-coord" class="readout-coord"></div>
+      </div>
+
+      <aside id="settings" class="sheet settings panel" role="dialog" aria-labelledby="settings-title" hidden>
+        <div class="sheet-head">
+          <h2 id="settings-title">Settings</h2>
+          <button id="settings-close" class="icon-btn" type="button" aria-label="Close settings">
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+          </button>
+        </div>
+        <section class="set-group" aria-labelledby="set-display">
+          <h3 id="set-display">Display</h3>
+          <div class="set-row">
+            <span id="theme-label">Light theme</span>
+            <button id="theme-toggle" class="switch-btn" type="button" role="switch" aria-checked="false" aria-labelledby="theme-label" title="Toggle light / dark (T)">
+              <span class="switch-knob" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="set-row">
+            <span id="isobar-label">Isobars</span>
+            <button id="isobar-toggle" class="switch-btn" type="button" role="switch" aria-checked="true" aria-labelledby="isobar-label" title="Show / hide pressure contours, labels and H / L (P)">
+              <span class="switch-knob" aria-hidden="true"></span>
+            </button>
+          </div>
+        </section>
+        <section class="set-group" aria-labelledby="set-particles">
+          <h3 id="set-particles">Particles</h3>
+          <div class="controls">
+            <label class="meter-field">
+              <span class="control-name">Flow</span>
+              <span id="flow-value" class="control-value">1.00</span>
+              <input id="flow" class="meter" type="range" min="0.4" max="7.2" step="0.1" value="1" />
+            </label>
+            <label class="meter-field">
+              <span class="control-name">Density</span>
+              <span id="density-value" class="control-value">0.10</span>
+              <input id="density" class="meter" type="range" min="0.04" max="1" step="0.02" value="0.1" />
+            </label>
+            <label class="meter-field">
+              <span class="control-name">Trail</span>
+              <span id="trail-value" class="control-value">18</span>
+              <input id="trail" class="meter" type="range" min="8" max="50" step="1" value="18" />
+            </label>
+          </div>
+          <button id="freeze" type="button" class="btn" aria-pressed="false">Freeze</button>
+        </section>
+      </aside>
+
+      <aside id="pin" class="pin panel" hidden aria-label="Point forecast">
+        <div class="pin-head">
+          <div class="pin-titles">
+            <div id="pin-place" class="pin-place">–</div>
+            <div id="pin-focus" class="pin-focus">–</div>
+          </div>
+          <button id="pin-close" class="btn" type="button">Close</button>
+        </div>
+        <div id="pin-wind" class="pin-wind">–</div>
+        <div id="pin-waves" class="pin-waves">–</div>
+        <div id="pin-under" class="pin-under">–</div>
+        <div id="pin-vert" class="pin-vert">–</div>
+        <figure id="pin-chart" class="pin-chart"></figure>
+      </aside>
+    </main>
+
+    <section id="timebar" class="timebar" role="group" aria-label="Forecast time">
+      <button id="play" type="button" class="tb-btn play" aria-label="Play forecast" aria-pressed="false" title="Play / pause (Space)">
+        <svg class="icon icon-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.5v11l9-5.5z" fill="currentColor" /></svg>
+        <svg class="icon icon-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z" fill="currentColor" /></svg>
+      </button>
+      <button id="step-back" type="button" class="tb-btn" aria-label="Previous forecast step" title="Step back (←)">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 2.5v11M13 2.5v11l-8.5-5.5z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" transform="translate(0 0)" /></svg>
+      </button>
+      <button id="step-fwd" type="button" class="tb-btn" aria-label="Next forecast step" title="Step forward (→)">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M13 2.5v11M3 2.5v11l8.5-5.5z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" /></svg>
+      </button>
+      <label class="tb-speed">
+        <span class="sr-only">Loop speed, forecast hours per second</span>
+        <select id="speed" title="Loop speed ( [ and ] )">
+          <option value="1">1×</option>
+          <option value="2">2×</option>
+          <option value="4" selected>4×</option>
+          <option value="8">8×</option>
+        </select>
+      </label>
+      <div class="tb-time">
+        <div class="tb-now">
+          <span id="valid" class="valid">–</span>
+          <span id="lead" class="lead" title="Forecast hour">F000</span>
+        </div>
+        <div class="tb-meta">
+          <span id="init" class="init">Locating the latest forecast cycle…</span>
+          <span id="age" class="age" data-stale="ok"></span>
+          <span id="status" class="status" role="status">Loading forecast</span>
+        </div>
+      </div>
+      <div class="tb-slider">
+        <label class="sr-only" for="hour">Forecast hour</label>
+        <input id="hour" class="meter" type="range" min="0" max="48" step="0.1" value="0" />
+        <div id="hour-ticks" class="ticks" aria-hidden="true">
+          <span style="--p: 0">0</span><span style="--p: 25">12</span><span style="--p: 50">24</span><span style="--p: 75">36</span><span style="--p: 100">48h</span>
+        </div>
+      </div>
+    </section>
+
+    <dialog id="help" class="help" aria-labelledby="help-title">
+      <div class="dlg-head">
+        <h2 id="help-title">Keyboard shortcuts</h2>
+        <form method="dialog">
+          <button id="help-close" class="icon-btn" type="submit" aria-label="Close help">
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+          </button>
+        </form>
+      </div>
+      <div class="dlg-body">
+        <dl class="keys">
+          <div><dt><kbd>Space</kbd></dt><dd>Play / pause</dd></div>
+          <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Step one forecast step</dd></div>
+          <div><dt><kbd>Shift</kbd> + <kbd>←</kbd> <kbd>→</kbd></dt><dd>Step 24 h</dd></div>
+          <div><dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>First / last forecast hour</dd></div>
+          <div><dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Slower / faster loop</dd></div>
+          <div><dt><kbd>L</kbd></dt><dd>Layer menu: <kbd>↑</kbd> <kbd>↓</kbd> move, <kbd>Enter</kbd> selects</dd></div>
+          <div><dt><kbd>1</kbd>–<kbd>9</kbd></dt><dd>Choose the Nth layer in the menu</dd></div>
+          <div><dt><kbd>M</kbd></dt><dd>Switch model (GFS / AIGFS)</dd></div>
+          <div><dt><kbd>T</kbd></dt><dd>Toggle light / dark theme</dd></div>
+          <div><dt><kbd>P</kbd></dt><dd>Show / hide isobars, pressure labels and H / L</dd></div>
+          <div><dt><kbd>S</kbd></dt><dd>Open / close settings</dd></div>
+          <div><dt><kbd>?</kbd></dt><dd>Open / close this help</dd></div>
+          <div><dt><kbd>Esc</kbd></dt><dd>Close menu or dialog, otherwise remove the <span class="only-server">pin</span><span class="only-static">point readout</span></dd></div>
+        </dl>
+        <p class="help-note">Hover the map for the value and position under the cursor. <span class="only-server">Click or tap the map to pin a point and open its forecast chart.</span><span class="only-static">Click or tap the map to read the value and position at that point.</span> All times are UTC.</p>
+      </div>
+    </dialog>
+
+    <script src="vendor/maplibre-gl.js?v=5.6.2"></script>
+    <script type="module" src="app.js?v=49"></script>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cape Farewell tip jets - Hurricane Force Low Archive</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Three common Greenland tip jet setups near Cape Farewell, where the low sits in each, and what goes with a hurricane-force gust rather than a storm-force one. ERA5 proxy research, post hoc.">
+<style>
+  /* Self-contained on purpose: the flat/ copy of the site is a single folder and only
+     index.html gets its paths rewritten, so this page uses no files from assets/ and
+     refers to its figures by bare file name. Tokens mirror assets/app.css. */
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --surface-sunk: #f2f2ee; --border: #e1e0d9; --border-strong: #c3c2b7;
+    --ink: #0b0b0b; --ink-2: #52514e; --ink-muted: #6d6b66;
+    --atl: #2a78d6; --pac: #eb6834;
+    --navy: #0a3161; --navy-ink: #ffffff; --navy-soft: #cfe0f3; --accent: #0a3f73; --accent-soft: #e4edf8;
+    --badge-ink: #8a5a00; --badge-bg: #fdf3dd; --badge-border: #f4dfae;
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+      --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+      --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+      --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+    --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+    --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+    --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 var(--font); }
+  a { color: var(--accent); }
+  .masthead { background: var(--navy); color: var(--navy-ink); padding: 14px 16px; }
+  .masthead-in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+  .masthead h1 { margin: 0; font-size: 18px; font-weight: 650; }
+  .masthead a { color: var(--navy-soft); }
+  main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  h2 { font-size: 22px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  p { margin: 0 0 10px; max-width: 74ch; }
+  section { border-top: 1px solid var(--border); padding-top: 20px; min-width: 0; }
+  .note { background: var(--badge-bg); color: var(--ink); border: 1px solid var(--badge-border); border-left: 4px solid var(--badge-ink); border-radius: 6px; padding: 12px 14px; }
+  .note strong { color: var(--badge-ink); }
+  .answers { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+  .answers ul { margin: 6px 0 0; padding-left: 20px; } .answers li { margin-bottom: 6px; max-width: 80ch; }
+  .tag { font-size: 12px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+  .muted { color: var(--ink-2); font-size: 13px; }
+  .limit { border-left: 3px solid var(--border-strong); padding-left: 10px; color: var(--ink-2); }
+  .fig { margin: 12px 0 18px; min-width: 0; }
+  .fig figcaption { font-size: 14px; margin-top: 6px; max-width: 80ch; }
+  .fig img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--border); border-radius: 4px; }
+  .scroll { overflow-x: auto; }
+  .scroll img { min-width: 720px; }
+  .pair { display: grid; grid-template-columns: 1fr; gap: 12px 16px; min-width: 0; }
+  .pair .scroll img { min-width: 0; }
+  @media (min-width: 900px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .basin-atl { color: var(--atl); font-weight: 650; } .basin-pac { color: var(--pac); font-weight: 650; }
+  table { border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--border); }
+  .tablewrap { overflow-x: auto; }
+  footer { border-top: 1px solid var(--border); padding-top: 14px; }
+
+  .tablewrap table { min-width: 560px; }
+  td.num, th.num { text-align: right; }
+  .grid2 { display: grid; grid-template-columns: 1fr; gap: 12px 24px; }
+  @media (min-width: 900px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  dl.preds { margin: 6px 0 0; } dl.preds dt { font-weight: 650; margin-top: 8px; } dl.preds dd { margin: 0; max-width: 80ch; color: var(--ink-2); }
+  .lead { font-size: 17px; max-width: 74ch; }
+  .good { border-left: 4px solid var(--atl); }
+  .null { border-left: 4px solid var(--border-strong); }
+  .links a { white-space: nowrap; }
+</style>
+</head>
+<body>
+<header class="masthead"><div class="masthead-in">
+  <h1>Cape Farewell tip jets: three setups, and what goes with hurricane force</h1>
+  <a href="index.html">&larr; Back to the archive</a>
+</div></header>
+<main>
+<div class="note"><strong>ERA5 proxy, and a first look, not a forecast tool.</strong> &ldquo;Hurricane force&rdquo; here means a reanalysis gust of 71.7 kt or more within about 216 nm of Cape Farewell (about 62 kt in a satellite wind check). No station there has confirmed 64 kt. The comparisons were run after the data were pulled, so treat them as leads that need confirming on future winters.</div>
+
+<div class="answers">
+  <div class="tag">In plain words</div>
+  <ul>
+    <li><strong>About two thirds of tip-jet episodes (three quarters of hurricane-force ones) fall into one of three setups.</strong> Westerly wind east to south of the cape (the classic forward tip jet), northerly wind east of the cape, and easterly wind west of the cape ahead of a front. Each has a low in a different place (map below).</li>
+    <li><strong>About 3 in 10 tip-jet episodes reach hurricane force, whichever setup.</strong> The rest stay at storm force (gusts of 54&ndash;71 kt). The setup does not tell you which.</li>
+    <li><strong>A deeper low, and a tighter pressure gradient around the wind, go with hurricane force most clearly.</strong> Over winters 2004-05 to 2025-26, hurricane-force episodes had lows averaging about 955&ndash;961 hPa; storm-force ones about 970&ndash;973 hPa. That is how strong the storm already is, not an advance warning.</li>
+    <li><strong>Two extras depend on the setup.</strong> High pressure over the Greenland ice sheet goes with hurricane force in the northerly setup. In the westerly setup, colder air than sea upstream does.</li>
+    <li><strong>A blend of forecast models under-showed storm force in northerly (barrier) flow along the east coast in one winter.</strong> A satellite check from another project (one winter, not ours) found storm-force wind in about 2 in 10 of the cells where the blended forecast showed gale. See &ldquo;Barrier flow: a satellite check&rdquo; below.</li>
+    <li><strong>When this proxy says hurricane force, OPC usually had a hurricane-force low nearby</strong> (about 9 in 10 times, within 600 nm), against 2 to 5 in 10 for storm-force episodes.</li>
+  </ul>
+</div>
+
+<section id="use">
+  <div class="tag">How to use it</div>
+  <h2>Reading a tip jet forecast with this in mind</h2>
+  <ul>
+    <li><strong>Match the model to a setup.</strong> Where is the low and which way is the wind at the cape? Compare with the maps below.</li>
+    <li><strong>Expect storm-force gusts as the usual outcome and hurricane force as the stronger one in about 3 in 10.</strong></li>
+    <li><strong>Lean toward hurricane force when the low is deeper</strong> (hurricane-force episodes averaged 955&ndash;961 hPa, storm-force ones 970&ndash;973), and, in a northerly setup, when pressure over the Greenland ice sheet is high.</li>
+    <li><strong>Treat all of it as a lead.</strong> It comes from reanalysis gusts, checked after the fact, and has not been tried on model forecasts.</li>
+  </ul>
+</section>
+
+<section id="setups">
+  <div class="tag">The typical setups</div>
+  <h2>Where the low sits for each setup</h2>
+  <p>The columns are the three setups; the top row is storm-force episodes, the bottom row hurricane-force ones. Blue shading is how much lower the pressure is than normal, grey lines are sea-level pressure, arrows are the 10 m wind, the orange dot is Cape Farewell and L marks the lowest average pressure.</p>
+  <figure class="fig"><div class="scroll"><img src="tip-jets-composites.png" alt="Six maps of average sea-level pressure and 10 m wind around Cape Farewell for three tip jet setups at storm force and hurricane force" width="1650" height="880"></div><figcaption>The maps average all episodes in each box, so the centres of the averaged lows read shallower (968&ndash;974 hPa hurricane force, 983&ndash;985 storm force) than a typical single low. November to March 2004-05 to 2025-26 (ERA5 proxy). Westerly: 109 storm force, 49 hurricane force. Northerly: 55 and 18. Easterly: 71 and 26.</figcaption></figure>
+  <div class="tablewrap"><table>
+    <thead><tr><th scope="col">Setup</th><th scope="col" class="num">Episodes</th><th scope="col" class="num">Reached hurricane force</th><th scope="col">Where the average low is (hurricane-force cases)</th></tr></thead>
+    <tbody>
+    <tr><td>Westerly wind, east to south of the cape</td><td class="num">158</td><td class="num">31%</td><td>about 63N 36W, northeast of the cape; westerlies run below it</td></tr>
+    <tr><td>Northerly wind, east of the cape</td><td class="num">73</td><td class="num">25%</td><td>about 58N 39W, southeast of the cape</td></tr>
+    <tr><td>Easterly wind, west of the cape (ahead of a front)</td><td class="num">97</td><td class="num">27%</td><td>about 57.5N 55.5W, in the Labrador Sea</td></tr>
+    <tr><td>None of these three</td><td class="num">186</td><td class="num">18%</td><td>a mix: north of the cape in northerly wind (about a third), south of the cape in northerly or easterly wind (about 4 in 10), the rest west of it</td></tr>
+    </tbody></table></div>
+  <p class="muted">An episode is a run of 12-hourly times with a gust of 54 kt or more, treated as one event. 514 episodes in all, 126 reaching hurricane force.</p>
+</section>
+
+<section id="lean">
+  <div class="tag">Hurricane force or storm force?</div>
+  <h2>What goes with the stronger gust</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th scope="col">Ingredient</th><th scope="col">Westerly</th><th scope="col">Northerly</th><th scope="col">Easterly</th></tr></thead>
+    <tbody>
+    <tr><td>Deeper low (per about 13 hPa)</td><td>5 times the odds</td><td>2 times</td><td>3 times</td></tr>
+    <tr><td>Higher pressure over the Greenland ice sheet (per about 10 hPa)</td><td>goes the other way (0.7 times)</td><td>2 times</td><td>2 times, but cannot tell</td></tr>
+    <tr><td>Colder air than sea upstream (per about 2.5 K)</td><td>2 to 3 times</td><td>no detectable lean</td><td>no detectable lean</td></tr>
+    <tr><td>Low farther from the cape</td><td colspan="3">cannot tell</td></tr>
+    </tbody></table></div>
+  <p class="muted">&ldquo;Times the odds&rdquo; compares hurricane-force with storm-force episodes for each step up in the ingredient. Differences smaller than about 2 times cannot be detected with this many episodes.</p>
+  <ul>
+    <li><strong>Depth and the tight pressure gradient around the wind maximum describe the storm that is already blowing</strong>; they are not a lead-time signal.</li>
+    <li><strong>The Greenland high result in the northerly setup agrees in direction</strong> with the earlier Greenland jets study, whose coastal gusts were mostly this kind of flow. In the westerly setup the sign flips; why is untested, and the ice-sheet pressure may partly reflect the low sitting close by.</li>
+    <li><strong>The cold-air result appears only</strong> once the westerly setup is widened to include the forward tip jet east of the cape. Cold air is weakest in November, when hurricane force is also rarest, but it still holds with the month allowed for (about 3 times). Splitting the winters into even and odd years gives 3.8 times in one half and 1.7 in the other: the same direction, but uneven.</li>
+  </ul>
+</section>
+
+<section id="barrier">
+  <div class="tag">Barrier flow: a satellite check</div>
+  <h2>Where the models under-show storm force near Greenland</h2>
+  <p>This section is <strong>not from our reanalysis study</strong>. It was reported by the marine wind (GFE) project and has not been recomputed here. It compares a blend of the GFS, ECMWF and AIFS forecasts with satellite (ASCAT) winds, for November to March 2025-26 only, forecasts 1 to 5 days ahead. It looks only at places where the blend forecast gale (34 kt or more), and asks how often the satellite saw storm force (48 kt or more) there. The setups are the same three as above, by wind direction near Cape Farewell. &ldquo;Cold air&rdquo; means the sea is at least 13 &deg;C warmer than the air at about 5,000 ft (850 hPa).</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th scope="col">Setup</th><th scope="col">Air</th><th scope="col">Satellite saw storm force where the blend showed gale</th><th scope="col">Blend itself showed storm force</th></tr></thead>
+    <tbody>
+    <tr><td>Northerly to north-easterly (barrier), east coast</td><td>not cold</td><td>about 2 in 10 (23%)</td><td>about 3 in 100</td></tr>
+    <tr><td>Northerly to north-easterly (barrier), east coast</td><td>cold</td><td>about 2 in 10 (21%)</td><td>about 1 in 100</td></tr>
+    <tr><td>Easterly (west of the tip, ahead of a front)</td><td>cold</td><td>about 2 in 10 (20%)</td><td>under 1 in 100</td></tr>
+    <tr><td>Easterly (west of the tip, ahead of a front)</td><td>not cold</td><td>about 1 in 20 (5%)</td><td>about 1 in 100</td></tr>
+    <tr><td>Westerly, east to south of the cape</td><td>cold</td><td>about 1 in 8 (13%)</td><td>about 1 in 100</td></tr>
+    <tr><td>Westerly, east to south of the cape</td><td>not cold</td><td>about 1 in 6 (17%), small sample</td><td>under 1 in 100</td></tr>
+    <tr><td>Open ocean, more than 800 km from the cape</td><td>cold</td><td>about 1 in 6 (16%)</td><td>about 2 in 100</td></tr>
+    <tr><td>Open ocean, more than 800 km from the cape</td><td>not cold</td><td>about 1 in 10 (9%)</td><td>about 1 in 100</td></tr>
+    </tbody></table></div>
+  <ul>
+    <li><strong>Barrier flow is the clearest Greenland-specific signal.</strong> With or without cold air, about 1 in 5 gale cells reached storm force, and the blend almost never showed it. It matches the marine wind project's own finding that hurricane-force lows north of 60&deg;N are mostly this kind of northerly flow along the east coast and the Denmark Strait.</li>
+    <li><strong>Cold air matters for easterly flow.</strong> Easterly wind reached storm force mainly in cold air (20% against 5%), which is consistent with cold air sitting east of the tip ahead of an approaching front (our reading, not tested). The westerly tip jet in cold air looked like an ordinary open-ocean cold outbreak.</li>
+    <li><strong>Cold air may explain only part of why so many hurricane-force lows are near Greenland.</strong> The terrain-forced barrier wind may be the bigger part; this is the reporting project's reading, not a measured share.</li>
+    <li><strong>Our own check of a barrier-strength measure came out as &ldquo;cannot tell&rdquo;.</strong> For the 73 northerly episodes (18 reaching hurricane force) we compared the pressure difference across the Denmark Strait (Iceland minus the Greenland east coast, a standard sign of how hard the flow along the coast is pushed). Each step of about 9 hPa in that difference went with about 1.1 times the odds of hurricane force, with a range of 0.7 to 1.7 once low depth is allowed for. With 18 events only effects of about 2 times or more could show up, so a modest link is not ruled out. This was done after the data were in (a lead at most), and low-level stability and upper-air patterns are still untested.</li>
+    <li><strong>Limits:</strong> one winter, with cases bunched within storms; the satellite has gaps next to the coast and the ice edge; the westerly samples are small. A &ldquo;storm force possible&rdquo; flag for northerly flow within about 300 km of the east coast is only an idea so far and has not been tested.</li>
+  </ul>
+</section>
+
+<section id="opc">
+  <div class="tag">OPC agreed</div>
+  <h2>How often OPC had a hurricane-force low nearby</h2>
+  <p>An OPC hurricane-force low fix within 600 nm of the gust maximum, within 12 hours: <strong>92% (westerly), 94% (northerly) and 96% (easterly)</strong> of the hurricane-force episodes, against 24%, 36% and 54% of the storm-force ones. This goes through an OPC low (usually the parent low), not the tip jet itself, because the OPC archive holds low positions only.</p>
+</section>
+
+<section id="limits">
+  <div class="tag">Limits</div>
+  <h2>What this does not tell you</h2>
+  <ul class="limit">
+    <li>The pre-registered tests could not run (too few hurricane-force episodes to split the winters), so every comparison above is exploratory. The westerly setup was widened after the data were in, because the original definition left 122 forward tip jet episodes out.</li>
+    <li>The gusts are reanalysis at 0.25 degrees next to steep terrain, the least certain place for this proxy. Not tested: low-level stability, upper-air patterns.</li>
+    <li>Episodes in the same winter are not independent of each other, so the real sample is 22 winters, not 328 episodes; ranges come from resampling whole winters.</li>
+    <li>No forecast model was tested, so this is not a forecast rule.</li>
+  </ul>
+</section>
+<details class="limit"><summary><strong>How this was done</strong> (for the curious)</summary>
+  <p>Gusts come from ERA5, a reanalysis that blends observations with a model, at 0.25 degree spacing, twice a day, November to March, winters 2004-05 to 2025-26. The area is the ocean within about 216 nm (400 km) of Cape Farewell. An episode is a run of times with a gust of 54 kt or more, treated as one event; it is hurricane force if any time reaches 71.7 kt (the level the project matched to OPC&rsquo;s hurricane-force counts). The setup comes from where the gust maximum sits relative to the cape and the wind direction there.</p>
+  <p>The odds compare hurricane-force with storm-force episodes for each step up in an ingredient, after allowing for how deep the low is, using all winters together; ranges come from resampling whole winters. The plan was written before the data were pulled, but its test (fit on half the winters, check on the other half) could not run because there were too few hurricane-force episodes, so the comparisons here were done afterwards. The westerly setup was widened after the data were in.</p>
+</details>
+<footer class="muted">Sources: <code>research/era5/tip_jets</code> (hf-low PR 243) and STATUS.md. ERA5 proxy; gust cache with lows from the study&rsquo;s own pressure minimum, neither pipeline A nor B.</footer>
+</main>
+</body>
+</html>
