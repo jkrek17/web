@@ -1,0 +1,17 @@
+{
+  "generated_utc": "2026-10-19T12:35:37Z",
+  "kit_repo": "jkrek17/marine-research",
+  "kit_ref": "main",
+  "kit_sha": "cc2c396e510d67389b80832a5e51bd8b281c4015",
+  "start": "2026-08-17",
+  "end": "2026-10-11",
+  "weeks_scored": [
+    "2026-W40",
+    "2026-W41"
+  ],
+  "run_presets_exit": 0,
+  "presets": {
+    "2026-10-16-pressure-d5-7": "ok",
+    "2026-10-16-warning-forecast": "ok"
+  }
+}
