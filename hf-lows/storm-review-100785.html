@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Storm review: North Atlantic, 24 December 1989 - HF Low Archive</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+  /* Self-contained on purpose: the flat/ copy of the site is a single folder and only
+     index.html gets its paths rewritten, so this page uses no files from assets/ and
+     refers to its figures by bare file name. Tokens mirror assets/app.css. */
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --surface-sunk: #f2f2ee; --border: #e1e0d9; --border-strong: #c3c2b7;
+    --ink: #0b0b0b; --ink-2: #52514e; --ink-muted: #6d6b66;
+    --atl: #2a78d6; --pac: #eb6834;
+    --navy: #0a3161; --navy-ink: #ffffff; --navy-soft: #cfe0f3; --accent: #0a3f73; --accent-soft: #e4edf8;
+    --badge-ink: #8a5a00; --badge-bg: #fdf3dd; --badge-border: #f4dfae;
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+      --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+      --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+      --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+    --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+    --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+    --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 var(--font); }
+  a { color: var(--accent); }
+  .masthead { background: var(--navy); color: var(--navy-ink); padding: 14px 16px; }
+  .masthead-in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+  .masthead h1 { margin: 0; font-size: 18px; font-weight: 650; }
+  .masthead a { color: var(--navy-soft); }
+  main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  h2 { font-size: 22px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  p { margin: 0 0 10px; max-width: 74ch; }
+  section { border-top: 1px solid var(--border); padding-top: 20px; min-width: 0; }
+  .note { background: var(--badge-bg); color: var(--ink); border: 1px solid var(--badge-border); border-left: 4px solid var(--badge-ink); border-radius: 6px; padding: 12px 14px; }
+  .note strong { color: var(--badge-ink); }
+  .answers { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+  .answers ul { margin: 6px 0 0; padding-left: 20px; } .answers li { margin-bottom: 6px; max-width: 80ch; }
+  .tag { font-size: 12px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+  .muted { color: var(--ink-2); font-size: 13px; }
+  .limit { border-left: 3px solid var(--border-strong); padding-left: 10px; color: var(--ink-2); }
+  .fig { margin: 12px 0 18px; min-width: 0; }
+  .fig figcaption { font-size: 14px; margin-top: 6px; max-width: 80ch; }
+  .fig img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--border); border-radius: 4px; }
+  .scroll { overflow-x: auto; }
+  .scroll img { min-width: 720px; }
+  .pair { display: grid; grid-template-columns: 1fr; gap: 12px 16px; min-width: 0; }
+  .pair .scroll img { min-width: 0; }
+  @media (min-width: 900px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .basin-atl { color: var(--atl); font-weight: 650; } .basin-pac { color: var(--pac); font-weight: 650; }
+  table { border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--border); }
+  .tablewrap { overflow-x: auto; }
+  .jump { font-size: 14px; margin: 10px 0 14px; } .jump a { white-space: normal; }
+  footer { border-top: 1px solid var(--border); padding-top: 14px; }
+  .idx td.num, .idx th.num { text-align: right; }
+  .hero { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .hero .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  .hero .stat b { display: block; font-size: 24px; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .hero .stat span { font-size: 12px; color: var(--ink-2); }
+  .stack { display: flex; flex-direction: column; gap: 22px; }
+  meter.bar { appearance: none; -webkit-appearance: none; width: 64px; height: 8px; vertical-align: middle; margin-right: 6px; border: 0; border-radius: 4px; background: var(--surface-sunk); }
+  meter.bar::-webkit-meter-bar { background: var(--surface-sunk); border: 0; border-radius: 4px; height: 8px; }
+  meter.bar.atl::-webkit-meter-optimum-value, meter.bar.atl::-webkit-meter-suboptimum-value, meter.bar.atl::-webkit-meter-even-less-good-value { background: var(--atl); border-radius: 4px; }
+  meter.bar.pac::-webkit-meter-optimum-value, meter.bar.pac::-webkit-meter-suboptimum-value, meter.bar.pac::-webkit-meter-even-less-good-value { background: var(--pac); border-radius: 4px; }
+  meter.bar.atl::-moz-meter-bar { background: var(--atl); } meter.bar.pac::-moz-meter-bar { background: var(--pac); }
+  @media (max-width: 700px) { .toolbar { position: static !important; } }
+  .toolbar { position: sticky; top: 0; z-index: 5; background: var(--page); border-bottom: 1px solid var(--border); padding: 8px 0; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 14px; }
+  .toolbar button, .toolbar select { font: inherit; padding: 5px 12px; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--ink); cursor: pointer; }
+  .toolbar button[aria-pressed="true"] { background: var(--navy); color: var(--navy-ink); border-color: var(--navy); }
+  .toolbar button:focus-visible, .toolbar select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .storm { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; border-top: 4px solid var(--border-strong); scroll-margin-top: 56px; }
+  .storm.atl { border-top-color: var(--atl); } .storm.pac { border-top-color: var(--pac); }
+  .storm[hidden] { display: none; }
+  .storm h3 { font-size: 19px; margin: 0 0 2px; }
+  .storm .rank { display: inline-block; font-size: 12px; font-weight: 650; padding: 1px 8px; border-radius: 999px; background: var(--surface-sunk); border: 1px solid var(--border); color: var(--ink-2); margin-right: 8px; vertical-align: 2px; }
+  .storm .meta { font-size: 13px; color: var(--ink-2); margin-bottom: 10px; }
+  .tiles { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); margin: 0 0 12px; }
+  .tiles div { background: var(--surface-sunk); border-radius: 8px; padding: 8px 10px; }
+  .tiles b { display: block; font-size: 20px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .tiles span { font-size: 12px; color: var(--ink-2); }
+  .storm .sum { border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; margin-bottom: 12px; }
+  .storm .sum p { margin: 0 0 6px; }
+  .storm details { border-top: 1px solid var(--border); padding: 8px 0 2px; }
+  .storm summary { cursor: pointer; font-weight: 650; padding: 4px 0; }
+  .storm .fig { margin: 8px 0 10px; }
+  .storm .fig img { border-radius: 6px; }
+  .count { color: var(--ink-2); font-size: 13px; }
+  .blk { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  section .tag { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<header class="masthead"><div class="masthead-in"><h1>Storm review: North Atlantic, 24 December 1989</h1><a href="storm-reviews.html">&larr; All storm reviews</a></div></header>
+<main>
+<div class="note"><strong>ERA5 proxy, not direct observation.</strong> ERA5 is a weather model re-run over past years and blended with the observations available. Tracks are the project&rsquo;s pipeline A tracks, found in ERA5 itself. The gust index is the strongest ERA5 10 m gust over the ocean within 800 km (about 430 nm) of the low, a stand-in (proxy) for the sustained wind OPC warns on. Structure and upper-level numbers are ERA5 at 1.5&deg;; maps and the wind field are ERA5 at 0.25&deg;. Distances are nautical miles.</div>
+<section id="storm" class="storm atl">
+  <h3><span class="rank">Atlantic #5</span><span class="basin-atl">North Atlantic, 24 December 1989</span></h3>
+  <div class="meta">Rank 5 by lowest ERA5 central pressure in the North Atlantic. Pipeline A track 100785.</div>
+  <div class="tiles"><div><b>921.8</b><span>lowest pressure (hPa)</span></div><div><b>13</b><span>fastest 24 h fall (hPa)</span></div><div><b>83</b><span>peak gust index (kt)</span></div><div><b>24</b><span>hours at HF strength</span></div><div><b>16,655</b><span>peak ocean area at 71.7 kt+ (nm&sup2;)</span></div></div>
+  <p class="limit"><strong>Not direct observation.</strong> This storm is before the 2004&ndash;05 season, so no archive record covers it; every number and map here is ERA5 reanalysis. The gust index also runs high before 2001, so read its level with caution; central pressure is the better yardstick.</p>
+  <div class="sum"><div class="tag">1. The storm in plain words</div><p>ERA5 puts its lowest pressure at 921.8 hPa on 24 Dec 1989 1800Z, near 62.0&deg;N 23.5&deg;W. Its fastest 24 h fall was 13 hPa, ending 25 Dec 1989 0000Z at about 60&deg;N (the bomb threshold there is 24 hPa, so it falls short of that yardstick). It first reached hurricane-force-equivalent gusts (index at least 71.7 kt) on 24 Dec 1989 0600Z near 59.2&deg;N 24.5&deg;W, was at that strength in 4 of its 6-hourly fixes (about 24 h, counting each 6-hourly fix as 6 h), and peaked at a gust index of 83 kt on 24 Dec 1989 1800Z. The tracker only picks it up 18 h before the lowest pressure, so its early development, and the 24 h fall above, are only partly captured. The gust swath maximum anywhere in the window, land included, is 88 kt.</p></div>
+</section>
+<section><div class="tag">2. Track and wind field</div>
+<figure class="fig"><div class="scroll"><a href="storm-review-100785-track.png"><img src="storm-review-100785-track.png" alt="Track and gust swath" loading="lazy"></a></div>
+<figcaption>Left: 6-hourly fixes coloured by central pressure, red rings where the gust index reached 71.7 kt. Right: highest ERA5 10 m gust at each point from 48 h before to 24 h after the lowest pressure (land included; black contour 71.7 kt).</figcaption></figure></section>
+<section><div class="tag">3. How it developed</div>
+<p>At its first tracked fix (24 Dec 0000Z, 57.8&deg;N) the low was <b>frontal, cold core</b> (Hart B 73 m, lower-level core &minus;222 m). At its lowest pressure it was <b>warm seclusion</b> (B 5 m, lower-level core +96 m). The first fix with a symmetric warm core (the warm-seclusion signature) is 24 Dec 1200Z, -6 h from the lowest pressure. </p><p class="muted">How to read the structure numbers. Hart&rsquo;s B says how lopsided the low is: above about 10 m it is frontal, near zero it is symmetric. The lower-level core number says whether the 900 to 600 hPa layer is cold (negative) or warm (positive). A frontal low with a cold core is the early stage; a warm seclusion has warm air wrapped around the centre. The classes come from a coarse 1.5&deg; grid, so treat them as a guide.</p>
+<figure class="fig"><div class="scroll"><a href="storm-review-100785-series.png"><img src="storm-review-100785-series.png" alt="Six-panel development series" loading="lazy"></a></div>
+<figcaption>From the top: central pressure; the fall in pressure over the previous 24 h against the bomb yardstick (scaled by latitude); the gust index; the ocean area with gusts of 71.7 kt or more; the 250 hPa jet; the two upper-level lift terms (divergence and vorticity advection); and two structure measures (frontal against symmetric, cold core against warm core) with the structure class along the bottom. The tan band is the 24 h of fastest fall.</figcaption></figure></section>
+<section><div class="tag">4. What drove it: upper-level support</div>
+<p>During its fastest 24 h fall (24 Dec 0000Z to 25 Dec 0000Z) the strongest 250 hPa wind within about 540 nm averaged <b>116 kt</b>. Upper-level divergence at 300 hPa over the centre averaged +1.0 &times;10<sup>&minus;5</sup>/s (positive means air spreading out aloft, which draws air up from below), and 500 hPa vorticity advection &minus;0.0 &times;10<sup>&minus;9</sup>/s&sup2; (positive means cyclonic spin arriving aloft). The Eady growth rate (850&ndash;500 hPa), a measure of how favourable the temperature contrast and wind shear are for the storm to grow, averaged 0.86 per day, and the moisture in the air column within about 270 nm averaged 9 kg/m&sup2;.</p>
+<figure class="fig"><div class="scroll"><a href="storm-review-100785-maps.png"><img src="storm-review-100785-maps.png" alt="Upper-level maps" loading="lazy"></a></div>
+<figcaption>Sea-level pressure (black), 500 hPa height (blue) and 250 hPa wind speed (shaded jet), every 12 h from 48 h before to 24 h after the lowest pressure.</figcaption></figure></section>
+<section><div class="tag">5. Low-level structure: fronts and the low-level jet</div>
+<figure class="fig"><div class="scroll"><a href="storm-review-100785-lower.png"><img src="storm-review-100785-lower.png" alt="850 hPa temperature and 925 hPa wind maps" loading="lazy"></a></div>
+<figcaption>850 hPa temperature shows the fronts and the warm sector; the purple lines enclose 925 hPa wind of 50 and 64 kt, where the strongest low-level wind sat in each frame.</figcaption></figure></section>
+<section><div class="tag">6. Where the strongest wind was</div>
+<p>The ocean area with gusts of 71.7 kt or more within 600 nm peaked at <b>16,655 nm&sup2;</b> at 24 Dec 1800Z (+0 h from the lowest pressure). Some such wind was present in 20 of the 25 3-hourly fields (about 60 h). The single highest ocean gust in a 3-hourly field was 88 kt at 24 Dec 2100Z, 350 nm ahead of and 85 nm to the right of the centre. Of the 71.7 kt+ cells, 56% sat in the <b>front right</b> quarter of the storm (frame fixed to the direction of motion; where the low was stalled the last direction it moved was used).</p>
+<figure class="fig"><div class="scroll"><a href="storm-review-100785-structure.png"><img src="storm-review-100785-structure.png" alt="Hart phase space and storm-relative wind" loading="lazy"></a></div>
+<figcaption>Left: the storm&rsquo;s path through Hart&rsquo;s cyclone phase space, a diagram of how lopsided the low is against how warm its core is. Middle: ocean cells at 64 kt or more, in a frame that moves and turns with the low. Right: how the 71.7 kt+ cells split between the four quarters.</figcaption></figure></section>
+<section><div class="tag">7. Was its set-up unusual? Compared with other hurricane-force-strength lows</div>
+<p>For this storm&rsquo;s 4 fixes with a gust index of 71.7 kt or more, the table gives the median of each ingredient and how it ranks among all such fixes in the same basin since 2004&ndash;05 (pipeline A, ERA5 proxy). Fixes from one storm are not independent, so read the rank as a rough guide, not a test.</p>
+<div class="tablewrap"><table class="idx"><thead><tr><th>Ingredient</th><th class="num">This storm</th><th class="num">Higher than this share of HF-strength fixes</th></tr></thead><tbody><tr><td>strongest 250 hPa wind (the jet) within 540 nm</td><td class="num">120 kt</td><td class="num">higher than 40% of them</td></tr><tr><td>upper-level divergence (300 hPa) within 270 nm</td><td class="num">0.9 &times;10<sup>&minus;5</sup> /s</td><td class="num">higher than 61% of them</td></tr><tr><td>vorticity advection (500 hPa) within 270 nm</td><td class="num">-0.2 &times;10<sup>&minus;9</sup> /s&sup2;</td><td class="num">higher than 19% of them</td></tr><tr><td>Eady growth rate, the support for storm growth (850&ndash;500 hPa)</td><td class="num">0.74 /day</td><td class="num">higher than 35% of them</td></tr><tr><td>moisture in the air column within 270 nm</td><td class="num">9 kg/m&sup2;</td><td class="num">higher than 34% of them</td></tr><tr><td>sharpest sea-surface temperature gradient within 270 nm</td><td class="num">2.2 K/100 km</td><td class="num">higher than 51% of them</td></tr></tbody></table></div></section>
+<section><div class="blk"><div class="tag">What OPC had</div><p>No OPC archive fix matches this storm (the archive starts with the 2004&ndash;05 season), so there is nothing to compare with.</p></div></section>
+<section><div class="tag">Read with care</div>
+<p class="limit">ERA5 proxy throughout; never validated for storms before the archive begins. The structure measures (Hart&rsquo;s cyclone phase space) use seven pressure levels on a 1.5&deg; grid, coarser than the original method, so read the structure class as a guide, not an exact classification. Over Greenland and high ground ERA5&rsquo;s sea-level pressure is extrapolated, and gusts near coasts and sea ice are less reliable. The storm-relative frame uses the last direction of motion while the low is stalled. A storm is one case: nothing here is a trend or a forecast rule.</p></section>
+</main></body></html>
