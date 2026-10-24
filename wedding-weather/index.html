@@ -171,6 +171,11 @@ $("windows").innerHTML = C.windows.map(w => {
   const ts = hs.map(h => winStats(w.key, h, "t")), td = winStats(w.key, w.s, "td"), wi = winStats(w.key, w.s, "w");
   const temp = ts[0] && ts[1] ? `${r0(ts[0][1])}°F at ${hourLab(U(w.s))}, ${r0(ts[1][1])}°F at ${hourLab(U(w.e))}` : "–";
   const rng = ts[0] && ts[1] ? `${r0(Math.min(ts[0][0], ts[1][0]))}–${r0(Math.max(ts[0][2], ts[1][2]))}°F` : "–";
+  if (t.past) return `<article class="win">
+    <div class="when">${w.label}<span>${t.sub || ""}</span></div>
+    <div class="big"><div class="pct">${t.pct || "Over"}</div><div class="lab">this window<br>has passed</div></div>
+    <p class="note">${t.note || ""}</p>
+  </article>`;
   return `<article class="win">
     <div class="when">${w.label}<span>${t.sub || ""}</span></div>
     <div class="big"><div class="pct">${t.pct || pc(B.final)}</div><div class="lab">chance of rain<br>Normal for these hours: ${pc(W.clim[w.key].p_measurable)}</div></div>
