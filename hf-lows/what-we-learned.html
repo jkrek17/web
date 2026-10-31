@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What we learned - Hurricane Force Extratropical Low Archive</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="A one-page summary for forecasters: which results from the ERA5 proxy research are usable, which tests came back empty, and why the scores stop where they do.">
+<style>
+  /* Self-contained on purpose: the flat/ copy of the site is a single folder and only
+     index.html gets its paths rewritten, so this page uses no files from assets/ and
+     refers to its figures by bare file name. Tokens mirror assets/app.css. */
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --surface-sunk: #f2f2ee; --border: #e1e0d9; --border-strong: #c3c2b7;
+    --ink: #0b0b0b; --ink-2: #52514e; --ink-muted: #6d6b66;
+    --atl: #2a78d6; --pac: #eb6834;
+    --navy: #0a3161; --navy-ink: #ffffff; --navy-soft: #cfe0f3; --accent: #0a3f73; --accent-soft: #e4edf8;
+    --badge-ink: #8a5a00; --badge-bg: #fdf3dd; --badge-border: #f4dfae;
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+      --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+      --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+      --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+    --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+    --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+    --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 var(--font); }
+  a { color: var(--accent); }
+  .masthead { background: var(--navy); color: var(--navy-ink); padding: 14px 16px; }
+  .masthead-in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+  .masthead h1 { margin: 0; font-size: 18px; font-weight: 650; }
+  .masthead a { color: var(--navy-soft); }
+  main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  h2 { font-size: 22px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  p { margin: 0 0 10px; max-width: 74ch; }
+  section { border-top: 1px solid var(--border); padding-top: 20px; min-width: 0; }
+  .note { background: var(--badge-bg); color: var(--ink); border: 1px solid var(--badge-border); border-left: 4px solid var(--badge-ink); border-radius: 6px; padding: 12px 14px; }
+  .note strong { color: var(--badge-ink); }
+  .answers { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+  .answers ul { margin: 6px 0 0; padding-left: 20px; } .answers li { margin-bottom: 6px; max-width: 80ch; }
+  .tag { font-size: 12px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+  .muted { color: var(--ink-2); font-size: 13px; }
+  .limit { border-left: 3px solid var(--border-strong); padding-left: 10px; color: var(--ink-2); }
+  .fig { margin: 12px 0 18px; min-width: 0; }
+  .fig figcaption { font-size: 14px; margin-top: 6px; max-width: 80ch; }
+  .fig img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--border); border-radius: 4px; }
+  .scroll { overflow-x: auto; }
+  .scroll img { min-width: 720px; }
+  .pair { display: grid; grid-template-columns: 1fr; gap: 12px 16px; min-width: 0; }
+  .pair .scroll img { min-width: 0; }
+  @media (min-width: 900px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .basin-atl { color: var(--atl); font-weight: 650; } .basin-pac { color: var(--pac); font-weight: 650; }
+  table { border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--border); }
+  .tablewrap { overflow-x: auto; }
+  footer { border-top: 1px solid var(--border); padding-top: 14px; }
+
+  .tablewrap table { min-width: 560px; }
+  td.num, th.num { text-align: right; }
+  .grid2 { display: grid; grid-template-columns: 1fr; gap: 12px 24px; }
+  @media (min-width: 900px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  dl.preds { margin: 6px 0 0; } dl.preds dt { font-weight: 650; margin-top: 8px; } dl.preds dd { margin: 0; max-width: 80ch; color: var(--ink-2); }
+  .lead { font-size: 17px; max-width: 74ch; }
+  .good { border-left: 4px solid var(--atl); }
+  .null { border-left: 4px solid var(--border-strong); }
+  .links a { white-space: nowrap; }
+</style>
+</head>
+<body>
+<header class="masthead"><div class="masthead-in">
+  <h1>What we learned: what a forecaster can use, and what did not pan out</h1>
+  <a href="index.html">&larr; Back to the archive</a>
+</div></header>
+<main>
+<div class="note"><strong>ERA5 proxy, and OPC&rsquo;s judgement, not measured wind.</strong> Almost every number here is a score against either OPC&rsquo;s analyst call (hurricane-force, HF) or the ERA5 gust proxy for hurricane force (a gust index of 71.7 kt). Neither is an anemometer. The ERA5 proxy has not been validated before the archive begins. Each result says which pipeline it came from.</div>
+
+<div class="answers">
+  <div class="tag">In plain words</div>
+  <ul>
+    <li><strong>There is a lot here you can use.</strong> Lows in the &ldquo;Coupled&rdquo; environment reach storm force or stronger 41% of the time (hurricane force 8.5%), against 8% (0.6%) for &ldquo;Quiet&rdquo; ones. A GFS gust of 76&ndash;85 kt matches an OPC hurricane-force call about half to two-thirds of the time out to 72 hours. And the 24-hour model reached a probability of 0.5 before OPC&rsquo;s first hurricane-force fix in 55% of OPC&rsquo;s storms, by a median of 12 hours.</li>
+    <li><strong>Why the extra ingredients added so little.</strong> A storm&rsquo;s depth, how fast it is already deepening and how strong its gusts already are describe most of what the jet, trough, moisture or climate pattern would have told you, because those things act <em>through</em> the storm&rsquo;s own development. Once the storm&rsquo;s state is known, there is little left for them to explain, and the ceiling of what 1.5&deg; fields can say is close. That is a finding about the atmosphere, not a lack of data. One exception: the whole surrounding pattern (500 hPa height, sea-level pressure and 250 hPa wind within 500 nm) does add a small but measurable amount, +0.024 on the outlook skill score (+0.395 to +0.419), positive in all 8 seasons tested and mostly at the gale boundary. That is ERA5 proxy only, not yet tried on GFS.</li>
+    <li><strong>What holds on real forecasts.</strong> The 24-hour outlook keeps most of its skill when fed GFS forecasts, and a plain GFS gust threshold agrees with OPC about half the time to 48 hours, less beyond that.</li>
+    <li><strong>Why it stops there.</strong> The scores are judged against an analyst&rsquo;s call or a reanalysis proxy, not measured wind. A satellite wind check (ASCAT) has now been done: it agrees with the reanalysis on which storms are strongest, but it is not an independent test (see below).</li>
+  </ul>
+</div>
+
+<section id="usable">
+  <div class="tag">1. What a forecaster can use</div>
+  <h2>Results you can act on</h2>
+
+  <div class="answers good">
+    <h3>The 24-hour gale / storm / hurricane-force outlook</h3>
+    <p>The storm&rsquo;s own state carries most of the skill. Against the usual odds for that basin and month, a state-only outlook cuts the probability error by about 37% (skill score +0.368, where 0 is no better than the usual odds and 1 is perfect). Adding the whole environment set (cyclone-phase terms, jet, trough, baroclinicity, sea-surface temperature, heat flux, moisture) lifts that to +0.399, a gain of about 0.03; the jet and trough terms alone add only about 0.01. The state-only outlook already includes the storm&rsquo;s current gust. Fed GFS forecasts instead of ERA5, the full model scores +0.351 (against +0.386 on ERA5 for the same five seasons; the 0.399 above is all 22), and the environment terms keep about 85% of their gain. The GFS test covers five seasons only.</p>
+    <p class="muted">ERA5 proxy, pipeline A, 22 seasons, each scored with that season left out. <a href="bomb-environment.html">Environment check</a> (outlook for one storm) and <a href="environment-model.html">Storm model</a> (how it is built).</p>
+  </div>
+
+  <div class="answers good">
+    <h3>Environment regions give clear wind odds</h3>
+    <p>On the vorticity-advection and baroclinicity (Eady growth rate) diagram, lows in the <em>Coupled</em> region (both strong forcing ingredients present, 19% of fixes) reach storm force or stronger in the next 24 hours 41% of the time and hurricane force 8.5% of the time. Lows in the <em>Quiet</em> region (52% of fixes) do so 8% and 0.6% of the time. The Coupled region holds 72% of all rapidly deepening fixes. The region cuts were chosen after looking, so treat the groupings as descriptive.</p>
+    <p class="muted">ERA5 proxy, pipeline A. <a href="bomb-environment.html">Environment check</a>.</p>
+  </div>
+
+  <div class="answers good">
+    <h3>GFS gust: how often OPC called hurricane force, by peak gust and lead</h3>
+    <p>Take the highest GFS gust near a forecast low. The table shows the share of those forecast fixes where OPC had a hurricane-force low nearby at the valid time. Roughly: at 72&ndash;76 kt it is close to a coin flip out to 48 hours, and at 76&ndash;85 kt about two in three at 0 hours and still about half or better at 72 hours.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Peak GFS gust</th><th scope="col" class="num">0 h</th><th scope="col" class="num">48 h</th><th scope="col" class="num">72 h</th><th scope="col" class="num">96 h</th></tr></thead>
+      <tbody>
+        <tr><td>72&ndash;76 kt</td><td class="num">53%</td><td class="num">48%</td><td class="num">35%</td><td class="num">33%</td></tr>
+        <tr><td>76&ndash;80 kt</td><td class="num">65%</td><td class="num">53%</td><td class="num">52%</td><td class="num">39%</td></tr>
+        <tr><td>80&ndash;85 kt</td><td class="num">67%</td><td class="num">64%</td><td class="num">53%</td><td class="num">49%</td></tr>
+      </tbody>
+    </table></div>
+    <p>Counted another way (searching within 432 nautical miles of the forecast low): a GFS gust at the level that matches OPC&rsquo;s hurricane-force frequency flags 52% of OPC&rsquo;s hurricane-force fixes in the Atlantic and 57% in the Pacific at 0 hours, 55% and 55% at 48 hours, 45% and 47% at 72 hours, and 43% and 42% at 96 hours. Beyond 48 hours the forecast low often is not the same storm, so the numbers fall.</p>
+    <p><strong>Searching within 270 nautical miles (500 km) of the forecast low is enough.</strong> Searching 432 or 648 nautical miles scored within up to about 0.05 on the skill score (usually within 0.03) and was slightly worse in several cells; 270 nm was enough in 17 of 18 basin-lead cells. Smaller radii were not tested.</p>
+    <p>The <a href="outlook-replay.html">Outlook replay</a> page turns the same idea into maps for forecast days 1 to 4: 126 past GFS runs shaded by how often OPC agreed a hurricane-force or storm-force low was near, using tables built without that run&rsquo;s season, with OPC&rsquo;s actual fixes drawn on top. It is a replay of past forecasts, not a live product. The experimental <a href="outlook-live.html">Outlook live</a> page applies the same shading to the newest GFS run once a day (October to April); it is not a warning and not an OPC product.</p>
+    <p class="limit">OPC&rsquo;s hurricane-force call is an analyst&rsquo;s judgement and is sometimes made as a service to customers, so &ldquo;OPC agreed&rdquo; is not the same as &ldquo;the wind was there&rdquo;, and a model gust above OPC&rsquo;s call is not necessarily wrong. Pooled Atlantic and Pacific, October to April, five seasons (2021-22 to 2025-26), GFS versions changed inside that window, the shares count forecast fixes (not storms), and no intervals were computed. The raw GFS gust was the only input here; the model was not used.</p>
+  </div>
+
+  <div class="answers good">
+    <h3>Monthly gale, storm and hurricane-force wind maps</h3>
+    <p>Hours per month at or above gale (38 kt), storm (54 kt) and hurricane-force (71.7 kt) gusts, 2004-05 to 2025-26, plus a separate 1979-2003 October&ndash;April set. The two periods are never pooled, because ERA5 gusts at a given storm depth drift upward before 2001. Open the <a href="index.html">Map</a> tab, choose the Atlas view &ldquo;ERA5 gust climatology and gale / storm / HF hours&rdquo;, then the Period menu.</p>
+  </div>
+
+  <div class="answers good">
+    <h3>How the model did against OPC, storm by storm</h3>
+    <p>Of 1,635 OPC hurricane-force storms that could be rated, 904 (55%) had a model probability of 0.5 or more before OPC&rsquo;s first hurricane-force fix, with a median lead of 12 hours. The <a href="index.html">Events</a> tab lists every one, and each row opens that storm on the map. The model can also rate a storm higher than OPC ever called it, which is not necessarily an error.</p>
+  </div>
+</section>
+
+<section id="nulls">
+  <div class="tag">2. What did not pan out</div>
+  <h2>Tests that came back empty (equal weight)</h2>
+  <p>Each of these was planned before the outcomes were looked at, and a well-powered empty result is a finding: it says where not to look. The last column says whether the test could have seen a modest effect.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th scope="col">Idea</th><th scope="col">Result</th><th scope="col">Could it have seen an effect?</th></tr></thead>
+    <tbody>
+      <tr><td>Teleconnections (NAO, PNA, ENSO, MJO) and where HF lows go</td><td>2 of the 15 standard comparisons flag, about what chance gives. See the <a href="index.html">Teleconnections</a> tab.</td><td>Only large shifts: 22 seasons is a small sample.</td></tr>
+      <tr><td>Jet-streak quadrant added to the 24-hour HF forecast</td><td>essentially no gain: +0.0016 in skill score, range from &minus;0.0007 to +0.0036. (The upstream trough did add a little for rapid deepening, +0.008, and could not be told for 24-hour HF.)</td><td>Yes: the upper end is below the 0.005 bar.</td></tr>
+      <tr><td>A second ascent centre (&ldquo;coupled ascent&rdquo;)</td><td>0 of 11 tests pass; gain &minus;0.0000. (The storm&rsquo;s own ascent does help, +0.0088, but partly as a same-time diagnostic, not a precursor.)</td><td>Yes: all 11 are well-powered nulls.</td></tr>
+      <tr><td>Surface moisture and heat-flux proxies</td><td>No further gain (+0.0005 in skill score) once the model already includes column water vapour and heat flux. These terms do carry real weight inside the full model.</td><td>Yes for the 24-hour forecast.</td></tr>
+      <tr><td>Kuroshio warm anomaly and where Pacific lows form</td><td>0.995 times the usual genesis per standard deviation (95% range 0.917 to 1.079, 47 winters). For HF lows themselves the test could not tell.</td><td>Yes for genesis; no for HF.</td></tr>
+      <tr><td>A second jet streak (&ldquo;two-jet&rdquo;)</td><td>Not tested: it needed about 62 GB of extra data and was skipped.</td><td>Not applicable.</td></tr>
+      <tr><td>Machine learning (boosted trees, imagery, bias correction)</td><td>Boosted trees gained +0.032 in skill score over the logistic model, most of which is curvature of predictors already in the model, not a new ingredient. Judged not worthwhile.</td><td>Only a large gain: the sample is 22 seasons.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="ceiling">
+  <div class="tag">3. Why the scores stop where they do</div>
+  <h2>The ceiling is mostly the yardstick</h2>
+  <ul>
+    <li><strong>The fields already say most of what they can.</strong> Given the 1.5&deg; fields at the <em>same</em> time, with no forecast at all, hurricane force is recovered only to a Heidke skill score of 0.60, or 0.69&ndash;0.70 with extra wind and gradient fields (a hit-rate score corrected for chance: 0 is chance, 1 is perfect). The 24-hour forecast is near that.</li>
+    <li><strong>The labels are judgement or proxy.</strong> OPC&rsquo;s call is an analyst&rsquo;s, sometimes issued as a service to users. ERA5 gusts read low in the strongest storms. A score against either cannot pass the noise in the label.</li>
+    <li><strong>The sample is seasons.</strong> Climate-index questions have 22 usable seasons, not thousands of storms.</li>
+  </ul>
+  <div class="note"><strong>Satellite wind check: done.</strong> We compared ERA5 gusts with winds measured by the ASCAT satellite scatterometer, for 4,252 storms from 2006&ndash;07 to 2025&ndash;26. ERA5 ranks storms almost the same way the satellite does (rank correlation 0.95 in the Atlantic and 0.92 in the Pacific), so a storm ERA5 calls strong is also strong in the satellite winds. ERA5 reads about 15 to 25% higher than the satellite; our 71.7 kt gust threshold corresponds to about 62 kt of satellite wind. This is a consistency check, not independent proof: ERA5 already takes in ASCAT data and buoy reports. The ceiling stays as described above, and the pre-2001 counts stay within their own era.</div>
+</section>
+
+<section id="limits">
+  <div class="tag">4. Limits</div>
+  <h2>What this summary does not cover</h2>
+  <ul>
+    <li>Everything is an ERA5 proxy (pipeline A) or a GFS proxy built the same way, not direct observation.</li>
+    <li>The GFS tests cover five seasons (2021-22 to 2025-26) and GFS changed versions inside them.</li>
+    <li>Models were fitted and tested on 2004-05 onward only. Seasons before 2001 are used only for within-era comparisons, never for levels or trends, and never as a 1979&ndash;2025 hurricane-force trend.</li>
+    <li>The OPC archive holds low positions and categories, not wind areas, and no gale or storm calls, so gale and storm cuts (38 and 54 kt) are nominal.</li>
+  </ul>
+</section>
+
+<footer class="muted">Sources: STATUS.md and the research results in this repository (<code>research/era5/bomb_env</code>, <code>gfs_outlook</code>, <code>gfs_raw_gust_96h</code>, <code>hf_jet_trough</code>, <code>hf_omega_coupling</code>, <code>enso_kuroshio</code>).</footer>
+</main>
+</body>
+</html>

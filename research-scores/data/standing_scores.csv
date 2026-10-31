@@ -1,0 +1,578 @@
+study,week,basin,method,metric,value,n,truth
+2026-10-16-pressure-d5-7,2025-W45,natl,aifs,depth_hpa_d5,6.067857142857171,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,aifs,false_lows_d5,0.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,aifs,hit_300km_d5,0.2857142857142857,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,aifs,position_km_d5,536.1279774920956,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,gfs,depth_hpa_d5,5.871428571428571,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,gfs,false_lows_d5,1.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,gfs,hit_300km_d5,0.4642857142857143,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,gfs,position_km_d5,357.82541473372675,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,ifs,depth_hpa_d5,7.142857142857167,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,ifs,false_lows_d5,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,ifs,hit_300km_d5,0.4285714285714285,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,natl,ifs,position_km_d5,379.98486712481787,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,aifs,depth_hpa_d5,5.407352941176475,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,aifs,false_lows_d5,0.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,aifs,hit_300km_d5,0.4705882352941176,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,aifs,position_km_d5,407.5152117003316,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,gfs,depth_hpa_d5,8.0544117647059,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,gfs,false_lows_d5,1.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,gfs,hit_300km_d5,0.5294117647058824,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,gfs,position_km_d5,338.97492957071154,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,ifs,depth_hpa_d5,4.816176470588245,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,ifs,false_lows_d5,1.5714285714285714,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,ifs,hit_300km_d5,0.7352941176470589,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W45,npac,ifs,position_km_d5,243.98552073087467,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,aifs,depth_hpa_d5,5.490624999999994,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,aifs,false_lows_d5,0.7142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,aifs,hit_300km_d5,0.5,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,aifs,position_km_d5,320.7671388756674,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,gfs,depth_hpa_d5,8.021874999999973,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,gfs,false_lows_d5,0.7142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,gfs,hit_300km_d5,0.5625,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,gfs,position_km_d5,347.0472223376756,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,ifs,depth_hpa_d5,6.959374999999987,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,ifs,false_lows_d5,0.7142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,ifs,hit_300km_d5,0.5625,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,natl,ifs,position_km_d5,316.1297699786953,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,aifs,depth_hpa_d5,7.1475609756097525,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,aifs,false_lows_d5,0.7142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,aifs,hit_300km_d5,0.5853658536585366,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,aifs,position_km_d5,361.2538125604584,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,gfs,depth_hpa_d5,8.615853658536585,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,gfs,false_lows_d5,3.2857142857142856,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,gfs,hit_300km_d5,0.5853658536585366,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,gfs,position_km_d5,309.37387544305085,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,ifs,depth_hpa_d5,6.520731707317071,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,ifs,false_lows_d5,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,ifs,hit_300km_d5,0.6341463414634146,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W46,npac,ifs,position_km_d5,292.5850173777528,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,aifs,depth_hpa_d5,8.124000000000018,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,aifs,false_lows_d5,1.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,aifs,hit_300km_d5,0.32,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,aifs,position_km_d5,442.4090107372194,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,gfs,depth_hpa_d5,8.90800000000001,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,gfs,false_lows_d5,0.5714285714285714,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,gfs,hit_300km_d5,0.4,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,gfs,position_km_d5,409.1982736596648,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,ifs,depth_hpa_d5,8.420000000000009,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,ifs,false_lows_d5,0.8571428571428571,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,ifs,hit_300km_d5,0.48,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,natl,ifs,position_km_d5,396.6570201660741,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,aifs,depth_hpa_d5,5.274285714285731,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,aifs,false_lows_d5,0.2857142857142857,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,aifs,hit_300km_d5,0.2857142857142857,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,aifs,position_km_d5,461.9628163966696,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,gfs,depth_hpa_d5,7.257142857142841,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,gfs,false_lows_d5,1.4285714285714286,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,gfs,hit_300km_d5,0.4285714285714285,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,gfs,position_km_d5,427.1658514039925,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,ifs,depth_hpa_d5,6.925714285714292,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,ifs,false_lows_d5,1.5714285714285714,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,ifs,hit_300km_d5,0.3142857142857143,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W47,npac,ifs,position_km_d5,437.9274793116805,35,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,aifs,depth_hpa_d5,6.661111111111103,9,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,aifs,false_lows_d5,0.6666666666666666,3,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,aifs,hit_300km_d5,0.4444444444444444,9,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,aifs,position_km_d5,452.10360005061005,9,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,gfs,depth_hpa_d5,6.409999999999991,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,gfs,false_lows_d5,3.142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,gfs,hit_300km_d5,0.64,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,gfs,position_km_d5,297.24958128106385,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,ifs,depth_hpa_d5,5.494444444444412,9,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,ifs,false_lows_d5,1.3333333333333333,3,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,ifs,hit_300km_d5,0.4444444444444444,9,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,natl,ifs,position_km_d5,333.2277183039592,9,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,aifs,depth_hpa_d5,5.849999999999996,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,aifs,false_lows_d5,0.6666666666666666,3,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,aifs,hit_300km_d5,0.6923076923076923,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,aifs,position_km_d5,256.180640976172,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,gfs,depth_hpa_d5,6.047058823529409,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,gfs,false_lows_d5,2.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,gfs,hit_300km_d5,0.5882352941176471,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,gfs,position_km_d5,286.8391991082997,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,ifs,depth_hpa_d5,4.265384615384637,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,ifs,false_lows_d5,1.6666666666666667,3,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,ifs,hit_300km_d5,0.7692307692307693,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W48,npac,ifs,position_km_d5,212.6264087250425,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,natl,gfs,depth_hpa_d5,8.356097560975618,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,natl,gfs,false_lows_d5,2.571428571428572,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,natl,gfs,hit_300km_d5,0.3902439024390244,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,natl,gfs,position_km_d5,384.7173685808468,41,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,npac,gfs,depth_hpa_d5,8.279032258064523,31,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,npac,gfs,false_lows_d5,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,npac,gfs,hit_300km_d5,0.6774193548387096,31,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W49,npac,gfs,position_km_d5,292.43015054861627,31,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,natl,gfs,depth_hpa_d5,10.446153846153836,26,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,natl,gfs,false_lows_d5,3.571428571428572,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,natl,gfs,hit_300km_d5,0.5,26,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,natl,gfs,position_km_d5,328.89109332245795,26,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,npac,gfs,depth_hpa_d5,6.230357142857132,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,npac,gfs,false_lows_d5,1.8571428571428568,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,npac,gfs,hit_300km_d5,0.6428571428571429,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W50,npac,gfs,position_km_d5,277.5517559808811,28,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,natl,gfs,depth_hpa_d5,13.054761904761898,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,natl,gfs,false_lows_d5,2.4285714285714284,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,natl,gfs,hit_300km_d5,0.1428571428571428,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,natl,gfs,position_km_d5,561.0502877353778,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,npac,gfs,depth_hpa_d5,4.129166666666663,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,npac,gfs,false_lows_d5,0.4285714285714285,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,npac,gfs,hit_300km_d5,0.625,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W51,npac,gfs,position_km_d5,291.1828472163993,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,natl,gfs,depth_hpa_d5,8.22777777777778,18,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,natl,gfs,false_lows_d5,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,natl,gfs,hit_300km_d5,0.3888888888888889,18,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,natl,gfs,position_km_d5,506.1550241437554,18,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,npac,gfs,depth_hpa_d5,6.5999999999999925,26,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,npac,gfs,false_lows_d5,2.2857142857142856,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,npac,gfs,hit_300km_d5,0.5,26,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2025-W52,npac,gfs,position_km_d5,324.76600403795663,26,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,natl,gfs,depth_hpa_d5,5.549999999999987,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,natl,gfs,false_lows_d5,1.5714285714285714,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,natl,gfs,hit_300km_d5,0.5,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,natl,gfs,position_km_d5,299.3839256005124,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,npac,gfs,depth_hpa_d5,10.308064516129038,62,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,npac,gfs,false_lows_d5,2.571428571428572,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,npac,gfs,hit_300km_d5,0.7096774193548387,62,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W01,npac,gfs,position_km_d5,272.81854995494626,62,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,natl,gfs,depth_hpa_d5,7.036764705882336,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,natl,gfs,false_lows_d5,2.4285714285714284,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,natl,gfs,hit_300km_d5,0.4117647058823529,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,natl,gfs,position_km_d5,389.8904504916831,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,npac,gfs,depth_hpa_d5,7.606493506493516,77,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,npac,gfs,false_lows_d5,2.142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,npac,gfs,hit_300km_d5,0.5714285714285714,77,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W02,npac,gfs,position_km_d5,315.9579343735519,77,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,natl,gfs,depth_hpa_d5,8.217391304347826,46,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,natl,gfs,false_lows_d5,1.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,natl,gfs,hit_300km_d5,0.4347826086956521,46,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,natl,gfs,position_km_d5,350.35779327493043,46,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,npac,gfs,depth_hpa_d5,6.102272727272733,22,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,npac,gfs,false_lows_d5,1.5714285714285714,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,npac,gfs,hit_300km_d5,0.5454545454545454,22,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W03,npac,gfs,position_km_d5,354.9553467217871,22,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,natl,gfs,depth_hpa_d5,9.45666666666667,45,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,natl,gfs,false_lows_d5,2.571428571428572,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,natl,gfs,hit_300km_d5,0.4444444444444444,45,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,natl,gfs,position_km_d5,354.3898229163064,45,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,npac,gfs,depth_hpa_d5,9.090517241379318,58,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,npac,gfs,false_lows_d5,3.142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,npac,gfs,hit_300km_d5,0.4655172413793103,58,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W04,npac,gfs,position_km_d5,379.3665782431486,58,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,natl,gfs,depth_hpa_d5,7.600000000000002,39,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,natl,gfs,false_lows_d5,2.142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,natl,gfs,hit_300km_d5,0.3846153846153846,39,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,natl,gfs,position_km_d5,359.65012061808665,39,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,npac,gfs,depth_hpa_d5,7.856756756756767,37,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,npac,gfs,false_lows_d5,2.4285714285714284,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,npac,gfs,hit_300km_d5,0.3513513513513513,37,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W05,npac,gfs,position_km_d5,452.5804872771454,37,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,natl,gfs,depth_hpa_d5,9.127941176470602,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,natl,gfs,false_lows_d5,2.2857142857142856,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,natl,gfs,hit_300km_d5,0.3235294117647059,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,natl,gfs,position_km_d5,520.0084293065354,34,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,npac,gfs,depth_hpa_d5,5.548717948717945,39,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,npac,gfs,false_lows_d5,1.7142857142857142,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,npac,gfs,hit_300km_d5,0.7435897435897436,39,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W06,npac,gfs,position_km_d5,226.9569847914836,39,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,natl,gfs,depth_hpa_d5,7.951999999999985,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,natl,gfs,false_lows_d5,1.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,natl,gfs,hit_300km_d5,0.32,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,natl,gfs,position_km_d5,452.1797039755151,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,npac,gfs,depth_hpa_d5,6.889999999999998,10,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,npac,gfs,false_lows_d5,0.7142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,npac,gfs,hit_300km_d5,0.4,10,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W07,npac,gfs,position_km_d5,426.6630521202829,10,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,natl,gfs,depth_hpa_d5,7.20344827586208,29,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,natl,gfs,false_lows_d5,1.8571428571428568,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,natl,gfs,hit_300km_d5,0.7241379310344828,29,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,natl,gfs,position_km_d5,239.6818554222181,29,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,npac,gfs,depth_hpa_d5,3.927999999999989,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,npac,gfs,false_lows_d5,1.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,npac,gfs,hit_300km_d5,0.68,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W08,npac,gfs,position_km_d5,266.76450436245534,25,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,natl,gfs,depth_hpa_d5,8.031250000000005,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,natl,gfs,false_lows_d5,1.7142857142857142,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,natl,gfs,hit_300km_d5,0.4166666666666667,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,natl,gfs,position_km_d5,394.9087548057055,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,npac,gfs,depth_hpa_d5,5.024074074074077,27,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,npac,gfs,false_lows_d5,1.4285714285714286,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,npac,gfs,hit_300km_d5,0.5185185185185185,27,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W09,npac,gfs,position_km_d5,264.9574468840648,27,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,natl,gfs,depth_hpa_d5,12.288333333333314,30,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,natl,gfs,false_lows_d5,1.8571428571428568,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,natl,gfs,hit_300km_d5,0.3333333333333333,30,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,natl,gfs,position_km_d5,457.4244144818757,30,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,npac,gfs,depth_hpa_d5,4.7729166666666885,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,npac,gfs,false_lows_d5,0.8571428571428571,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,npac,gfs,hit_300km_d5,0.5,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W10,npac,gfs,position_km_d5,282.45251261514784,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,natl,gfs,depth_hpa_d5,5.38750000000001,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,natl,gfs,false_lows_d5,2.4285714285714284,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,natl,gfs,hit_300km_d5,0.375,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,natl,gfs,position_km_d5,314.2357747953636,16,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,npac,gfs,depth_hpa_d5,6.245238095238089,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,npac,gfs,false_lows_d5,1.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,npac,gfs,hit_300km_d5,0.6190476190476191,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W11,npac,gfs,position_km_d5,316.2794804623463,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,natl,gfs,depth_hpa_d5,12.342307692307678,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,natl,gfs,false_lows_d5,2.571428571428572,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,natl,gfs,hit_300km_d5,0.3076923076923077,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,natl,gfs,position_km_d5,447.45096399323904,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,npac,gfs,depth_hpa_d5,5.256250000000023,8,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,npac,gfs,false_lows_d5,0.4285714285714285,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,npac,gfs,hit_300km_d5,1.0,8,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W12,npac,gfs,position_km_d5,193.0545781709073,8,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,natl,gfs,depth_hpa_d5,3.573076923076944,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,natl,gfs,false_lows_d5,1.8571428571428568,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,natl,gfs,hit_300km_d5,0.6923076923076923,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,natl,gfs,position_km_d5,210.42733465315163,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,npac,gfs,depth_hpa_d5,3.225000000000032,12,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,npac,gfs,false_lows_d5,0.2857142857142857,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,npac,gfs,hit_300km_d5,0.6666666666666666,12,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W13,npac,gfs,position_km_d5,271.5484410047156,12,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,depth_hpa_d5,2.1250000000000284,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,depth_hpa_d6,3.7357142857142827,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,depth_hpa_d7,11.5,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,false_lows_d5,0.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,false_lows_d6,1.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,false_lows_d7,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,hit_300km_d5,0.75,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,hit_300km_d6,0.42857142857142855,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,hit_300km_d7,0.4,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,position_km_d5,231.30012780119432,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,position_km_d6,345.1497789180707,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,aifs,position_km_d7,334.07223628949475,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,depth_hpa_d5,4.500000000000057,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,depth_hpa_d6,6.19285714285713,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,depth_hpa_d7,13.539999999999964,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,false_lows_d5,0.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,false_lows_d6,0.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,false_lows_d7,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,hit_300km_d5,1.0,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,hit_300km_d6,0.14285714285714285,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,hit_300km_d7,0.4,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,position_km_d5,136.26582120912525,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,position_km_d6,564.7782578419071,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,gfs,position_km_d7,495.347987350749,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,depth_hpa_d5,4.075000000000017,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,depth_hpa_d6,5.321428571428571,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,depth_hpa_d7,8.119999999999958,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,false_lows_d5,0.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,false_lows_d6,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,false_lows_d7,2.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,hit_300km_d5,0.5,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,hit_300km_d6,0.42857142857142855,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,hit_300km_d7,0.2,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,position_km_d5,266.3277942803846,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,position_km_d6,357.97498684492865,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,natl,ifs,position_km_d7,450.56594006971864,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,depth_hpa_d5,8.924999999999983,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,depth_hpa_d6,4.875000000000028,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,depth_hpa_d7,1.7799999999999954,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,false_lows_d5,1.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,false_lows_d6,0.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,false_lows_d7,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,hit_300km_d5,0.75,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,hit_300km_d6,0.75,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,hit_300km_d7,0.6,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,position_km_d5,211.03651838782636,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,position_km_d6,200.2509705556335,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,aifs,position_km_d7,212.17591686187143,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,depth_hpa_d5,8.375,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,depth_hpa_d6,7.400000000000034,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,depth_hpa_d7,5.600000000000023,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,false_lows_d5,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,false_lows_d6,2.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,false_lows_d7,2.0,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,hit_300km_d5,0.75,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,hit_300km_d6,0.75,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,hit_300km_d7,0.8,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,position_km_d5,270.59796572031087,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,position_km_d6,236.07708537881737,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,gfs,position_km_d7,268.5484602539546,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,depth_hpa_d5,13.44999999999996,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,depth_hpa_d6,6.675000000000011,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,depth_hpa_d7,3.2999999999999545,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,false_lows_d5,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,false_lows_d6,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,false_lows_d7,0.5,2,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,hit_300km_d5,0.5,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,hit_300km_d6,1.0,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,hit_300km_d7,0.8,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,position_km_d5,270.17165771417234,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,position_km_d6,137.18122502872896,4,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W40,npac,ifs,position_km_d7,184.58985002657116,5,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,depth_hpa_d5,6.130952380952359,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,depth_hpa_d6,11.42619047619048,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,depth_hpa_d7,14.65952380952381,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,false_lows_d5,0.42857142857142855,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,false_lows_d6,1.7142857142857142,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,false_lows_d7,1.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,hit_300km_d5,0.7142857142857143,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,hit_300km_d6,0.47619047619047616,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,hit_300km_d7,0.38095238095238093,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,position_km_d5,271.3911435264482,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,position_km_d6,453.51169131227175,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,aifs,position_km_d7,383.75879938195567,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,depth_hpa_d5,9.811904761904765,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,depth_hpa_d6,12.073809523809526,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,depth_hpa_d7,15.445238095238102,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,false_lows_d5,1.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,false_lows_d6,2.5714285714285716,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,false_lows_d7,2.857142857142857,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,hit_300km_d5,0.42857142857142855,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,hit_300km_d6,0.38095238095238093,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,hit_300km_d7,0.42857142857142855,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,position_km_d5,415.8645055407839,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,position_km_d6,410.67323966173285,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,gfs,position_km_d7,399.21208790660603,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,depth_hpa_d5,9.00238095238095,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,depth_hpa_d6,12.240476190476178,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,depth_hpa_d7,14.78333333333333,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,false_lows_d5,1.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,false_lows_d6,2.4285714285714284,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,false_lows_d7,3.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,hit_300km_d5,0.47619047619047616,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,hit_300km_d6,0.42857142857142855,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,hit_300km_d7,0.23809523809523808,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,position_km_d5,354.5000690457756,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,position_km_d6,430.94669451283454,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,natl,ifs,position_km_d7,536.368317546255,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,depth_hpa_d5,3.725000000000017,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,depth_hpa_d6,6.432608695652176,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,depth_hpa_d7,8.016666666666666,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,false_lows_d5,0.42857142857142855,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,false_lows_d6,0.2857142857142857,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,false_lows_d7,1.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,hit_300km_d5,0.7,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,hit_300km_d6,0.5217391304347826,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,hit_300km_d7,0.3333333333333333,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,position_km_d5,275.01211155464614,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,position_km_d6,371.02350174569455,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,aifs,position_km_d7,433.53748721157604,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,depth_hpa_d5,8.194999999999999,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,depth_hpa_d6,8.445652173913038,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,depth_hpa_d7,8.691666666666672,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,false_lows_d5,1.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,false_lows_d6,2.2857142857142856,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,false_lows_d7,2.2857142857142856,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,hit_300km_d5,0.5,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,hit_300km_d6,0.391304347826087,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,hit_300km_d7,0.3333333333333333,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,position_km_d5,336.4683653531111,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,position_km_d6,388.16901416661096,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,gfs,position_km_d7,501.7031212250847,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,depth_hpa_d5,4.334999999999985,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,depth_hpa_d6,6.206521739130444,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,depth_hpa_d7,7.2333333333333245,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,false_lows_d5,0.8571428571428571,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,false_lows_d6,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,false_lows_d7,2.4285714285714284,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,hit_300km_d5,0.55,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,hit_300km_d6,0.6086956521739131,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,hit_300km_d7,0.3333333333333333,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,position_km_d5,288.8745346161887,20,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,position_km_d6,315.9086449019804,23,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W41,npac,ifs,position_km_d7,418.4726680498743,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,depth_hpa_d5,6.628947368421049,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,depth_hpa_d6,9.340476190476206,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,depth_hpa_d7,17.460416666666664,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,false_lows_d5,0.42857142857142855,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,false_lows_d6,1.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,false_lows_d7,0.7142857142857143,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,hit_300km_d5,0.47368421052631576,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,hit_300km_d6,0.47619047619047616,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,hit_300km_d7,0.375,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,position_km_d5,395.92539766165356,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,position_km_d6,444.6995187951469,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,aifs,position_km_d7,568.4545620857785,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,depth_hpa_d5,7.21842105263159,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,depth_hpa_d6,15.93095238095239,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,depth_hpa_d7,22.606250000000017,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,false_lows_d5,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,false_lows_d6,2.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,false_lows_d7,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,hit_300km_d5,0.7894736842105263,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,hit_300km_d6,0.23809523809523808,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,hit_300km_d7,0.20833333333333334,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,position_km_d5,229.80214792283493,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,position_km_d6,511.66392191266243,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,gfs,position_km_d7,587.4046930878889,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,depth_hpa_d5,7.0394736842105505,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,depth_hpa_d6,8.126190476190486,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,depth_hpa_d7,14.977083333333326,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,false_lows_d5,1.1428571428571428,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,false_lows_d6,1.5714285714285714,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,false_lows_d7,1.8571428571428572,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,hit_300km_d5,0.5263157894736842,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,hit_300km_d6,0.3333333333333333,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,hit_300km_d7,0.5,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,position_km_d5,316.7922971601445,19,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,position_km_d6,394.88939520909776,21,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,natl,ifs,position_km_d7,476.25324877004067,24,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,depth_hpa_d5,3.120588235294135,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,depth_hpa_d6,5.607692307692341,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,depth_hpa_d7,8.890909090909107,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,false_lows_d5,0.14285714285714285,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,false_lows_d6,0.2857142857142857,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,false_lows_d7,0.8571428571428571,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,hit_300km_d5,0.5882352941176471,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,hit_300km_d6,0.46153846153846156,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,hit_300km_d7,0.36363636363636365,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,position_km_d5,278.5424597056177,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,position_km_d6,290.2681121561791,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,aifs,position_km_d7,406.88044028762124,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,depth_hpa_d5,8.585294117647061,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,depth_hpa_d6,6.8615384615384825,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,depth_hpa_d7,7.372727272727306,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,false_lows_d5,1.7142857142857142,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,false_lows_d6,2.857142857142857,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,false_lows_d7,3.0,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,hit_300km_d5,0.5294117647058824,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,hit_300km_d6,0.46153846153846156,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,hit_300km_d7,0.2727272727272727,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,position_km_d5,275.75812884942434,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,position_km_d6,348.12419615121144,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,gfs,position_km_d7,418.37758479413037,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,depth_hpa_d5,4.061764705882363,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,depth_hpa_d6,8.100000000000023,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,depth_hpa_d7,7.199999999999983,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,false_lows_d5,0.42857142857142855,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,false_lows_d6,1.2857142857142858,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,false_lows_d7,1.4285714285714286,7,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,hit_300km_d5,0.47058823529411764,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,hit_300km_d6,0.6153846153846154,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,hit_300km_d7,0.5454545454545454,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,position_km_d5,278.2756723876477,17,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,position_km_d6,296.663083895572,13,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-pressure-d5-7,2026-W42,npac,ifs,position_km_d7,331.4827078818087,11,anl: GFS+IFS 12 UTC analysis mean (rk.store.analysis)
+2026-10-16-warning-forecast,2025-W45,natl,model_ifs@0,gale_area_nm2,237278.75696770227,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,model_ifs@0,gale_catch,0.9381443298969072,194,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,model_ifs@0,gale_fa_area,0.0110624001311099,24407,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,model_ifs@6,storm_area_nm2,24840.8547122534,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,model_ifs@6,storm_catch,0.7857142857142857,70,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,model_ifs@6,storm_fa_area,0.0646077387291444,2817,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,pmem@0.05,storm_area_nm2,52872.57799909747,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,pmem@0.05,storm_catch,0.8,70,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,pmem@0.05,storm_fa_area,0.0992381716118684,4988,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,pmem@0.2,gale_area_nm2,378457.2402378293,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,pmem@0.2,gale_catch,0.9536082474226804,194,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,natl,pmem@0.2,gale_fa_area,0.0264746487642456,36941,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,model_ifs@0,gale_area_nm2,213680.7773977636,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,model_ifs@0,gale_catch,0.902439024390244,41,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,model_ifs@0,gale_fa_area,0.0052334100900146,4777,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,model_ifs@6,storm_area_nm2,12561.92415264921,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,model_ifs@6,storm_catch,0.7142857142857143,14,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,model_ifs@6,storm_fa_area,0.4294478527607362,489,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,pmem@0.05,storm_area_nm2,26050.80533026224,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,pmem@0.05,storm_catch,0.8571428571428571,14,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,pmem@0.05,storm_fa_area,0.2662337662337662,770,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,pmem@0.2,gale_area_nm2,404505.970950553,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,pmem@0.2,gale_catch,0.951219512195122,41,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W45,npac,pmem@0.2,gale_fa_area,0.0413823957051783,8941,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,model_ifs@0,gale_area_nm2,76340.28683178546,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,model_ifs@0,gale_catch,0.8319327731092437,119,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,model_ifs@0,gale_fa_area,0.0264262780933563,4049,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,model_ifs@6,storm_area_nm2,5140.322423660481,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,model_ifs@6,storm_catch,0.7272727272727273,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,model_ifs@6,storm_fa_area,0.2105263157894736,209,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,pmem@0.05,storm_area_nm2,22466.72328564051,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,pmem@0.05,storm_catch,1.0,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,pmem@0.05,storm_fa_area,0.1915584415584415,1232,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,pmem@0.2,gale_area_nm2,160083.71841496017,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,pmem@0.2,gale_catch,0.907563025210084,119,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,natl,pmem@0.2,gale_fa_area,0.0642570281124498,9213,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,model_ifs@0,gale_area_nm2,106860.87750306052,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,model_ifs@0,gale_catch,0.7761194029850746,67,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,model_ifs@0,gale_fa_area,0.0446428571428571,2016,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,model_ifs@6,storm_area_nm2,6993.748693753065,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,model_ifs@6,storm_catch,0.3333333333333333,3,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,model_ifs@6,storm_fa_area,0.5714285714285714,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,pmem@0.05,storm_area_nm2,18060.27447977876,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,pmem@0.05,storm_catch,0.6666666666666666,3,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,pmem@0.05,storm_fa_area,0.1584158415841584,101,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,pmem@0.2,gale_area_nm2,240172.8595301103,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,pmem@0.2,gale_catch,0.8208955223880597,67,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W46,npac,pmem@0.2,gale_fa_area,0.113187736245275,4762,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,model_ifs@0,gale_area_nm2,13132.230392159428,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,model_ifs@0,gale_catch,0.7142857142857143,35,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,model_ifs@0,gale_fa_area,0.0661478599221789,1028,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,model_ifs@6,storm_area_nm2,1765.2929639594183,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,model_ifs@6,storm_catch,1.0,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,model_ifs@6,storm_fa_area,0.1454545454545454,110,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,pmem@0.05,storm_area_nm2,3504.4904140297726,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,pmem@0.05,storm_catch,1.0,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,pmem@0.05,storm_fa_area,0.1125,240,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,pmem@0.2,gale_area_nm2,24890.164796884863,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,pmem@0.2,gale_catch,0.7428571428571429,35,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,natl,pmem@0.2,gale_fa_area,0.13944878650761,2431,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,model_ifs@0,gale_area_nm2,244457.86301442183,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,model_ifs@0,gale_catch,0.75,64,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,model_ifs@0,gale_fa_area,0.0359732688753021,7033,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,model_ifs@6,storm_area_nm2,15737.912944661202,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,model_ifs@6,storm_catch,0.8181818181818182,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,model_ifs@6,storm_fa_area,0.2719167904903417,673,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,pmem@0.05,storm_area_nm2,39617.89339207935,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,pmem@0.05,storm_catch,0.8181818181818182,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,pmem@0.05,storm_fa_area,0.2433862433862433,1134,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,pmem@0.2,gale_area_nm2,428604.5529435003,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,pmem@0.2,gale_catch,0.78125,64,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W47,npac,pmem@0.2,gale_fa_area,0.0597001279941488,10938,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,model_ifs@0,gale_area_nm2,43169.39758364219,20,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,model_ifs@0,gale_catch,0.6226415094339622,53,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,model_ifs@0,gale_fa_area,0.0438698431144683,3442,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,model_ifs@6,storm_area_nm2,4559.409425418639,20,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,model_ifs@6,storm_catch,0.8571428571428571,7,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,model_ifs@6,storm_fa_area,0.1326530612244898,294,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,pmem@0.05,storm_area_nm2,9999.107757573029,20,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,pmem@0.05,storm_catch,0.8571428571428571,7,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,pmem@0.05,storm_fa_area,0.2163265306122449,490,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,pmem@0.2,gale_area_nm2,85594.29327045048,20,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,pmem@0.2,gale_catch,0.6981132075471698,53,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,natl,pmem@0.2,gale_fa_area,0.0464751138326267,6369,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,model_ifs@0,gale_area_nm2,261856.5638775994,12,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,model_ifs@0,gale_catch,0.7142857142857143,14,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,model_ifs@0,gale_fa_area,0.0168005843681519,1369,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,model_ifs@6,storm_area_nm2,40843.53276743505,12,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,model_ifs@6,storm_catch,0.5,2,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,model_ifs@6,storm_fa_area,0.6190476190476191,63,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,pmem@0.05,storm_area_nm2,70007.86890048264,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,pmem@0.05,storm_catch,1.0,2,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,pmem@0.05,storm_fa_area,0.7631578947368421,190,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,pmem@0.2,gale_area_nm2,369633.4741273253,11,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,pmem@0.2,gale_catch,0.5,14,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W48,npac,pmem@0.2,gale_fa_area,0.0478180129990714,2154,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,model_ifs@0,gale_area_nm2,265810.28567117493,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,model_ifs@0,gale_catch,1.0,40,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,model_ifs@0,gale_fa_area,0.0164133738601823,6580,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,model_ifs@6,storm_area_nm2,58712.181910186046,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,model_ifs@6,storm_catch,0.7777777777777778,18,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,model_ifs@6,storm_fa_area,0.0717821782178217,1616,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,pmem@0.05,storm_area_nm2,102836.2303853776,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,pmem@0.05,storm_catch,0.7222222222222222,18,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,pmem@0.05,storm_fa_area,0.0694444444444444,2952,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,pmem@0.2,gale_area_nm2,420165.15540122514,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,pmem@0.2,gale_catch,1.0,40,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2025-W49,natl,pmem@0.2,gale_fa_area,0.0130693830482413,10406,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W40,natl,model_ifs@0,gale_area_nm2,1784.065002655886,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W40,natl,model_ifs@0,gale_catch,0.8,5,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W40,natl,model_ifs@0,gale_fa_area,0.0,90,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W40,natl,model_ifs@6,storm_area_nm2,0.0,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W40,npac,model_ifs@0,gale_area_nm2,5286.0587296983385,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W40,npac,model_ifs@6,storm_area_nm2,17.218611000968888,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,natl,model_ifs@0,gale_area_nm2,41432.17584165144,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,natl,model_ifs@0,gale_catch,0.7922077922077922,77,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,natl,model_ifs@0,gale_fa_area,0.01714961561206387,1691,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,natl,model_ifs@6,storm_area_nm2,1134.6272102439184,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,natl,model_ifs@6,storm_catch,0.5,8,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,natl,model_ifs@6,storm_fa_area,0.4782608695652174,46,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,npac,model_ifs@0,gale_area_nm2,24050.386199087585,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,npac,model_ifs@0,gale_catch,1.0,6,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,npac,model_ifs@0,gale_fa_area,0.06882591093117409,247,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,npac,model_ifs@6,storm_area_nm2,4164.685984093525,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W41,npac,model_ifs@6,storm_fa_area,1.0,1,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W42,natl,model_ifs@0,gale_area_nm2,71169.29126148165,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W42,natl,model_ifs@6,storm_area_nm2,2950.1238578563252,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W42,npac,model_ifs@0,gale_area_nm2,16878.32162049835,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
+2026-10-16-warning-forecast,2026-W42,npac,model_ifs@6,storm_area_nm2,2437.294061372766,28,"ASCAT real 10 m wind (rk.truth.ascat_grid), inside the OPC high seas area"
