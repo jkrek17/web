@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tabular view of NWS Local Storm Reports — filter by type and state, sort by magnitude.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://server.arcgisonline.com https://*.arcgisonline.com https://mesonet.agron.iastate.edu; font-src 'self'; connect-src 'self' https://api.weather.gov https://mesonet.agron.iastate.edu;">
+    <title>NWS LSR Reports — Table</title>
+    <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="reports-table.css">
+</head>
+<body>
+    <div class="reports-table-page">
+        <header class="reports-table-header">
+            <h1><i class="fas fa-table"></i> LSR reports (table)</h1>
+            <div class="reports-table-header-actions">
+                <a href="index.html" class="btn-link-nav" id="linkToMap"><i class="fas fa-map"></i> Open map</a>
+                <button type="button" id="tableDarkModeToggle" class="btn-link-nav" title="Toggle dark mode">
+                    <i class="fas fa-moon" id="tableDarkModeIcon"></i> Theme
+                </button>
+            </div>
+        </header>
+
+        <div class="reports-table-toolbar">
+            <div class="reports-toolbar-group">
+                <label for="startDate">Start date (UTC)</label>
+                <input type="date" id="startDate" class="form-control">
+            </div>
+            <div class="reports-toolbar-group">
+                <label for="startHour">Start time</label>
+                <input type="text" id="startHour" class="form-control" placeholder="1200" maxlength="5" inputmode="numeric">
+            </div>
+            <div class="reports-toolbar-group">
+                <label for="endDate">End date (UTC)</label>
+                <input type="date" id="endDate" class="form-control">
+            </div>
+            <div class="reports-toolbar-group">
+                <label for="endHour">End time</label>
+                <input type="text" id="endHour" class="form-control" placeholder="1200" maxlength="5" inputmode="numeric">
+            </div>
+            <div class="reports-toolbar-group">
+                <label for="stateFilter">State (matches State column)</label>
+                <select id="stateFilter" class="form-control"></select>
+            </div>
+            <div class="reports-toolbar-group reports-type-filter">
+                <label for="typeFilter">Report types (multi-select)</label>
+                <select id="typeFilter" class="form-control" multiple></select>
+            </div>
+            <div class="reports-toolbar-group" style="min-width: auto;">
+                <label>&nbsp;</label>
+                <button type="button" id="loadReportsBtn" class="btn btn-primary" style="white-space: nowrap;">
+                    <i class="fas fa-sync-alt"></i> Load data
+                </button>
+            </div>
+            <div class="reports-toolbar-group" style="min-width: auto;">
+                <label>&nbsp;</label>
+                <button type="button" id="exportCsvBtn" class="btn btn-secondary" style="white-space: nowrap;">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+            </div>
+        </div>
+
+        <p id="reportsTableMeta" class="reports-table-meta"></p>
+        <div id="reportsLoading" class="reports-loading" style="display: none;">Loading reports…</div>
+        <div id="reportsError" class="reports-error" style="display: none;"></div>
+
+        <div class="reports-table-wrap">
+            <table class="reports-data-table">
+                <thead>
+                    <tr>
+                        <th data-sort="time">Time (UTC)</th>
+                        <th data-sort="type">Report type</th>
+                        <th>Category</th>
+                        <th data-sort="magnitude">Magnitude</th>
+                        <th data-sort="state">State</th>
+                        <th>WFO</th>
+                        <th>Location</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody id="reportsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script type="module" src="js/reports-table.js"></script>
+</body>
+</html>

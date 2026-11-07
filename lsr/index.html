@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive map of National Weather Service Local Storm Reports. View real-time and historical storm reports across the United States.">
+    <meta name="keywords" content="NWS, weather, storm reports, tornado, hail, wind, interactive map">
+    <meta name="author" content="NWS LSR Map">
+    <!-- Content Security Policy: Local assets plus external services (matches .htaccess) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://mesonet.agron.iastate.edu; font-src 'self'; connect-src 'self' https://api.weather.gov https://mesonet.agron.iastate.edu https://mapservices.weather.noaa.gov;">
+    <title>[test: main] NWS Local Storm Reports - Interactive Map</title>
+
+    <!-- MapLibre GL CSS -->
+    <link rel="stylesheet" href="lib/maplibre/maplibre-gl.css">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" id="mobileMenuToggle" class="mobile-menu-toggle" aria-label="Toggle menu" title="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1><i class="fas fa-cloud-showers-heavy"></i> NWS Local Storm Reports</h1>
+            <p class="subtitle">Interactive Map of National Weather Service Storm Reports</p>
+            <div class="header-actions">
+                <a href="reports-table.html" class="header-action-btn" id="linkReportsTable" title="View reports in a sortable table" style="text-decoration: none;">
+                    <i class="fas fa-table"></i>
+                    <span class="header-action-label">Table</span>
+                </a>
+                <button type="button" id="darkModeToggle" class="header-action-btn" title="Toggle dark mode">
+                    <i class="fas fa-moon" id="darkModeIcon"></i>
+                    <span class="header-action-label">Dark Mode</span>
+                </button>
+                <button type="button" id="headerHelpBtn" class="header-action-btn" title="Help & Keyboard Shortcuts (Press ? for help)">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="header-action-label">Help</span>
+                </button>
+            </div>
+            <div id="statusToast" class="status-toast" style="display: none;">
+                <span id="statusToastMessage"></span>
+                <button type="button" class="status-toast-close" id="closeStatusToast" title="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Controls Panel -->
+        <aside class="controls-panel">
+            <button type="button" id="mobileMenuClose" class="mobile-menu-close" aria-label="Close menu" title="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <!-- Active Filter Summary -->
+            <div class="controls-section" id="filterSummary" style="display: none;">
+                <h3><i class="fas fa-eye"></i> Current View</h3>
+                <div class="current-view-summaries">
+                    <button type="button" class="cv-detail cv-clickable" data-section="date" title="Click to edit date range">
+                        <i class="fas fa-calendar"></i> <span id="summaryDate">−1 Day (12Z)</span>
+                    </button>
+                    <button type="button" class="cv-detail cv-clickable" data-section="location" title="Click to edit location">
+                        <i class="fas fa-map-marker-alt"></i> <span id="summaryLocation">All US</span>
+                    </button>
+                    <button type="button" class="cv-detail cv-clickable" data-section="weather" title="Click to edit weather types">
+                        <i class="fas fa-cloud"></i> <span id="summaryTypes">All types</span>
+                    </button>
+                </div>
+                <div class="cv-actions">
+                    <a href="playback.html?mode=live" id="openLive" class="btn-toggle-action" style="text-decoration: none;" title="Live mode: reports, radar and warnings that refresh every minute (opens the Playback &amp; Live page)">
+                        <i class="fas fa-satellite-dish"></i> Live
+                    </a>
+                    <a href="playback.html" id="openPlayback" class="btn-toggle-action" style="text-decoration: none;" title="Replay this date range over time with radar and warnings">
+                        <i class="fas fa-play-circle"></i> Playback
+                    </a>
+                    <button type="button" id="clearAllFilters" class="btn-toggle-action" title="Reset filters">
+                        <i class="fas fa-redo-alt"></i> Reset
+                    </button>
+                </div>
+                <div class="cv-share-export">
+                    <button type="button" id="shareLink" class="btn-toggle-action" title="Share current view - Copy link with filters (Shortcut: S)">
+                        <i class="fas fa-link"></i> Share
+                    </button>
+                    <button type="button" id="exportData" class="btn-toggle-action" title="Export data - Download as CSV or JSON (Shortcut: E)">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <h3><i class="fas fa-filter"></i> Filters</h3>
+
+                <!-- Date Range -->
+                <div class="control-group collapsible" data-section="date">
+                    <div class="control-group-header">
+                        <h4><i class="fas fa-calendar-alt"></i> Date Range</h4>
+                        <button type="button" class="collapse-toggle" aria-label="Toggle section">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="control-group-content">
+                    <div class="date-presets">
+                        <button type="button" class="btn-preset" data-preset="6h" title="Load reports from the last 6 hours">Last 6h</button>
+                        <button type="button" class="btn-preset" data-preset="12h" title="Load reports from the last 12 hours">Last 12h</button>
+                        <button type="button" class="btn-preset" data-preset="24h" title="Load reports from the last 24 hours">Last 24h</button>
+                        <button type="button" class="btn-preset" data-preset="48h" title="Load reports from the last 48 hours">Last 48h</button>
+                        <button type="button" class="btn-preset" data-preset="week" title="Load reports from the last 7 days">Last Week</button>
+                        <button type="button" class="btn-preset" data-preset="custom" title="Set custom date and time range">Custom</button>
+                    </div>
+                    <div id="customDateFields" style="display: none;">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" class="form-control">
+                        <label for="startHour">Start Time (UTC):</label>
+                        <input type="text" id="startHour" class="form-control" inputmode="numeric" autocomplete="off" placeholder="HHMM" pattern="^([01]\d|2[0-3])[0-5]\d$" title="24-hour UTC time (HHMM)">
+                        <label for="endDate">End Date:</label>
+                        <input type="date" id="endDate" class="form-control">
+                        <label for="endHour">End Time (UTC):</label>
+                        <input type="text" id="endHour" class="form-control" inputmode="numeric" autocomplete="off" placeholder="HHMM" pattern="^([01]\d|2[0-3])[0-5]\d$" title="24-hour UTC time (HHMM)">
+                    </div>
+                    <div class="date-shift-buttons">
+                        <button type="button" id="shiftDateBackward" class="btn btn-secondary" title="Back one day: with a quick preset sets 12:00–12:00 UTC; in Custom keeps your times">
+                            <i class="fas fa-chevron-left"></i> -1 Day
+                        </button>
+                        <button type="button" id="shiftDateForward" class="btn btn-secondary" title="Forward one day: with a quick preset sets 12:00–12:00 UTC; in Custom keeps your times">
+                            +1 Day <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div id="actionButtons" style="display: none;">
+                        <button type="button" id="fetchData" class="btn btn-primary" title="Fetch storm reports for selected date range and filters (Shortcut: G)">
+                            <i class="fas fa-search"></i> <span class="btn-text">Get Data</span>
+                            <span class="btn-loading" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
+                            </span>
+                        </button>
+                        <button type="button" id="autoRefresh" class="btn btn-secondary" title="Automatically refresh data every 5 minutes">
+                            <i class="fas fa-sync-alt"></i> Auto Refresh
+                        </button>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- State/Region Selector -->
+                <div class="control-group collapsible" data-section="location">
+                    <div class="control-group-header">
+                        <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
+                        <button type="button" class="collapse-toggle" aria-label="Toggle section">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="control-group-content">
+                    <label for="regionSelect">Select State or Region:</label>
+                    <select id="regionSelect" class="form-control">
+                        <option value="">All (United States)</option>
+                        <optgroup label="Regions">
+                            <option value="northeast">Northeast</option>
+                            <option value="southeast">Southeast</option>
+                            <option value="midwest">Midwest</option>
+                            <option value="southwest">Southwest</option>
+                            <option value="west">West</option>
+                            <option value="pacific">Pacific</option>
+                            <option value="pacific_northwest">Pacific Northwest</option>
+                            <option value="southwest_desert">Southwest Desert</option>
+                            <option value="rockies_intermountain">Rockies / Intermountain</option>
+                            <option value="southern_plains">Southern Plains</option>
+                            <option value="northern_plains">Northern Plains</option>
+                            <option value="great_lakes">Great Lakes</option>
+                            <option value="gulf_coast">Gulf Coast</option>
+                            <option value="central">Central</option>
+                            <option value="east">East</option>
+                        </optgroup>
+                        <optgroup label="NWS Administrative Regions">
+                            <option value="nws_eastern">NWS Eastern</option>
+                            <option value="nws_southern">NWS Southern</option>
+                            <option value="nws_central">NWS Central</option>
+                            <option value="nws_western">NWS Western</option>
+                            <option value="nws_alaska">NWS Alaska</option>
+                            <option value="nws_pacific">NWS Pacific</option>
+                        </optgroup>
+                        <optgroup label="States">
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                            <option value="PR">Puerto Rico</option>
+                        </optgroup>
+                    </select>
+                    <button type="button" id="clearBounds" class="btn btn-small" title="Clear location filter and reset to full United States">
+                        <i class="fas fa-times"></i> Clear Location
+                    </button>
+                    <label for="wfoSelect">Select WFO:</label>
+                    <select id="wfoSelect" class="form-control">
+                        <option value="">Select WFO...</option>
+                    </select>
+                    </div>
+                </div>
+
+                <!-- Weather Type Filter -->
+                <div class="control-group collapsible" data-section="weather">
+                    <div class="control-group-header">
+                        <h4><i class="fas fa-cloud"></i> Weather Types</h4>
+                        <button type="button" class="collapse-toggle" aria-label="Toggle section">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="control-group-content">
+                        <div class="filter-header">
+                            <div class="filter-toggles">
+                                <button type="button" id="selectAllTypes" class="btn-toggle" title="Select all weather types">All</button>
+                                <button type="button" id="selectNoneTypes" class="btn-toggle" title="Deselect all weather types">None</button>
+                            </div>
+                        </div>
+                        <div class="quick-filters">
+                            <button type="button" id="quickFilterSevere" class="btn-quick-filter" title="Filter to show only severe weather: Tornado, funnel cloud, waterspout, thunderstorm, hail">
+                                <i class="fas fa-exclamation-triangle"></i> Severe
+                            </button>
+                            <button type="button" id="quickFilterWinter" class="btn-quick-filter" title="Filter to show only winter weather: Snow, Sleet, Freezing Rain, Ice">
+                                <i class="fas fa-snowflake"></i> Winter
+                            </button>
+                            <button type="button" id="quickFilterPrecip" class="btn-quick-filter" title="Filter to show only precipitation: Rain, Flood, Coastal Flooding, Snow, Sleet, Freezing Rain, Ice">
+                                <i class="fas fa-cloud-rain"></i> Precip
+                            </button>
+                            <button type="button" id="quickFilterTropical" class="btn-quick-filter" title="Filter to show only tropical impacts: Rain, Flood, Coastal Flooding, Tropical">
+                                <i class="fas fa-hurricane"></i> Tropical
+                            </button>
+                        </div>
+                        <div class="weather-type-chips" id="weatherTypeFilters">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warnings Layers -->
+                <div class="control-group collapsible" data-section="warnings">
+                    <div class="control-group-header">
+                        <h4><i class="fas fa-exclamation-circle"></i> Warnings</h4>
+                        <button type="button" class="collapse-toggle" aria-label="Toggle section">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="control-group-content">
+                        <div class="warnings-layer-toggles">
+                            <label class="warnings-layer-toggle">
+                                <input type="checkbox" id="toggleShortFuseWarnings">
+                                <span>Short-Fuse Warnings</span>
+                            </label>
+                            <label class="warnings-layer-toggle">
+                                <input type="checkbox" id="toggleAllWarnings">
+                                <span>All Active Warnings</span>
+                            </label>
+                            <label class="warnings-layer-toggle">
+                                <input type="checkbox" id="toggleAllWatches">
+                                <span>All Active Watches</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Public Information Statements -->
+                <div class="control-group collapsible" data-section="pns">
+                    <div class="control-group-header">
+                        <h4><i class="fas fa-file-alt"></i> Public Information Statements (PNS)</h4>
+                        <button type="button" class="collapse-toggle" aria-label="Toggle section">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="control-group-content">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="showPNS">
+                            <span>Show NWS Public Information Statements</span>
+                        </label>
+                        <div class="pns-description">
+                            <p>
+                                <strong>What are PNS?</strong> Public Information Statements are detailed text products issued by NWS Weather Forecast Offices containing weather observations, storm summaries, and significant weather data.
+                            </p>
+                            <p>
+                                <strong>Data includes:</strong> Snow totals, rainfall amounts, wind gusts, temperatures, ice accumulation, flood reports, and other significant weather measurements from observers and automated stations.
+                            </p>
+                            <p>
+                                <small><i class="fas fa-map-marker-alt"></i> PNS reports with embedded coordinates are plotted at their exact location. Others are placed at the issuing WFO office. Click markers to view full details.</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Insights (Statistics & Top Reports) -->
+                <div class="control-group collapsible" id="dataInsightsPanel" style="display: none;" data-section="insights">
+                    <div class="control-group-header">
+                        <h4><i class="fas fa-chart-line"></i> Data Insights</h4>
+                        <button type="button" class="collapse-toggle" aria-label="Toggle section">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="control-group-content">
+                        <div id="statisticsContent" class="statistics-content">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                        <button type="button" id="showTopReports" class="btn btn-secondary btn-full" style="display: none;">
+                            <i class="fas fa-trophy"></i> View Top 10 Reports
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Top 10 Reports Modal -->
+                <div id="topReportsModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-trophy"></i> Top 10 Highest Magnitude Reports</h3>
+                            <button type="button" class="modal-close" id="closeTopReports" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="topReportsContent">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PNS Modal -->
+                <div id="pnsModal" class="modal pns-modal">
+                    <div class="modal-content pns-modal-content">
+                        <div class="modal-header pns-modal-header">
+                            <div class="pns-modal-title">
+                                <span class="pns-modal-icon">📋</span>
+                                <div>
+                                    <h3>Public Information Statement</h3>
+                                    <span class="pns-modal-office" id="pnsModalOffice"></span>
+                                </div>
+                            </div>
+                            <button type="button" class="modal-close" id="closePnsModal" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="pns-modal-meta">
+                            <span class="pns-modal-time" id="pnsModalTime"></span>
+                            <a href="#" id="pnsModalLink" target="_blank" class="pns-modal-link">
+                                <i class="fas fa-external-link-alt"></i> View on NWS
+                            </a>
+                        </div>
+                        <div class="modal-body pns-modal-body">
+                            <pre id="pnsModalText" class="pns-modal-text"></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Legend -->
+            <div class="controls-section collapsible-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-info-circle"></i> Legend</h3>
+                    <button type="button" class="collapse-toggle" aria-label="Toggle legend">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="section-content">
+                    <div id="legend" class="legend">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                    <div class="legend-magnitude">
+                        <div class="legend-magnitude-title" id="magnitudeLegendTitle">Magnitude Scale</div>
+                        <div id="magnitudeLegend" class="legend-magnitude-body">
+                            <div class="legend-magnitude-empty">Click a report marker to see the magnitude scale.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Help/Keyboard Shortcuts Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-keyboard"></i> Keyboard Shortcuts &amp; Help</h3>
+                    <button type="button" class="modal-close" id="closeHelpModal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="help-section">
+                        <h4><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h4>
+                        <div class="shortcuts-list">
+                            <div class="shortcut-item">
+                                <kbd>G</kbd>
+                                <span>Get Data / Fetch Reports</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>C</kbd>
+                                <span>Clear Map</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>S</kbd>
+                                <span>Share Link</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>E</kbd>
+                                <span>Export Data</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>?</kbd>
+                                <span>Show Help (this dialog)</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Esc</kbd>
+                                <span>Close Modals</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="help-section">
+                        <h4><i class="fas fa-lightbulb"></i> Tips</h4>
+                        <ul class="tips-list">
+                            <li>With a quick preset, <strong>−1 Day / +1 Day</strong> shifts dates and sets times to <strong>12:00 UTC</strong> on both ends. In <strong>Custom</strong>, the same buttons keep your times and only shift dates.</li>
+                            <li>Quick filters (Severe, Winter, Precip, Tropical) help focus on specific weather types</li>
+                            <li>Zoom in to see more markers when limited by performance</li>
+                            <li>Click markers to view detailed report information</li>
+                            <li>Use the Top 10 Reports feature to see highest magnitude events</li>
+                            <li>Share links preserve your current filters and date range</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- First Visit Tutorial Modal -->
+        <div id="tutorialModal" class="modal tutorial-modal">
+            <div class="modal-content tutorial-content">
+                <div class="tutorial-header">
+                    <h2><i class="fas fa-graduation-cap"></i> Welcome to NWS Local Storm Reports</h2>
+                    <button type="button" class="modal-close" id="closeTutorialModal" title="Skip tutorial" aria-label="Skip tutorial">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="tutorial-body">
+                    <div class="tutorial-step active" data-step="1">
+                        <div class="tutorial-icon">🗺️</div>
+                        <h3>Interactive Storm Report Map</h3>
+                        <p>View real-time and historical storm reports from the National Weather Service across the United States, Alaska, Hawaii, and Puerto Rico.</p>
+                        <p><strong>Tip:</strong> Click any marker to see detailed report information.</p>
+                    </div>
+                    <div class="tutorial-step" data-step="2">
+                        <div class="tutorial-icon">📅</div>
+                        <h3>Quick Date Presets</h3>
+                        <p>Use the quick presets (Last 6h through Last Week) for instant loading, or choose Custom for full control. The <strong>−1 Day / +1 Day</strong> buttons shift by one calendar day: with a preset they snap to <strong>12:00–12:00 UTC</strong>; in Custom they keep your start and end times.</p>
+                        <p><strong>Tip:</strong> Date presets automatically fetch data - no need to click "Get Data"!</p>
+                    </div>
+                    <div class="tutorial-step" data-step="3">
+                        <div class="tutorial-icon">📍</div>
+                        <h3>Filter by Location</h3>
+                        <p>Filter reports by state, region, or view all US data. The map will automatically zoom to your selection.</p>
+                        <p><strong>Tip:</strong> Click summary items in "Current View" to jump to filter sections.</p>
+                    </div>
+                    <div class="tutorial-step" data-step="4">
+                        <div class="tutorial-icon">🌩️</div>
+                        <h3>Weather Type Filters</h3>
+                        <p>Filter by specific weather types (Rain, Snow, Hail, Tornado, etc.) or use quick filters like "Severe", "Winter", "Precip", or "Tropical".</p>
+                        <p><strong>Tip:</strong> Click "All" or "None" buttons to quickly toggle all weather types.</p>
+                    </div>
+                    <div class="tutorial-step" data-step="5">
+                        <div class="tutorial-icon">📋</div>
+                        <h3>Public Information Statements (PNS)</h3>
+                        <p>Enable PNS to see detailed weather observations from NWS offices. PNS reports include snow totals, rainfall amounts, wind gusts, temperatures, ice accumulation, and other significant measurements.</p>
+                        <p><strong>Tip:</strong> PNS reports with coordinates appear at exact locations. Click any marker to view the full statement text with all observer details.</p>
+                    </div>
+                    <div class="tutorial-step" data-step="6">
+                        <div class="tutorial-icon">⚡</div>
+                        <h3>Playback, Live &amp; Sharing</h3>
+                        <p>"Playback" replays the current date range over time with radar and the warnings in effect. "Live" follows the latest reports, radar and warnings, refreshing every minute. Use "Share" to copy a link with your current filters, or "Export" to download data.</p>
+                        <p><strong>Tip:</strong> Keyboard shortcuts: G (Get Data), C (Clear), S (Share), E (Export), ? (Help)</p>
+                    </div>
+                </div>
+                <div class="tutorial-footer">
+                    <div class="tutorial-progress">
+                        <span id="tutorialStepCount">1</span> / <span id="tutorialTotalSteps">6</span>
+                    </div>
+                    <div class="tutorial-actions">
+                        <button type="button" class="btn btn-secondary" id="tutorialPrev" style="display: none;">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="tutorialSkip">
+                            Skip Tutorial
+                        </button>
+                        <button type="button" class="btn btn-primary" id="tutorialNext">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary" id="tutorialFinish" style="display: none;">
+                            Get Started <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Options Modal -->
+        <div id="exportModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-download"></i> Export Data</h3>
+                    <button type="button" class="modal-close" id="closeExportModal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="export-description">
+                        Export <strong id="exportCount">0</strong> reports in your preferred format:
+                    </p>
+                    <div class="export-options">
+                        <button type="button" class="export-option-btn" data-format="csv">
+                            <span class="export-option-icon">
+                                <i class="fas fa-file-csv"></i>
+                            </span>
+                            <span class="export-option-content">
+                                <span class="export-option-title">CSV (Spreadsheet)</span>
+                                <span class="export-option-desc">Compatible with Excel, Google Sheets</span>
+                            </span>
+                        </button>
+                        <button type="button" class="export-option-btn" data-format="json">
+                            <span class="export-option-icon">
+                                <i class="fas fa-file-code"></i>
+                            </span>
+                            <span class="export-option-content">
+                                <span class="export-option-title">JSON (Data)</span>
+                                <span class="export-option-desc">Structured data format for developers</span>
+                            </span>
+                        </button>
+                        <button type="button" class="export-option-btn" data-format="geojson">
+                            <span class="export-option-icon">
+                                <i class="fas fa-map"></i>
+                            </span>
+                            <span class="export-option-content">
+                                <span class="export-option-title">GeoJSON (Map Data)</span>
+                                <span class="export-option-desc">Geographic data for mapping applications</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        <main class="map-container">
+            <div id="map"></div>
+            <div class="map-stats" id="mapStats">
+                <span id="reportCount">0</span> reports displayed
+            </div>
+            <div class="map-controls">
+                <button type="button" id="resetView" class="map-control-btn" title="Reset to default US view">
+                    <i class="fas fa-home"></i> Reset View
+                </button>
+                <button type="button" id="myLocation" class="map-control-btn" title="Center map on your location">
+                    <i class="fas fa-crosshairs"></i> My Location
+                </button>
+                <button type="button" id="clearMapBtn" class="map-control-btn" title="Clear all markers from map (Shortcut: C)">
+                    <i class="fas fa-trash"></i> Clear Map
+                </button>
+            </div>
+            <!-- Performance Feedback Banner -->
+            <div id="performanceBanner" class="performance-banner" style="display: none;">
+                <div class="performance-banner-content">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="performanceBannerText"></span>
+                    <button type="button" class="performance-banner-close" id="closePerformanceBanner" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Loading Progress Indicator -->
+            <div id="loadingProgress" class="loading-progress" style="display: none;">
+                <div class="loading-progress-bar">
+                    <div class="loading-progress-fill" id="loadingProgressFill"></div>
+                </div>
+                <div class="loading-progress-text" id="loadingProgressText">Loading reports...</div>
+            </div>
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">🌩️</div>
+                <h3 class="empty-state-title">No Reports Found</h3>
+                <p class="empty-state-message">Try adjusting your filters or date range to see storm reports.</p>
+                <div class="empty-state-actions">
+                    <button type="button" class="btn btn-primary" id="emptyStateGetData">
+                        <i class="fas fa-search"></i> Get Data
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PMTiles reader (self-hosted basemap; global "pmtiles"). MapLibre GL is imported by app.js -->
+    <script src="lib/pmtiles/pmtiles.js"></script>
+
+    <!-- Configuration -->
+    <script src="config.js"></script>
+
+    <!-- Application JS (now modular) -->
+    <script type="module" src="app.js"></script>
+
+    <!-- Fallback for browsers without ES6 module support -->
+    <script nomodule>
+        alert('This application requires a modern browser with ES6 module support. Please update your browser.');
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Replay NWS Local Storm Reports over time with archived radar and warnings, or follow them live.">
+    <!-- Content Security Policy: same as index.html (matches .htaccess) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://mesonet.agron.iastate.edu; font-src 'self'; connect-src 'self' https://api.weather.gov https://mesonet.agron.iastate.edu https://mapservices.weather.noaa.gov;">
+    <title>NWS Local Storm Reports - Playback &amp; Live</title>
+    <link rel="stylesheet" href="lib/maplibre/maplibre-gl.css">
+    <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="playback.css">
+</head>
+<body>
+    <div class="pb-app">
+        <header class="header pb-header">
+            <h1><i class="fas fa-cloud-showers-heavy"></i> <span>Storm Reports</span> <span class="pb-mode-title" id="modeTitle">Playback</span></h1>
+            <div class="header-actions">
+                <a href="index.html" class="header-action-btn" id="linkMainMap" title="Back to the main map with the same filters" style="text-decoration: none;">
+                    <i class="fas fa-map"></i>
+                    <span class="header-action-label">Map</span>
+                </a>
+                <button type="button" id="darkModeToggle" class="header-action-btn" title="Toggle dark mode">
+                    <i class="fas fa-moon" id="darkModeIcon"></i>
+                    <span class="header-action-label">Dark Mode</span>
+                </button>
+            </div>
+            <div id="statusToast" class="status-toast" style="display: none;">
+                <span id="statusToastMessage"></span>
+                <button type="button" class="status-toast-close" id="closeStatusToast" title="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="pb-main">
+            <div id="map"></div>
+
+            <!-- Settings panel -->
+            <section class="pb-panel" id="settingsPanel" aria-label="Playback settings">
+                <div class="pb-panel-header">
+                    <div class="pb-segmented" role="group" aria-label="Mode">
+                        <button type="button" id="modePlayback" class="active" aria-pressed="true"><i class="fas fa-history"></i> Playback</button>
+                        <button type="button" id="modeLive" aria-pressed="false"><i class="fas fa-satellite-dish"></i> Live</button>
+                    </div>
+                    <button type="button" class="pb-icon-btn" id="togglePanel" title="Collapse settings" aria-expanded="true" aria-controls="panelBody">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+                <div class="pb-panel-body" id="panelBody">
+                    <div class="pb-field" id="rangeFields">
+                        <span class="pb-label">Time range (UTC)</span>
+                        <div class="pb-presets" id="rangePresets">
+                            <button type="button" data-hours="6">6h</button>
+                            <button type="button" data-hours="12">12h</button>
+                            <button type="button" data-hours="24">24h</button>
+                            <button type="button" data-hours="48">48h</button>
+                            <button type="button" data-hours="168">7d</button>
+                        </div>
+                        <label class="pb-inline">From <input type="datetime-local" id="rangeStart" step="300"></label>
+                        <label class="pb-inline">To <input type="datetime-local" id="rangeEnd" step="300"></label>
+                    </div>
+                    <div class="pb-field" id="liveFields" hidden>
+                        <span class="pb-label">Live window</span>
+                        <div class="pb-presets" id="livePresets">
+                            <button type="button" data-hours="3">3h</button>
+                            <button type="button" data-hours="6">6h</button>
+                            <button type="button" data-hours="12">12h</button>
+                            <button type="button" data-hours="24">24h</button>
+                        </div>
+                        <div class="pb-live-status"><i class="fas fa-sync-alt"></i> Refreshes every <span id="liveRefreshSeconds">60</span>s &middot; updated <span id="liveUpdated">--</span></div>
+                    </div>
+                    <label class="pb-field">
+                        <span class="pb-label">Location</span>
+                        <select id="regionSelect" class="form-control"></select>
+                    </label>
+                    <label class="pb-field">
+                        <span class="pb-label">Report types</span>
+                        <select id="typeSelect" class="form-control">
+                            <option value="all">All types</option>
+                            <option value="SEVERE">Severe (tornado, hail, thunderstorm)</option>
+                            <option value="WINTER">Winter</option>
+                            <option value="PRECIP">Precipitation</option>
+                            <option value="TROPICAL">Tropical</option>
+                        </select>
+                    </label>
+                    <div class="pb-field pb-checks">
+                        <label><input type="checkbox" id="showRadar" checked> Radar</label>
+                        <label><input type="checkbox" id="showWarnings" checked> Warnings in effect</label>
+                    </div>
+                    <div class="pb-field" id="radarFields">
+                        <label class="pb-inline" for="radarOpacity"><span class="pb-label">Radar opacity</span> <span id="radarOpacityValue">70%</span></label>
+                        <input type="range" id="radarOpacity" min="30" max="100" step="5" value="70">
+                        <div class="pb-legend" aria-label="Radar reflectivity color scale (dBZ)">
+                            <div class="pb-legend-bar" id="radarLegendBar"></div>
+                            <div class="pb-legend-ticks" id="radarLegendTicks"></div>
+                            <div class="pb-legend-caption">Reflectivity (dBZ) &middot; NEXRAD composite, IEM</div>
+                        </div>
+                    </div>
+                    <label class="pb-field">
+                        <span class="pb-label">Highlight reports from the last</span>
+                        <select id="trailSelect" class="form-control">
+                            <option value="15">15 minutes</option>
+                            <option value="30">30 minutes</option>
+                            <option value="60" selected>1 hour</option>
+                            <option value="180">3 hours</option>
+                        </select>
+                    </label>
+                    <button type="button" id="loadButton" class="btn btn-primary pb-load"><i class="fas fa-download"></i> Load</button>
+                </div>
+            </section>
+
+            <!-- Timeline -->
+            <section class="pb-timeline" aria-label="Timeline">
+                <div class="pb-transport">
+                    <button type="button" class="pb-icon-btn" id="btnStart" title="Go to start (Home)"><i class="fas fa-step-backward"></i></button>
+                    <button type="button" class="pb-icon-btn" id="btnBack" title="Step back (Left arrow)"><i class="fas fa-backward"></i></button>
+                    <button type="button" class="pb-play" id="btnPlay" title="Play / pause (Space)"><i class="fas fa-play"></i></button>
+                    <button type="button" class="pb-icon-btn" id="btnForward" title="Step forward (Right arrow)"><i class="fas fa-forward"></i></button>
+                    <button type="button" class="pb-icon-btn" id="btnEnd" title="Go to end (End)"><i class="fas fa-step-forward"></i></button>
+                    <button type="button" class="pb-live-badge" id="btnGoLive" hidden title="Jump back to now"><span class="pb-dot"></span> LIVE</button>
+                </div>
+                <div class="pb-track-wrap">
+                    <div class="pb-track" id="track">
+                        <svg id="histogram" aria-hidden="true"></svg>
+                        <div class="pb-playhead" id="playhead"></div>
+                        <input type="range" id="scrubber" min="0" max="0" value="0" step="1" aria-label="Playback time">
+                        <div class="pb-tooltip" id="trackTooltip" hidden></div>
+                    </div>
+                    <div class="pb-axis" id="axis"></div>
+                </div>
+                <div class="pb-readout">
+                    <div class="pb-time" id="timeUtc">--</div>
+                    <div class="pb-time-local" id="timeLocal">&nbsp;</div>
+                    <div class="pb-count" id="reportCount">0 reports</div>
+                    <div class="pb-count" id="radarStatus" aria-live="polite">&nbsp;</div>
+                    <div class="pb-options">
+                        <label title="Step buttons and arrow keys move by this much">Step
+                            <select id="stepSelect">
+                                <option value="5">5 min</option>
+                                <option value="10">10 min</option>
+                                <option value="15">15 min</option>
+                                <option value="30">30 min</option>
+                                <option value="60">1 hr</option>
+                            </select>
+                        </label>
+                        <label title="Weather time played per second">Speed
+                            <select id="speedSelect">
+                                <option value="5">5 min/s</option>
+                                <option value="10">10 min/s</option>
+                                <option value="15">15 min/s</option>
+                                <option value="30" selected>30 min/s</option>
+                                <option value="60">1 h/s</option>
+                                <option value="120">2 h/s</option>
+                                <option value="240">4 h/s</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PMTiles reader (self-hosted basemap; global "pmtiles"). MapLibre GL is imported by playback.js -->
+    <script src="lib/pmtiles/pmtiles.js"></script>
+    <script src="config.js"></script>
+    <script type="module" src="playback.js"></script>
+    <script nomodule>
+        alert('This application requires a modern browser with ES6 module support. Please update your browser.');
+    </script>
+</body>
+</html>
