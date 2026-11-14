@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Phillies 2027 Offseason Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: the same navy scoreboard band as the lineup study, then the plan in the order
+   a front office would execute it: moves, the roster they produce, the value, the cost, the clock. */
+:root{
+  --paper:#f2f4f8;--surface:#ffffff;--surface-2:#eef1f6;--ink:#0f1d36;--ink-2:#3d4a61;--muted:#667288;
+  --line:#dbe1ea;--line-strong:#b9c3d2;--red:#d4202f;--red-ink:#b3141f;--navy:#002d72;--blue:#2a78d6;
+  --hero-bg:#0a2350;--hero-ink:#ffffff;--hero-2:#c4d3ec;--hero-line:rgba(255,255,255,.18);
+  --chip-trade-bg:#e6f0fb;--chip-trade:#1c5cab;--chip-sign-bg:#fdecee;--chip-sign:#b3141f;--chip-move-bg:#eef1f6;--chip-move:#3d4a61;
+  --field:#e3efe6;--field-line:#b7d0bd;--dirt:#ead9c4;
+  --shadow:0 1px 2px rgba(15,29,54,.06),0 8px 24px rgba(15,29,54,.06);
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0b1220;--surface:#121b2d;--surface-2:#18233a;--ink:#e9eef7;--ink-2:#c3cde0;--muted:#8f9bb2;
+  --line:#243149;--line-strong:#34445f;--red:#ee3a48;--red-ink:#ff8a93;--navy:#8fb4ff;--blue:#3987e5;
+  --hero-bg:#081530;--hero-ink:#ffffff;--hero-2:#aebfdc;--hero-line:rgba(255,255,255,.14);
+  --chip-trade-bg:#15325c;--chip-trade:#9ec5f4;--chip-sign-bg:#4a1a22;--chip-sign:#ff9aa2;--chip-move-bg:#18233a;--chip-move:#c3cde0;
+  --field:#14281d;--field-line:#24432f;--dirt:#3a2e22;
+  --shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0b1220;--surface:#121b2d;--surface-2:#18233a;--ink:#e9eef7;--ink-2:#c3cde0;--muted:#8f9bb2;
+  --line:#243149;--line-strong:#34445f;--red:#ee3a48;--red-ink:#ff8a93;--navy:#8fb4ff;--blue:#3987e5;
+  --hero-bg:#081530;--hero-ink:#ffffff;--hero-2:#aebfdc;--hero-line:rgba(255,255,255,.14);
+  --chip-trade-bg:#15325c;--chip-trade:#9ec5f4;--chip-sign-bg:#4a1a22;--chip-sign:#ff9aa2;--chip-move-bg:#18233a;--chip-move:#c3cde0;
+  --field:#14281d;--field-line:#24432f;--dirt:#3a2e22;
+  --shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--body);font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:.01em;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,4.2vw,44px);line-height:1;font-weight:700;text-transform:uppercase}
+h3{font-size:22px;line-height:1.05;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.kicker{display:block;font:700 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.lead{color:var(--ink-2);max-width:70ch;margin:10px 0 0}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+.hero{background:var(--hero-bg);color:var(--hero-ink);padding-block:44px 34px;border-bottom:6px solid var(--red)}
+.hero .kicker{color:#ff9aa2}
+.hero h1{font-size:clamp(44px,7vw,86px);line-height:.9;font-weight:800;text-transform:uppercase;margin:12px 0 16px}
+.hero h1 span{color:#ff5a67}
+.hero p{color:var(--hero-2);max-width:66ch;margin:0}
+.hero p strong{color:var(--hero-ink)}
+.hero-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--hero-line);margin-top:26px}
+.hero-facts div{padding:14px 14px 0 0}
+.hero-facts strong{display:block;font:700 36px/1 var(--display)}
+.hero-facts span{display:block;font-size:13px;color:var(--hero-2);margin-top:4px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:22px;overflow-x:auto;padding-block:11px}
+nav.toc a{font:700 13px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+nav.toc a:hover{color:var(--red)}
+nav.toc a.ext{margin-left:auto;color:var(--red)}
+main{padding-bottom:72px}
+main section{padding-block:56px 0}
+.section-head{margin-bottom:22px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow);min-width:0}
+.fine{font-size:13px;color:var(--muted)}
+/* moves */
+.moves{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:move}
+.move{display:grid;grid-template-columns:52px minmax(0,1fr) 220px;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow)}
+.move .n{font:800 34px/1 var(--display);color:var(--red)}
+.move h3{font-size:23px}
+.chip{display:inline-block;font:700 11px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;margin-right:6px;vertical-align:3px}
+.chip.trade{background:var(--chip-trade-bg);color:var(--chip-trade)}
+.chip.sign{background:var(--chip-sign-bg);color:var(--chip-sign)}
+.chip.move-c{background:var(--chip-move-bg);color:var(--chip-move)}
+.move p{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+.move p b{color:var(--ink)}
+.move .side{border-left:1px solid var(--line);padding-left:16px;font-size:14px;color:var(--ink-2)}
+.move .side strong{display:block;font:700 26px/1 var(--display);color:var(--ink)}
+.move .side span{display:block;color:var(--muted);font-size:12.5px;margin-bottom:8px}
+/* lineup */
+.roster-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line-strong);border-top:8px solid var(--navy);border-radius:6px;box-shadow:var(--shadow);min-width:0}
+.card header{padding:14px 16px 10px;border-bottom:2px solid var(--ink)}
+.card header h3{font-size:24px}
+.card header span{font-size:12.5px;color:var(--muted)}
+.card ol{list-style:none;margin:0;padding:0}
+.card li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:8px 16px;border-bottom:1px solid var(--line);font-size:15px}
+.card li:last-child{border-bottom:0}
+.card li b{font:800 22px/1 var(--display);color:var(--red)}
+.card li em{font-style:normal;font-weight:700;font-size:13px;color:var(--ink-2)}
+.card li .new{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--red-ink);margin-left:6px}
+.field-wrap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:var(--shadow)}
+.field-wrap svg{display:block;width:100%;height:auto}
+.f-grass{fill:var(--field)}.f-dirt{fill:var(--dirt)}.f-line{stroke:var(--field-line);stroke-width:2;fill:none}
+.f-name{fill:var(--ink);font:700 16px var(--body)}.f-pos{fill:var(--red);font:800 15px var(--display);letter-spacing:.06em}
+.f-sub{fill:var(--muted);font:600 13px var(--body)}
+.staff{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+.staff .panel h3{font-size:19px;margin-bottom:8px}
+.staff ul{list-style:none;margin:0;padding:0;font-size:14.5px}
+.staff li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.staff li:last-child{border-bottom:0}
+.staff li span{color:var(--muted);font-size:13px;text-align:right}
+/* value chart */
+.value-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
+.chart-wrap{overflow-x:auto}
+svg.chart{display:block;width:100%;min-width:520px;height:auto;font-family:var(--body)}
+.grid{stroke:var(--line);stroke-width:1}.zero{stroke:var(--line-strong);stroke-width:1.5}
+.tick{fill:var(--muted);font-size:12px}.rowlabel{fill:var(--ink);font-size:14px;font-weight:600}
+.bar{fill:var(--blue)}.err{stroke:var(--ink-2);stroke-width:1.5}.vlabel{fill:var(--ink);font-size:13px;font-weight:700}
+.bigstat strong{display:block;font:800 64px/1 var(--display);color:var(--red)}
+.bigstat span{display:block;color:var(--ink-2)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:14.5px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--surface-2);color:var(--ink-2);font:700 12px var(--body);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+tr.total td{font-weight:700;background:var(--surface-2)}
+/* timeline */
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.timeline li:last-child{border-bottom:0}
+.timeline time{font:700 18px/1.1 var(--display);text-transform:uppercase;color:var(--navy)}
+.timeline li.freeze time{color:var(--red)}
+.timeline p{margin:0;color:var(--ink-2)}
+.miller{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;position:relative}
+.step time{display:block;font:700 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.step h4{font-size:21px;text-transform:uppercase;margin:4px 0 6px}
+.step p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.risks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.risk{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:14px 16px}
+.risk h4{font-size:19px;text-transform:uppercase}
+.risk p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2)}
+.method{columns:2;column-gap:36px;color:var(--ink-2);font-size:15px}
+.method p{margin:0 0 12px;break-inside:avoid}
+.method strong{color:var(--ink)}
+footer.page{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding-block:26px}
+#tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:7px 10px;border-radius:6px;max-width:280px;box-shadow:var(--shadow)}
+@media (max-width:980px){.roster-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.field-wrap{grid-column:1 / -1}.value-grid{grid-template-columns:minmax(0,1fr)}.miller{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){
+  .hero-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .move{grid-template-columns:36px minmax(0,1fr)}.move .side{grid-column:2;border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:10px}
+  .roster-grid,.staff,.risks,.miller{grid-template-columns:minmax(0,1fr)}
+  .timeline li{grid-template-columns:minmax(0,1fr);gap:4px}.method{columns:1}
+}
+</style></head>
+<body>
+<header class="hero"><div class="wrap">
+<span class="kicker">Philadelphia Phillies · 2026-27 offseason</span>
+<h1>The full plan: <span>+10 wins.</span></h1>
+<p>The 2026 Phillies won 88 games but played like an <strong>83-win team</strong> (713 runs scored, 698 allowed). This plan fills right field, third base, catcher and the bullpen, moves Trea Turner to center field and Bryson Stott to shortstop, and keeps Aidan Miller as the 2028 infielder. Every move is designed to land before the labor deal expires on <strong>December 1</strong>.</p>
+<div class="hero-facts">
+<div><strong>~93</strong><span>projected 2027 wins (about 90–96 before season luck)</span></div>
+<div><strong>+105</strong><span>runs over the 2026 team's true talent</span></div>
+<div><strong>$380–395M</strong><span>luxury-tax payroll, a franchise record</span></div>
+<div><strong>Dec 1</strong><span>expected lockout; about four weeks to work</span></div>
+</div></div></header>
+
+<nav class="toc" aria-label="Sections"><div class="wrap">
+<a href="#moves">The moves</a><a href="#roster">2027 roster</a><a href="#value">Where the wins come from</a><a href="#cost">Cost</a><a href="#calendar">Calendar</a><a href="#miller">Aidan Miller</a><a href="#risks">Risks</a><a href="#method">Method</a><a class="ext" href="https://jkrek17.github.io/web/phillies/offseason/retool/">Retool plan →</a>
+</div></nav>
+
+<main class="wrap">
+<section id="moves">
+<div class="section-head"><span class="kicker">In priority order</span><h2>The moves</h2>
+<p class="lead">Scarce pieces first (a right-handed right fielder, a third baseman, a catcher who hits), fungible ones last. Each trade lists why the other club says yes.</p></div>
+<ol class="moves">
+<li class="move"><span class="n">1</span><div><h3>Hire the manager</h3><p>Before free agency opens. Alex Cora is reported as the presumed top target; Don Mattingly (79-55 as interim) wants the job. Free agents and their agents want to know who they are playing for, and the window is four weeks.</p></div>
+<div class="side"><strong>October</strong><span>No lockout effect</span></div></li>
+
+<li class="move"><span class="n">2</span><div><h3><span class="chip sign">Sign</span>Seiya Suzuki, right field</h3><p><b>3 years, $75–80M, plus a club option.</b> The best two-way fit on the market: a .345 projected wOBA, a 22.5% chase rate that attacks the 2026 offense's weakest area, +8 fielding runs in right with a strong arm, and a right-handed bat. He replaces a 2026 right-field group that projected around .300. He will carry a qualifying offer, so he costs the Phillies' 2nd- and 5th-highest 2027 picks.</p></div>
+<div class="side"><strong>~$26M</strong><span>per year · QO picks</span>about +20 runs</div></li>
+
+<li class="move"><span class="n">3</span><div><h3><span class="chip trade">Trade</span>Isaac Paredes, third base, from Houston</h3><p><b>Phillies give Bryan Rincon</b> (SS, top-100 prospect); add RHP Moisés Chace only if needed. <b>Houston says yes</b> because it sheds his $13.35M club option and gets a shortstop to cover Jeremy Peña's free agency after 2027, the same pattern as its Tucker and Bregman decisions. Paredes projects at .340 (his 2026 home/road split says the Crawford Boxes helped; Citizens Bank Park is the 5th-friendliest park for right-handed homers) and is about +9 fielding runs better than Bohm at third. Close after the mid-November MVP vote, which can turn his option mutual. Fallback: Bohm, 1 year at about $9M; Plan C: Teruaki Sato from Japan.</p></div>
+<div class="side"><strong>$13.35M</strong><span>1 year · costs Rincon</span>about +24 runs</div></li>
+
+<li class="move"><span class="n">4</span><div><h3><span class="chip sign">Sign</span>Ryan Jeffers, catcher</h3><p><b>3 years, $45–51M.</b> Catcher was the biggest production hole: Realmuto hit .276 wOBA at 36. Jeffers projects at .320–.325 after a hamate fracture, and Realmuto catches 50–60 games as the backup and right-handed bench bat. Jeffers will likely carry a qualifying offer (3rd- and 6th-highest picks) and is a Boras client, so have a contingency done by November 25: Shea Langeliers from the Athletics for a package without Gage Wood (Chace, Alirio Ferrebus, Escobar or Nori; the A's want pitching), or Carson Kelly at 2 years, $15M.</p></div>
+<div class="side"><strong>~$17M</strong><span>per year · QO picks</span>about +7 runs net of defense</div></li>
+
+<li class="move"><span class="n">5</span><div><h3><span class="chip move-c">Move</span>Turner to center, Stott to short; <span class="chip sign">Sign</span>Gleyber Torres, second base</h3><p><b>Torres: 1 year plus an option, about $15M.</b> Turner's 29.9 ft/s sprint speed beats Justin Crawford's, and his −8.7 fielding runs at shortstop came mostly from lost range. Stott was +4.1 at second and +1.9 at third. The switch lets a real bat play second: Torres's 18.9% chase rate is the lowest of the options. Crawford (.270 against lefties) goes to Triple-A or the bench to keep developing at 23. Torres is the bridge to Aidan Miller, so the deal stays short. Needs Turner's buy-in.</p></div>
+<div class="side"><strong>~$15M</strong><span>1 year + option</span>about +14 runs (+18 bat, −4 glove)</div></li>
+
+<li class="move"><span class="n">6</span><div><h3><span class="chip sign">Sign</span>Bullpen: Bednar, Vesia, Mayza</h3><p><b>David Bednar 3 years, $39M; Alex Vesia 2 years, $18M; re-sign Tim Mayza 1 year, $4M.</b> Alvarado (lost 2 mph, 11.4% walks), Banks and Raley combined for about 150 innings of 5.90 ERA. Two arms behind Jhoan Duran, not one, because Brad Keller is out after Tommy John surgery. Promote Luke Bowlan (97.1 mph fastball) and McFarlane into leverage roles; non-tender Banks. Adrián Morejón replaces Bednar only on three years and only without a qualifying offer.</p></div>
+<div class="side"><strong>~$26M</strong><span>per year combined</span>about +20 runs</div></li>
+
+<li class="move"><span class="n">7</span><div><h3><span class="chip sign">Sign</span>Jake Bauers, left field vs right-handers; <span class="chip trade">Trade</span>Brandon Marsh</h3><p><b>Bauers: 1 year, $8–10M, plus a club option.</b> A real step forward in 2026 (13.9% barrels, 21.7% chase) but one strong year after six weak ones, so project .335 and don't give two guaranteed years. He plays left against right-handers; Derek Hill (+2.9 fielding runs, about $1.2M) plays left against lefties. Then <b>trade Marsh</b>, a $7–8M fourth outfielder in his final arbitration year, for a middle reliever or salary room. The other club gets a lefty-hitting outfielder with speed and a year of control.</p></div>
+<div class="side"><strong>~$9M</strong><span>Marsh saves ~$7.5M</span>platoon bat</div></li>
+
+<li class="move"><span class="n">8</span><div><h3><span class="chip sign">Sign</span>A veteran starter and Edmundo Sosa</h3><p><b>One starter on a 1-year deal at $8–10M</b> (Nick Martinez, Kyle Freeland, or Brandon Woodruff as an incentive flier) plus Nestor Cortes on a minor-league deal: starters six through eight cost about 15 runs in 2026. <b>Re-sign Sosa</b>, 1 year plus an option at about $4.5M, as the utility infielder (+2.1 fielding runs at third).</p></div>
+<div class="side"><strong>~$13M</strong><span>combined</span>about +8 runs</div></li>
+
+<li class="move"><span class="n">9</span><div><h3>Housekeeping</h3><p>Non-tender Banks, Garrett Stubbs and Rojas. Add <b>Aidan Miller</b> and Escobar to the 40-man roster before the Rule 5 protection deadline (Rincon too if the Houston deal falls through). Open extension talks with Duran, who becomes a free agent after 2027. Two coaching projects with no transaction: Harper's throw-receiving at first base (−9.7 fielding runs, worst in baseball) and Aaron Nola's fastball and sinker, which lost about 30 runs combined.</p></div>
+<div class="side"><strong>—</strong><span>by mid-November</span></div></li>
+</ol>
+<p class="fine">Let walk: Luis Arraez, Alec Bohm, Adolis García, José Alvarado. Keep: Andrew Painter, Gage Wood, Aidan Miller, Justin Crawford. Run values are 2027 projections with aging and park adjustments; see Method.</p>
+</section>
+
+<section id="roster">
+<div class="section-head"><span class="kicker">What it produces</span><h2>The 2027 roster</h2>
+<p class="lead">Batting orders are the run model's best arrangement for each starter hand, using the aging- and park-adjusted projections. New faces are marked.</p></div>
+<div class="roster-grid">
+<article class="card"><header><h3>vs right-handers</h3><span>5.10 runs per 9 innings (2026 regulars: 4.73)</span></header><ol>
+<li><b>1</b><span>Bryce Harper</span><em>1B</em></li>
+<li><b>2</b><span>Kyle Schwarber</span><em>DH</em></li>
+<li><b>3</b><span>Seiya Suzuki<span class="new">new</span></span><em>RF</em></li>
+<li><b>4</b><span>Jake Bauers<span class="new">new</span></span><em>LF</em></li>
+<li><b>5</b><span>Isaac Paredes<span class="new">new</span></span><em>3B</em></li>
+<li><b>6</b><span>Ryan Jeffers<span class="new">new</span></span><em>C</em></li>
+<li><b>7</b><span>Trea Turner</span><em>CF</em></li>
+<li><b>8</b><span>Bryson Stott</span><em>SS</em></li>
+<li><b>9</b><span>Gleyber Torres<span class="new">new</span></span><em>2B</em></li>
+</ol></article>
+<article class="card"><header><h3>vs left-handers</h3><span>4.82 runs per 9 innings (2026 regulars: 4.25)</span></header><ol>
+<li><b>1</b><span>Gleyber Torres<span class="new">new</span></span><em>2B</em></li>
+<li><b>2</b><span>Seiya Suzuki<span class="new">new</span></span><em>RF</em></li>
+<li><b>3</b><span>Kyle Schwarber</span><em>DH</em></li>
+<li><b>4</b><span>Isaac Paredes<span class="new">new</span></span><em>3B</em></li>
+<li><b>5</b><span>Bryce Harper</span><em>1B</em></li>
+<li><b>6</b><span>Ryan Jeffers<span class="new">new</span></span><em>C</em></li>
+<li><b>7</b><span>Derek Hill</span><em>LF</em></li>
+<li><b>8</b><span>Trea Turner</span><em>CF</em></li>
+<li><b>9</b><span>Bryson Stott</span><em>SS</em></li>
+</ol></article>
+<div class="field-wrap" role="img" aria-label="Defensive alignment: Jeffers catching, Harper first, Torres second, Stott short, Paredes third, Bauers or Hill in left, Turner in center, Suzuki in right, Schwarber DH">
+<svg viewBox="0 0 400 380" aria-hidden="true">
+<path class="f-grass" d="M200 360 L20 180 A255 255 0 0 1 380 180 Z"/>
+<path class="f-dirt" d="M200 352 L105 257 A134 134 0 0 1 295 257 Z"/>
+<path class="f-grass" d="M200 318 L148 266 L200 214 L252 266 Z"/>
+<path class="f-line" d="M200 360 L20 180 M200 360 L380 180"/>
+<text class="f-pos" x="200" y="56" text-anchor="middle">CF</text><text class="f-name" x="200" y="72" text-anchor="middle">Turner</text>
+<text class="f-pos" x="78" y="118" text-anchor="middle">LF</text><text class="f-name" x="78" y="134" text-anchor="middle">Bauers</text><text class="f-sub" x="78" y="148" text-anchor="middle">Hill vs LHP</text>
+<text class="f-pos" x="322" y="118" text-anchor="middle">RF</text><text class="f-name" x="322" y="134" text-anchor="middle">Suzuki</text>
+<text class="f-pos" x="150" y="190" text-anchor="middle">SS</text><text class="f-name" x="150" y="206" text-anchor="middle">Stott</text>
+<text class="f-pos" x="252" y="190" text-anchor="middle">2B</text><text class="f-name" x="252" y="206" text-anchor="middle">Torres</text><text class="f-sub" x="252" y="220" text-anchor="middle">→ Miller</text>
+<text class="f-pos" x="104" y="268" text-anchor="middle">3B</text><text class="f-name" x="104" y="284" text-anchor="middle">Paredes</text>
+<text class="f-pos" x="296" y="268" text-anchor="middle">1B</text><text class="f-name" x="296" y="284" text-anchor="middle">Harper</text>
+<text class="f-pos" x="200" y="372" text-anchor="middle">C · Jeffers</text>
+<text class="f-pos" x="356" y="350" text-anchor="middle">DH</text><text class="f-name" x="356" y="366" text-anchor="middle">Schwarber</text>
+</svg></div>
+</div>
+<div class="staff">
+<div class="panel"><h3>Rotation</h3><ul>
+<li>Cristopher Sánchez<span>LHP</span></li><li>Jesús Luzardo<span>LHP · extended through 2031</span></li>
+<li>Zack Wheeler<span>RHP · 37, final contract year</span></li><li>Aaron Nola<span>RHP · pitch-design project</span></li>
+<li>Andrew Painter<span>RHP · year 2</span></li><li>Veteran 1-year starter<span>new · sixth starter</span></li></ul></div>
+<div class="panel"><h3>Bullpen</h3><ul>
+<li>Jhoan Duran<span>closer · FA after 2027</span></li><li>David Bednar<span>new · RHP</span></li>
+<li>Alex Vesia<span>new · LHP</span></li><li>Luke Bowlan<span>RHP · 97.1 mph</span></li>
+<li>Tim Mayza<span>LHP</span></li><li>McFarlane, Shugart, Kilian, Kerkering<span>depth</span></li></ul></div>
+<div class="panel"><h3>Bench</h3><ul>
+<li>J.T. Realmuto<span>C · RH bat, 50–60 starts</span></li><li>Derek Hill<span>OF · starts vs LHP</span></li>
+<li>Edmundo Sosa<span>UT infield</span></li><li>Justin Crawford<span>CF depth / Triple-A</span></li>
+<li>Aidan Miller<span>Triple-A, 2B by midseason</span></li></ul></div>
+</div>
+</section>
+
+<section id="value">
+<div class="section-head"><span class="kicker">The payoff</span><h2>Where the wins come from</h2>
+<p class="lead">Measured against the 2026 team's true talent, not its 88-win record: by runs scored and allowed it was an 83-win team, and about five of its wins were sequencing luck. Bars show the expected gain; whiskers show one standard deviation of projection error.</p></div>
+<div class="value-grid">
+<div class="panel"><div class="chart-wrap">
+<svg class="chart" viewBox="0 0 640 250" role="img" aria-labelledby="v-t"><title id="v-t">Expected runs gained in 2027 by component, with error bars</title>
+<line class="grid" x1="235" x2="235" y1="16" y2="214"/><line class="grid" x1="323" x2="323" y1="16" y2="214"/><line class="grid" x1="411" x2="411" y1="16" y2="214"/><line class="grid" x1="499" x2="499" y1="16" y2="214"/><line class="grid" x1="587" x2="587" y1="16" y2="214"/>
+<line class="zero" x1="191" x2="191" y1="16" y2="214"/>
+<text class="tick" x="191" y="234" text-anchor="middle">0</text><text class="tick" x="279" y="234" text-anchor="middle">20</text><text class="tick" x="367" y="234" text-anchor="middle">40</text><text class="tick" x="455" y="234" text-anchor="middle">60</text><text class="tick" x="543" y="234" text-anchor="middle">80</text>
+<g tabindex="0" data-tip="Offense: +71 runs (±20). Lineup model with aging and park adjustments, plus about 5 runs because the 2026 right-field group was worse than the modeled regulars.">
+<text class="rowlabel" x="12" y="50">Offense</text><rect class="bar" x="191" y="34" width="312" height="26" rx="4"/>
+<line class="err" x1="415" x2="591" y1="47" y2="47"/><line class="err" x1="415" x2="415" y1="40" y2="54"/><line class="err" x1="591" x2="591" y1="40" y2="54"/><text class="vlabel" x="597" y="51">+71</text></g>
+<g tabindex="0" data-tip="Bullpen: +20 runs (±10). About 150 innings at a 5.90 ERA replaced by roughly 3.50.">
+<text class="rowlabel" x="12" y="98">Bullpen</text><rect class="bar" x="191" y="82" width="88" height="26" rx="4"/>
+<line class="err" x1="235" x2="323" y1="95" y2="95"/><line class="err" x1="235" x2="235" y1="88" y2="102"/><line class="err" x1="323" x2="323" y1="88" y2="102"/><text class="vlabel" x="331" y="99">+20</text></g>
+<g tabindex="0" data-tip="Defense: +8 runs (±12). Third base +9 (Paredes for Bohm), shortstop +9 (Stott for Turner's 2026), second base −9 (Torres for Stott), right field +4, center field +1, left field −2, catcher −5.">
+<text class="rowlabel" x="12" y="146">Defense</text><rect class="bar" x="191" y="130" width="35" height="26" rx="4"/>
+<line class="err" x1="173" x2="279" y1="143" y2="143"/><line class="err" x1="173" x2="173" y1="136" y2="150"/><line class="err" x1="279" x2="279" y1="136" y2="150"/><text class="vlabel" x="287" y="147">+8</text></g>
+<g tabindex="0" data-tip="Rotation: +6 runs (±15). A real sixth starter +8, Painter's second year +4, Nola partial rebound +4, Wheeler and Sánchez aging and regression −10.">
+<text class="rowlabel" x="12" y="194">Rotation</text><rect class="bar" x="191" y="178" width="26" height="26" rx="4"/>
+<line class="err" x1="151" x2="283" y1="191" y2="191"/><line class="err" x1="151" x2="151" y1="184" y2="198"/><line class="err" x1="283" x2="283" y1="184" y2="198"/><text class="vlabel" x="291" y="195">+6</text></g>
+</svg></div>
+<p class="fine">Runs gained per 162 games. Combined error is about ±30 runs; season-to-season luck adds roughly ±6 wins on top.</p></div>
+<div class="panel bigstat"><strong>+105</strong><span>runs, about <b>+10 wins</b>: from an 83-win base to roughly <b>93</b>, with a likely range of 90–96 before luck. The lineup alone goes from 4.58 to 5.01 runs per nine innings.</span>
+<p class="fine">For comparison: the advisor's version without the Turner/Stott/Torres move is about +88 runs; the lean plan is about +50 (+5 wins). The <a href="https://jkrek17.github.io/web/phillies/offseason/retool/">retool alternative</a> keeps Harper and Schwarber, trades Nola for a young center fielder if the price is right, keeps every prospect, and lands near 90 wins at about $345M.</p></div>
+</div>
+</section>
+
+<section id="cost">
+<div class="section-head"><span class="kicker">The bill</span><h2>What it costs</h2>
+<p class="lead">The Phillies already owe about $216M to nine players for 2027 and project to a $270–285M luxury-tax payroll before adding anyone. They have paid the tax five straight years, so every added dollar costs about $2.10 at the top rate.</p></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Addition</th><th>Terms</th><th class="num">2027 tax value</th><th>Other cost</th></tr></thead>
+<tbody>
+<tr><td>Seiya Suzuki</td><td>3 years + option</td><td class="num">~$26M</td><td>2nd and 5th picks</td></tr>
+<tr><td>Ryan Jeffers</td><td>3 years</td><td class="num">~$17M</td><td>3rd and 6th picks</td></tr>
+<tr><td>Gleyber Torres</td><td>1 year + option</td><td class="num">~$15M</td><td></td></tr>
+<tr><td>Isaac Paredes</td><td>club option</td><td class="num">$13.35M</td><td>Bryan Rincon</td></tr>
+<tr><td>David Bednar</td><td>3 years</td><td class="num">$13M</td><td></td></tr>
+<tr><td>Jake Bauers</td><td>1 year + option</td><td class="num">~$9M</td><td></td></tr>
+<tr><td>Veteran starter</td><td>1 year</td><td class="num">~$9M</td><td></td></tr>
+<tr><td>Alex Vesia</td><td>2 years</td><td class="num">$9M</td><td></td></tr>
+<tr><td>Edmundo Sosa</td><td>1 year + option</td><td class="num">~$4.5M</td><td></td></tr>
+<tr><td>Tim Mayza</td><td>1 year</td><td class="num">$4M</td><td></td></tr>
+<tr><td>Brandon Marsh traded</td><td></td><td class="num">−$7.5M</td><td>returns a reliever or room</td></tr>
+<tr class="total"><td>Net additions</td><td></td><td class="num">~$112M</td><td>about $235M in cash once tax is included</td></tr>
+<tr class="total"><td>2027 luxury-tax payroll</td><td></td><td class="num">$380–395M</td><td>2026 was about $321M</td></tr>
+</tbody></table></div>
+<p class="fine">Contract terms are market estimates from MLB Trade Rumors, Spotrac and published reporting as of October 2, 2026, not agreed deals. MLB's labor proposal includes a $245.3M hard cap from 2027; if a cap like that arrives without protection for existing contracts, no version of this plan survives, because no-trade clauses block moving Nola, Turner, Harper and Wheeler. That is why every new deal is three years or shorter.</p>
+</section>
+
+<section id="calendar">
+<div class="section-head"><span class="kicker">The clock</span><h2>Four weeks before the freeze</h2>
+<p class="lead">The collective bargaining agreement expires December 1 and a lockout is widely expected, which would freeze trades, signings and 40-man moves. In 2021, $1.4 billion was signed on December 1 alone.</p></div>
+<div class="panel"><ol class="timeline">
+<li><time>Now to end of World Series</time><p>Hire the manager. Ownership sets the payroll number. Agree trade frameworks with Houston (Paredes) and the Athletics (Langeliers as the catcher fallback). Line up Bohm and Carson Kelly as fallbacks.</p></li>
+<li><time>5 days after the Series</time><p>Exclusive window: re-sign Mayza and Sosa. Houston must exercise Paredes's option; qualifying offers go out (Suzuki and Jeffers expected).</p></li>
+<li><time>Early to mid November</time><p>Offer Suzuki on day one of open free agency. Sign Bauers and the veteran starter. MVP voting (around November 13) settles Paredes's option clause; close the trade. Qualifying-offer and Rule 5 protection deadlines: add Miller and Escobar.</p></li>
+<li><time>November 19–25</time><p>Catcher decision point: if Jeffers's agent is waiting out the lockout, execute Langeliers or Kelly by November 25. Sign Bednar and Vesia, and Torres. Trade Marsh once Bauers is in.</p></li>
+<li><time>November 30</time><p>Tender deadline: non-tender Banks, Stubbs and Rojas.</p></li>
+<li class="freeze"><time>December 1</time><p>Freeze. Anything left (a bench bat, the Marsh trade) moves to a compressed spring window, where prices rose in 2022.</p></li>
+</ol></div>
+</section>
+
+<section id="miller">
+<div class="section-head"><span class="kicker">The next shortstop</span><h2>Where Aidan Miller comes in</h2>
+<p class="lead">Miller is 22, MLB Pipeline's No. 50 prospect and the system's top position player. A back procedure (radiofrequency ablation on June 5) cost him most of 2026; he returned September 5 at Double-A. He is not the Opening Day answer, but he is the reason second base gets a one-year bridge and not a three-year contract.</p></div>
+<div class="miller">
+<div class="step"><time>November 2026</time><h4>Protect him</h4><p>Add him to the 40-man roster before the Rule 5 deadline. Do not trade him while his value is at its low point.</p></div>
+<div class="step"><time>Spring 2027</time><h4>Prove the back</h4><p>Double-A or Triple-A, playing every day at shortstop and second.</p></div>
+<div class="step"><time>Mid-2027</time><h4>Take second base</h4><p>If he hits, he replaces Torres, who moves to a bench and platoon role or is traded at the deadline.</p></div>
+<div class="step"><time>2028</time><h4>Shortstop or third</h4><p>Stott becomes a free agent after 2027 and Paredes is a one-year rental. Either extend Stott at short and play Miller at third, or let Stott go and make Miller the shortstop. Decide by July 2027.</p></div>
+</div>
+<p class="fine">Also ending after 2027: Wheeler's contract and Duran's team control. Realmuto is signed through 2028.</p>
+</section>
+
+<section id="risks">
+<div class="section-head"><span class="kicker">What could go wrong</span><h2>Risks</h2></div>
+<div class="risks">
+<div class="risk"><h4>The money</h4><p>About $235M of new cash for 2027 and a record tax bill. If ownership says "flat," run the lean plan (Suzuki, Paredes, one reliever, Mayza, Sosa: about +5 wins) and decide by November 1 rather than chase both.</p></div>
+<div class="risk"><h4>The lockout and Boras</h4><p>Jeffers may not sign before December 1. The catcher fallback has to be executed by November 25, not just discussed.</p></div>
+<div class="risk"><h4>An aging core</h4><p>Harper, Schwarber and Turner are 34, Realmuto 36, Wheeler 37. The projections include aging, but the downside tail is wider than any upside on the additions.</p></div>
+<div class="risk"><h4>Turner in center</h4><p>Elite speed, but he would be relearning the outfield at 34. The plan assumes −5 to +3 runs there; if it fails, Hill and Crawford cover center and Turner plays second.</p></div>
+<div class="risk"><h4>Paredes away from Houston</h4><p>His 2026 power leaned on the Crawford Boxes. Citizens Bank Park helps right-handed pull hitters too, but the projection is already cut to .340.</p></div>
+<div class="risk"><h4>A thinner farm</h4><p>After Rincon, the system is Gage Wood, Miller (back), Renteria and Spangler. Spend Rincon once, keep Wood and Painter for the 2028 rotation without Wheeler.</p></div>
+</div>
+</section>
+
+<section id="method">
+<div class="section-head"><span class="kicker">Transparency</span><h2>How this was built</h2></div>
+<div class="method">
+<p><strong>Research.</strong> Five research agents covered the Phillies' contracts and farm system, the free-agent market, the trade market (with each trade checked from the other club's side), Statcast valuations of every MLB hitter and pitcher, and defense, baserunning and pitch quality from Baseball Savant. Facts are as reported through October 2, 2026; projected contracts are estimates.</p>
+<p><strong>Review.</strong> A separate advisor reviewed the draft. It cut the expected offensive gain roughly in half by adding aging, multi-season regression and park effects; it also dropped a reliever trade Seattle would not accept and corrected the qualifying-offer count.</p>
+<p><strong>Run values.</strong> Lineups are scored with the same exact run-expectancy model as the <a href="https://jkrek17.github.io/web/phillies/">batting-order study</a>, using projected wOBA cut for age and park: Suzuki .345, Paredes .340, Bauers .335, Torres .330, Jeffers .325, Harper .355, Schwarber .352, Turner .318. Defense uses 2026 Statcast fielding run value; pitching uses regressed rates allowed. Ten runs is about one win.</p>
+<p><strong>Limits.</strong> Turner's center-field defense and Stott's shortstop defense are estimates, not measured. Contract values, qualifying offers and Houston's willingness are reported or inferred, not confirmed. Any of the free agents may sign elsewhere; each move lists its fallback.</p>
+</div>
+</section>
+</main>
+<footer class="page"><div class="wrap">Phillies 2027 offseason plan · built October 2026 from Statcast, Baseball Savant and published reporting · companion to the <a href="https://jkrek17.github.io/web/phillies/">2026 lineup study</a></div></footer>
+<div id="tip" role="tooltip" hidden></div>
+<script>
+(function(){var tip=document.getElementById('tip');
+function place(x,y){var w=tip.offsetWidth,h=tip.offsetHeight;tip.style.left=Math.min(window.innerWidth-w-8,Math.max(8,x+12))+'px';tip.style.top=Math.max(8,y-h-12)+'px';}
+document.addEventListener('mouseover',function(e){var el=e.target.closest('[data-tip]');if(!el)return;tip.textContent=el.getAttribute('data-tip');tip.hidden=false;place(e.clientX,e.clientY);});
+document.addEventListener('mousemove',function(e){if(!tip.hidden)place(e.clientX,e.clientY);});
+document.addEventListener('mouseout',function(e){if(e.target.closest('[data-tip]'))tip.hidden=true;});
+document.addEventListener('focusin',function(e){var el=e.target.closest('[data-tip]');if(!el)return;var r=el.getBoundingClientRect();tip.textContent=el.getAttribute('data-tip');tip.hidden=false;place(r.left+r.width/2,r.top);});
+document.addEventListener('focusout',function(){tip.hidden=true;});})();
+</script>
+</body></html>

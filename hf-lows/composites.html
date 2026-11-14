@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Composites - Hurricane Force Extratropical Low Archive</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="ERA5 proxy composites of the environment and storm-scale structure of hurricane force extratropical lows against storm-force-only lows, North Atlantic and North Pacific.">
+<style>
+  /* Self-contained on purpose: the flat/ copy of the site is a single folder and only
+     index.html gets its paths rewritten, so this page uses no files from assets/ and
+     refers to its figures by bare file name. Tokens mirror assets/app.css. */
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --surface-sunk: #f2f2ee; --border: #e1e0d9; --border-strong: #c3c2b7;
+    --ink: #0b0b0b; --ink-2: #52514e; --ink-muted: #6d6b66;
+    --atl: #2a78d6; --pac: #eb6834;
+    --navy: #0a3161; --navy-ink: #ffffff; --navy-soft: #cfe0f3; --accent: #0a3f73; --accent-soft: #e4edf8;
+    --badge-ink: #8a5a00; --badge-bg: #fdf3dd; --badge-border: #f4dfae;
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+      --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+      --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+      --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-sunk: #141413; --border: #2c2c2a; --border-strong: #383835;
+    --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #a09e97; --atl: #3987e5; --pac: #d95926;
+    --navy: #123a63; --accent: #93b8e6; --accent-soft: #16263a;
+    --badge-ink: #f1c76b; --badge-bg: #2b2210; --badge-border: #4d3d17;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 var(--font); }
+  a { color: var(--accent); }
+  .masthead { background: var(--navy); color: var(--navy-ink); padding: 14px 16px; }
+  .masthead-in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+  .masthead h1 { margin: 0; font-size: 18px; font-weight: 650; }
+  .masthead a { color: var(--navy-soft); }
+  main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  h2 { font-size: 22px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  p { margin: 0 0 10px; max-width: 74ch; }
+  section { border-top: 1px solid var(--border); padding-top: 20px; min-width: 0; }
+  .note { background: var(--badge-bg); color: var(--ink); border: 1px solid var(--badge-border); border-left: 4px solid var(--badge-ink); border-radius: 6px; padding: 12px 14px; }
+  .note strong { color: var(--badge-ink); }
+  .answers { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+  .answers ul { margin: 6px 0 0; padding-left: 20px; } .answers li { margin-bottom: 6px; max-width: 80ch; }
+  .tag { font-size: 12px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+  .muted { color: var(--ink-2); font-size: 13px; }
+  .limit { border-left: 3px solid var(--border-strong); padding-left: 10px; color: var(--ink-2); }
+  .fig { margin: 12px 0 18px; min-width: 0; }
+  .fig figcaption { font-size: 14px; margin-top: 6px; max-width: 80ch; }
+  .fig img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--border); border-radius: 4px; }
+  .scroll { overflow-x: auto; }
+  .scroll img { min-width: 720px; }
+  .pair { display: grid; grid-template-columns: 1fr; gap: 12px 16px; min-width: 0; }
+  .pair .scroll img { min-width: 0; }
+  @media (min-width: 900px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .basin-atl { color: var(--atl); font-weight: 650; } .basin-pac { color: var(--pac); font-weight: 650; }
+  table { border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--border); }
+  .tablewrap { overflow-x: auto; }
+  .jump { font-size: 14px; margin: 10px 0 14px; } .jump a { white-space: normal; }
+  footer { border-top: 1px solid var(--border); padding-top: 14px; }
+  details { margin: 10px 0; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
+  details > summary { cursor: pointer; padding: 8px 12px; font-weight: 600; color: var(--accent); }
+  details[open] > summary { border-bottom: 1px solid var(--border); }
+  details > p { margin: 10px 12px; }
+</style>
+</head>
+<body>
+<header class="masthead"><div class="masthead-in">
+  <h1>Composites: hurricane force lows against storm-force-only lows</h1>
+  <a href="index.html">&larr; Back to the archive</a>
+</div></header>
+<main>
+<div class="note"><strong>Averages from ERA5, not observations.</strong> ERA5 is a reanalysis: a weather model re-run over past years and blended with the observations available. Every figure here is built from ERA5 fields around storm tracks that the project found in ERA5 itself (&ldquo;pipeline A&rdquo;), for the 2004-05 to 2025-26 seasons. An &ldquo;HF low&rdquo; here is a storm whose ERA5 wind field looks like the ones OPC warns on as hurricane force: the strongest ocean gust within about 430 nm reaches 71.7 kt. That is a stand-in (a proxy) for OPC&rsquo;s sustained-wind warning, it has not been validated before the archive begins, and ERA5 reads low in the strongest storms. The archive on the other tabs is the record; this page is research.</div>
+
+<p class="jump"><strong>Jump to:</strong> <a href="#basin-pattern">Typical pattern (basin maps)</a> &middot; <a href="#environment">Before formation</a> &middot; <a href="#structure">Storm structure</a> &middot; <a href="#upper-air">Storm-centred upper-air maps (every HF low)</a> &middot; <a href="#followups">Follow-up tests</a></p>
+
+<div class="answers">
+  <div class="tag">What this page shows</div>
+  <p>Averages of the weather map around hurricane-force (HF) lows, compared with lows that only reached storm force. A forecaster can use it to see what the typical setup looks like: where the upper trough and jet sit, how steep the pressure gradient gets, and how early a storm looks different. It is a picture of the average, not a way to pick out the next HF low.</p>
+  <ul>
+    <li><strong>What does the typical setup look like?</strong> In both basins an upper trough (500 hPa heights well below normal) and a strong jet sit over a deepening low. In the Atlantic the average low at onset is 992 hPa near Iceland, with the trough 80 m below normal over it and a jet of 48 m/s (about 93 kt) along its south side. In the Pacific the same pattern is weaker (the trough is 29 m below normal) because HF lows start all across the basin. <a href="#basin-pattern">Basin maps below.</a></li>
+    <li><strong>What comes before an HF low?</strong> A slightly deeper upper trough and a stronger jet than before a low that only reaches storm force. In the Atlantic box (53&deg;N, 41&deg;W), 500 hPa heights are 7 m lower and the jet 1.1 m/s stronger over days &minus;10 to &minus;4 (day 0 is the onset), and 22 m lower and 1.9 m/s stronger on the onset day. The Pacific is weaker (6 m, 0.8 m/s). Sea-surface temperature does not differ.</li>
+    <li><strong>How does an HF low differ from a storm-force low?</strong> It is deeper (971 against 984 hPa in the Atlantic, 974 against 985 in the Pacific), with a pressure gradient about 60% steeper, the strongest gust closer to the centre (about 163 against 220 nm in the Atlantic, about 126 against 180 nm in the Pacific) and a wider area of 48-kt gusts. At equal central pressure the wider wind area survives in the Atlantic (about 21 nm wider) and not in the Pacific.</li>
+    <li><strong>When do they start to differ?</strong> The pressure gradient separates first, 36 to 48 hours before the peak; central pressure 12 to 24 hours before. The larger hemispheric pattern changes how HF lows look only weakly (Atlantic only, and not robust). Among deepening storms, the larger-scale environment separates those that reach HF, but those storms are already deeper and older.</li>
+    <li><strong>What does the air around an HF low look like?</strong> Averaged over every HF low (<a href="#upper-air">storm-centred maps below</a>), the 500 hPa low starts about 1,080 nm to the left of the track two days before onset. It is over the storm by onset in the Atlantic (by the peak in the Pacific). The jet maximum is behind the storm by then (and to its right in the Atlantic). Upper-level divergence sits just ahead of the surface low. Part of this wind pattern is the storm&rsquo;s own circulation.</li>
+  </ul>
+  <p class="muted">&ldquo;Below normal&rdquo; throughout means below the 1990&ndash;2019 average for the same day and hour (an anomaly).</p>
+</div>
+
+<section id="basin-pattern">
+  <div class="tag">Typical pattern</div>
+  <h2>The typical weather pattern for an HF low, basin by basin</h2>
+  <p>Average maps over every HF low (664 in the North Atlantic, 559 in the North Pacific; October to April onsets, 2004&ndash;05 to 2022&ndash;23), on fixed map coordinates. Top row: 48 hours before the low first reaches HF strength; bottom row: at HF onset. Columns: sea-level pressure, 500 hPa height, 250 hPa wind speed. Colour is the difference from the 1990&ndash;2019 average for the same day and hour; lines are the average field itself; magenta dots show where each HF low reached HF strength. These are ERA5 maps on a coarse 1.5&deg; grid, descriptive only, not a test. Because the lows start in different places, the average is smeared: it shows the typical background pattern, not a single storm.</p>
+<figure class="fig">
+  <div class="scroll"><a href="composites-basin-atl.png"><img src="composites-basin-atl.png" alt="North Atlantic average sea-level pressure, 500 hPa height and 250 hPa wind speed, 48 hours before HF onset and at onset, 664 HF lows" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span> (664 lows). At onset the average low is about 992 hPa, 6.9 hPa below normal, near 63&deg;N 33&deg;W, with the 500 hPa trough 80 m below normal near 60&deg;N 34.5&deg;W and a jet of up to 48 m/s (about 93 kt) running from the US east coast across the ocean (about 6 m/s above normal). Two days earlier the same pattern is already there but weaker (3.3 hPa and 45 m below normal). Onsets lie along the southern flank of the trough, mostly between 40&deg;N and 64&deg;N.</figcaption>
+</figure>
+<figure class="fig">
+  <div class="scroll"><a href="composites-basin-pac.png"><img src="composites-basin-pac.png" alt="North Pacific average sea-level pressure, 500 hPa height and 250 hPa wind speed, 48 hours before HF onset and at onset, 559 HF lows" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span> (559 lows). The same ingredients, weaker: at onset pressure is 2.8 hPa below normal, most strongly east of Japan near 42&deg;N 150&deg;E, the 500 hPa trough 29 m below normal near 43.5&deg;N 145.5&deg;E, and the jet reaches 65 m/s (about 126 kt) off Japan (about 5 m/s above normal). The average is weaker than in the Atlantic because HF lows start across the whole basin, from 130&deg;E to 140&deg;W (mostly 35&deg;N to 52&deg;N).</figcaption>
+</figure>
+  <p class="limit"><strong>Read with care.</strong> These are reanalysis maps on a coarse grid, not observations. The anomaly is measured against 1990&ndash;2019, so a warming trend adds a little. The 48-hour maps use all HF lows, including those whose track did not yet exist two days earlier. Wind-speed shading is the average speed minus the long-term average speed.</p>
+</section>
+
+<section id="environment">
+  <div class="tag">Before formation</div>
+  <h2>The weather pattern in the week before: HF onset against a storm-force-only peak</h2>
+  <p>Each map shows the difference between the average pattern before an HF low and before a low that only reached storm force, averaged over days &minus;10 to &minus;4 before the onset or peak. Red means higher than before a storm-force-only low, blue lower. Dots mark places where the difference is unlikely to be chance, using a correction for running many comparisons at once (neighbouring points are not independent, so read the dots as a guide). The green outline is the box used for the formal tests, and 12 of the 20 tests set out in advance pass. Click any figure on this page to open it at full size.</p>
+<figure class="fig">
+  <div class="scroll"><a href="composites-large-diff-atl-C1-L.png"><img src="composites-large-diff-atl-C1-L.png" alt="North Atlantic anomaly differences over days -10 to -4: Z500, MSLP, 250 hPa wind, SST and column water vapour" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span>, days &minus;10 to &minus;4 (1,080 HF and 3,773 storm-force storms): 500 hPa height &minus;7.2 m, 250 hPa jet +1.12 m/s in the box, sea-surface temperature no difference.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-large-diff-pac-C1-L.png"><img src="composites-large-diff-pac-C1-L.png" alt="North Pacific anomaly differences over days -10 to -4" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>, days &minus;10 to &minus;4 (875 HF and 3,883 storm-force storms): 500 hPa height &minus;5.8 m, jet +0.82 m/s. Weaker than the Atlantic.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-large-diff-atl-C1-k0.png"><img src="composites-large-diff-atl-C1-k0.png" alt="North Atlantic anomaly differences on the onset day" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span>, onset day: 500 hPa height &minus;22.0 m, jet +1.94 m/s. The difference builds from about day &minus;7.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-large-diff-pac-C1-k0.png"><img src="composites-large-diff-pac-C1-k0.png" alt="North Pacific anomaly differences on the onset day" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>, onset day: 500 hPa height &minus;9.1 m, jet +1.31 m/s.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-large-series-C1.png"><img src="composites-large-series-C1.png" alt="Box-mean differences by day before the anchor for both basins and five fields" loading="lazy"></a></div>
+  <figcaption>The box-mean difference by day, with a 95% range from resampling whole seasons (22 seasons). The Atlantic trough and jet differences grow steadily toward the onset day; the Pacific levels off.</figcaption>
+</figure>
+  <h3>The typical pattern</h3>
+  <p>The same patterns as actual maps rather than differences: 500 hPa height contours with 250 hPa wind in colour, and sea-level pressure, for HF onsets (top) and storm-force peaks (bottom).</p>
+  <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-large-typical-atl.png"><img src="composites-large-typical-atl.png" alt="Typical North Atlantic pattern before HF onset and storm-force peak" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span>: HF onsets show a deeper Greenland&ndash;Iceland trough and a stronger jet than storm-force-only peaks.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-large-typical-pac.png"><img src="composites-large-typical-pac.png" alt="Typical North Pacific pattern before HF onset and storm-force peak" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>: the same comparison; the difference is smaller.</figcaption>
+</figure>
+  </div>
+  <p class="limit">The two groups differ in age and in where they sit (HF onsets are on average 2.6&deg; of latitude further south than storm-force peaks in the Atlantic and 5.7&deg; in the Pacific), and storms in the same week share an environment. For the statistics, the independent sample is the 22 seasons, not the number of storms.</p>
+</section>
+
+<section id="structure">
+  <div class="tag">At the storm</div>
+  <h2>Inside the storm: wind, pressure and moisture maps</h2>
+  <p>Average maps of 400 HF storms and 400 storm-force-only storms per basin, matched by month and turned so the direction of motion points the same way (right of motion is down). Columns: HF onset, HF peak, storm-force peak, and the two differences. Rows: 10 m gust, 10 m wind speed, sea-level pressure, 2 m dewpoint. The gust and wind differences are partly built in, because HF is defined by the gust.</p>
+  <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-storm-comp-atl.png"><img src="composites-storm-comp-atl.png" alt="North Atlantic storm-motion-relative composites of gust, wind, MSLP and dewpoint" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span> (362 HF, 329 storm-force storms with a heading): central pressure 971 against 984 hPa, gradient about 60% steeper, 48-kt gust area wider by about 85 nm at onset (about 21 nm wider at equal central pressure, which is statistically unlikely to be chance).</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-storm-comp-pac.png"><img src="composites-storm-comp-pac.png" alt="North Pacific storm-motion-relative composites of gust, wind, MSLP and dewpoint" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>: central pressure 974 against 985 hPa, strongest gust about 126 against 180 nm from the centre; the wider 48-kt area at onset (about 83 nm) disappears at equal central pressure.</figcaption>
+</figure>
+  </div>
+  <p class="limit"><strong>Moisture caveat.</strong> HF storms look moister within about 270 nm, but the dewpoint is the raw value, not adjusted for latitude, and HF onsets sit further south (2.6&deg; Atlantic, 5.7&deg; Pacific). Do not read the dewpoint panels as moisture causing HF. 23 of the 28 structure tests set out in advance pass. ERA5 under-resolves the strongest winds, so the areas are biased low; shapes and HF-minus-storm-force differences are more trustworthy than absolute values.</p>
+</section>
+
+<section id="upper-air">
+  <div class="tag">Around every HF low</div>
+  <h2>Storm-centred upper-air maps of all HF lows</h2>
+  <p>Every HF low from October to April, 2004 to 9 January 2023 (664 Atlantic, 559 Pacific), averaged around the storm centre and turned so the direction of motion points right. Columns: 48, 24 and 12 hours before onset, onset and peak. Top row: the average field; bottom row: the difference from the 1990&ndash;2019 average. This is a descriptive average of ERA5 on a coarse 1.5&deg; grid, not a test.</p>
+  <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-env-atl-z500.png"><img src="composites-env-atl-z500.png" alt="North Atlantic mean 500 hPa height around HF lows, 48 hours before onset to peak" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span>, 500 hPa height. Two days before onset the average upper low is about 1,080 nm to the left of the track; by onset it is over the storm (500 hPa height below normal by 100 m at 48 h, 261 m at onset, 280 m at peak).</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-env-pac-z500.png"><img src="composites-env-pac-z500.png" alt="North Pacific mean 500 hPa height around HF lows, 48 hours before onset to peak" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>, 500 hPa height. The upper low also starts to the left, but is still about 760 nm to the left at onset and over the storm only at peak (below normal by 74 m, 197 m, 218 m).</figcaption>
+</figure>
+  </div>
+  <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-env-atl-wind250.png"><img src="composites-env-atl-wind250.png" alt="North Atlantic mean 250 hPa wind around HF lows" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span>, 250 hPa wind. The mean wind over the storm is 39&ndash;45 m/s 48&ndash;24 hours before onset and 26 m/s at onset; the jet maximum moves from ahead of the storm to behind and to the right.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-env-pac-wind250.png"><img src="composites-env-pac-wind250.png" alt="North Pacific mean 250 hPa wind around HF lows" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>, 250 hPa wind: 53&ndash;58 m/s over the storm 48&ndash;24 hours before onset, 35 m/s at onset; the maximum ends up about 540 nm behind.</figcaption>
+</figure>
+  </div>
+    <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-env-atl-div.png"><img src="composites-env-atl-div.png" alt="North Atlantic mean 250 and 500 hPa divergence around HF lows" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span>, divergence. Rows 1 and 2: 250 hPa divergence and its difference from normal; the maximum (+1.8 to +2.5 &times; 10<sup>&minus;5</sup>/s) sits about 110 to 270 nm ahead of the storm centre at every time. Rows 3 and 4: 500 hPa, 2 to 4 times weaker and noisy on this grid; read the 250 hPa rows.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-env-pac-div.png"><img src="composites-env-pac-div.png" alt="North Pacific mean 250 and 500 hPa divergence around HF lows" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>, divergence. The 250 hPa maximum is +1.9 to +3.2 &times; 10<sup>&minus;5</sup>/s, also just ahead of the centre; the 500 hPa rows are noisy.</figcaption>
+</figure>
+  </div>
+  <p class="limit"><strong>Read with care.</strong> These are reanalysis fields on a coarse 1.5&deg; grid, not observations. <strong>The 250 hPa wind maps show the average wind speed only, not a difference from normal.</strong> The storm&rsquo;s own circulation has not been removed, so the wind pattern near the centre (the weaker wind at the centre and part of the shift of the jet to behind the storm) is partly the storm itself, not the jet. An average smears jet streaks and troughs, so it cannot show entrance and exit regions, trough tilt or trough position. The 48-hour columns rest on the 151 Atlantic and 92 Pacific storms that already had a track then.</p>
+  <details>
+    <summary>Checking notes</summary>
+    <p>An earlier version had a second wind row shaded against the long-term mean wind, which reads too high almost everywhere; that row was removed. Wind speed is the grid-point speed interpolated to the storm box. A fresh agent recomputed every number quoted here from the raw fields; the resampling ranges and the figure pixels were not rechecked. The 250 hPa divergence maps and the north-up views are in the repository under <code>research/era5/hf_env_composites</code>.</p>
+  </details>
+</section>
+
+<section id="followups">
+  <div class="tag">Three follow-up tests</div>
+  <h2>When, which pattern, which storms</h2>
+  <p>Each test was written down before any comparison was made, and every table was recomputed by a fresh agent. The maps are descriptive; the tests are the numbers in the captions.</p>
+
+  <h3>When do HF and storm-force-only lows first look different?</h3>
+<figure class="fig">
+  <div class="scroll"><a href="composites-lifecycle-stageB.png"><img src="composites-lifecycle-stageB.png" alt="HF minus storm-force-only difference in storm-to-storm SD every 12 hours from 48 hours before to 24 hours after the peak, four measures, both basins" loading="lazy"></a></div>
+  <figcaption>The pressure gradient separates from about 48 h before the peak (Atlantic) and 36 h (Pacific, borderline); central pressure from 24 h (Atlantic, 7.4 hPa lower) and 12 h (Pacific, 9.4 hPa lower); at the peak it is 15 hPa lower. 39 of 56 tests pass. This is a look back at storms that already happened, not a forecast. At &minus;48 h only 78 of 250 Atlantic HF storms already have a track, so the earliest lags rest on older storms.</figcaption>
+</figure>  <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-lifecycle-maps-atl-msl.png"><img src="composites-lifecycle-maps-atl-msl.png" alt="North Atlantic MSLP composites at -48, -24 and 0 hours from the peak" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span> MSLP, HF against storm-force-only at &minus;48, &minus;24 and 0 h.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-lifecycle-maps-pac-msl.png"><img src="composites-lifecycle-maps-pac-msl.png" alt="North Pacific MSLP composites at -48, -24 and 0 hours from the peak" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span> MSLP at the same lags.</figcaption>
+</figure>
+  </div>
+
+  <h3>Does the hemispheric pattern change how the HF lows look?</h3>
+<figure class="fig">
+  <div class=""><a href="composites-pp-forest.png"><img src="composites-pp-forest.png" alt="Top minus bottom tercile of the pattern index for 11 structure measures in both basins" loading="lazy"></a></div>
+  <figcaption>The index splits weeks into thirds; the figure compares the top third with the bottom third. Mostly no difference. Pacific: nothing in 11 measures. Atlantic: in weeks when the pattern index is high, the 48-kt gust area is 23% larger (3 of 22 tests pass), but none passes when storms are matched on latitude, so it is a lead, not a finding.</figcaption>
+</figure>  <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-pp-maps-atl.png"><img src="composites-pp-maps-atl.png" alt="North Atlantic HF onset composites for top and bottom tercile of the pattern index" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span> HF onsets, top against bottom tercile.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-pp-maps-pac.png"><img src="composites-pp-maps-pac.png" alt="North Pacific HF onset composites for top and bottom tercile of the pattern index" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>: no detectable difference.</figcaption>
+</figure>
+  </div>
+
+  <h3>What separates deepening storms that become HF?</h3>
+<figure class="fig">
+  <div class="scroll"><a href="composites-conv-stageA.png"><img src="composites-conv-stageA.png" alt="Converters minus non-converters for six environment variables by hours before the reference time" loading="lazy"></a></div>
+  <figcaption>Among deepening storms, those that reach HF within 24 h (the &ldquo;converters&rdquo;) have more heat flux from the sea (+0.4 to 0.5 standard deviations, a measure of typical storm-to-storm spread), more vorticity advection, more divergence aloft and higher Eady growth (how favourable the temperature contrast and shear are for growth); 19 of 48 tests pass. They are also already deeper (6.7 hPa) and older (5 to 7 h), so this is association, not cause.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-conv-stageB.png"><img src="composites-conv-stageB.png" alt="Converters minus non-converters at 0.25 degree for jet position, theta-e, stability and baroclinicity" loading="lazy"></a></div>
+  <figcaption>On finer 0.25&deg; maps near the storm only 1 of 30 tests passes (Pacific 850 hPa temperature contrast). The distance and position of the jet and the 850 hPa equivalent potential temperature do not separate the two groups; the test was strong enough to see a difference of 0.2 standard deviations, so a difference that size is ruled out.</figcaption>
+</figure>  <div class="pair">
+<figure class="fig">
+  <div class="scroll"><a href="composites-conv-maps-atl-L0.png"><img src="composites-conv-maps-atl-L0.png" alt="North Atlantic converter and non-converter composites of 250 hPa wind, theta-e and baroclinicity" loading="lazy"></a></div>
+  <figcaption><span class="basin-atl">North Atlantic</span>, storms that reach HF against those that do not, at the reference time.</figcaption>
+</figure><figure class="fig">
+  <div class="scroll"><a href="composites-conv-maps-pac-L0.png"><img src="composites-conv-maps-pac-L0.png" alt="North Pacific converter and non-converter composites" loading="lazy"></a></div>
+  <figcaption><span class="basin-pac">North Pacific</span>, same comparison.</figcaption>
+</figure>
+  </div>
+  <p class="limit">Counts that sit near the 5% threshold move with the resample, so read pass counts as plus or minus 2. Not independently checked: the ERA5 extractions, the heading rotation, maps and figures.</p>
+</section>
+
+<footer>
+  <p class="muted">Groups: HF = ERA5 ocean gust index (strongest gust within 800 km, about 430 nm) of at least 71.7 kt (2,000 storms); storm-force-only = peak 54 to 71.7 kt (8,136), matched on basin and month. Seasons run 1 June to 31 May. Tests were registered in advance, corrected for multiple comparisons (Benjamini-Hochberg) within families of tests, and use resampling of whole seasons, because the independent sample is seasons, not storms. Code, plans, tables and verification notes are in the repository under <code>research/era5/hf_vs_storm</code>, <code>hf_lifecycle</code>, <code>hf_pattern_phase</code> and <code>hf_conversion</code>.</p>
+  <p class="muted"><a href="index.html">Back to the archive</a></p>
+</footer>
+</main>
+<script>
+  /* Follow the theme chosen on the archive page, if one was saved. */
+  (function () {
+    try {
+      var saved = localStorage.getItem('hf-theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+    } catch (err) { /* private mode: follow the system theme */ }
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>High Seas Draft</title>
+<meta name="description" content="A first-guess OPC High Seas Forecast (Pacific and Atlantic) written automatically from the marine wind page's grids and GFS-Wave seas each model run, with its warning areas on a globe. For forecasters to edit, not an official product.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a1120">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M3 3h10v10H3z%22 fill=%22none%22 stroke=%22%2338bdf8%22 stroke-width=%221.4%22/%3E%3Cpath d=%22M5 6h6M5 9h4%22 stroke=%22%2338bdf8%22 stroke-width=%221.2%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../globe-kit/lib/maplibre-gl.css?v=6f0a2646">
+<link rel="stylesheet" href="../globe-kit/globe-kit.css?v=6f0a2646">
+<style>
+  .hs-card { position: absolute; z-index: 15; top: calc(var(--gap) * 2 + var(--topbar-h)); left: var(--gap); bottom: var(--gap);
+    width: min(600px, calc(100% - var(--gap) * 2)); display: flex; flex-direction: column; overflow: hidden; }
+  .hs-head { display: flex; align-items: center; gap: 8px; padding: 12px 12px 8px 16px; flex-wrap: wrap; }
+  .hs-head h2 { font-size: 13px; font-weight: 700; margin-right: auto; }
+  .hs-steps { display: flex; gap: 4px; padding: 0 16px 8px; flex-wrap: wrap; }
+  .hs-steps button { font: 600 12px var(--mono); padding: 5px 9px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; color: var(--text-2); cursor: pointer; }
+  .hs-steps button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .hs-note { font-size: 11.5px; color: var(--text-3); padding: 0 16px 8px; }
+  .hs-text { flex: 1; overflow: auto; margin: 0; padding: 10px 16px 16px; border-top: 1px solid var(--border);
+    font: 12.5px/1.5 var(--mono); white-space: pre; color: var(--text); }
+  .hs-text { position: relative; }
+  .hs-text.hs-lay-block { padding-left: 40px; }
+  .hs-text .hs-para { display: inline; }
+  .hs-text .hs-cp, .hs-text .hs-go { position: absolute; left: 6px; width: 15px; height: 15px; margin-top: 2px; padding: 0;
+    border: 0; border-radius: 3px; background: transparent; color: var(--text-3); cursor: pointer; opacity: 0.55; user-select: none; }
+  .hs-text .hs-go { left: 22px; }
+  .hs-cp::before { content: ""; position: absolute; inset: 2px 4px 4px 2px; border: 1.4px solid currentColor; border-radius: 2px; }
+  .hs-cp::after { content: ""; position: absolute; inset: 5px 1px 1px 5px; border: 1.4px solid currentColor; border-radius: 2px; background: var(--surface-solid, #0f1a2e); }
+  .hs-go::before { content: ""; position: absolute; inset: 3px; border: 1.4px solid currentColor; border-radius: 50%; }
+  .hs-go::after { content: ""; position: absolute; left: 6px; top: 6px; width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+  .hs-text .hs-para:hover > .hs-cp, .hs-text .hs-para:hover > .hs-go, .hs-text .hs-cp:focus-visible, .hs-text .hs-go:focus-visible { opacity: 1; color: var(--accent); }
+  .hs-cp.ok { color: #4ade80; opacity: 1; }
+  .hs-cp.ok::before { inset: 3px 5px 5px 4px; border-width: 0 2px 2px 0; border-radius: 0; transform: rotate(45deg); }
+  .hs-cp.ok::after { display: none; }
+  .hs-text .hs-para:has(> .hs-cp:hover) { background: var(--accent-soft); }
+  /* storm cards (?layout=cards) and storm list (?layout=index) */
+  .hs-text.hs-lay-cards { padding-left: 12px; padding-right: 12px; }
+  .hs-text .hs-chb { display: inline-flex; gap: 6px; margin-left: auto; }
+  .hs-text .hs-chb .hs-cp, .hs-text .hs-chb .hs-go, .hs-index .hs-cp, .hs-index .hs-go { position: relative; left: auto; margin: 0; opacity: 0.8; }
+  .hs-text .hs-cardp { display: block; border: 1px solid var(--border); border-left: 3px solid var(--lvl, var(--border)); border-radius: var(--radius-sm); margin: 0 0 10px; }
+  .hs-ch { display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-bottom: 1px solid var(--border); font: 600 11.5px var(--font); color: var(--text-2); white-space: normal; user-select: none; }
+  .hs-cb { padding: 6px 10px 8px; }
+  .hs-plain { display: block; margin: 0 0 10px; color: var(--text-2); }
+  .hs-lvl { font: 700 10.5px var(--mono); letter-spacing: .04em; padding: 1px 6px; border-radius: 3px; color: #0a1120; background: var(--lvl); }
+  .hs-index { padding: 6px 16px 8px; border-top: 1px solid var(--border); display: grid; gap: 4px; }
+  .hs-index[hidden] { display: none; }
+  .hs-ix { display: grid; grid-template-columns: 70px 1fr 80px 44px; align-items: center; gap: 8px; font: 12px var(--mono); color: var(--text-2); }
+  .hs-ix .hs-lvl { justify-self: start; }
+  .hs-ix a { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--text-3); justify-self: start; }
+  .hs-ix .hs-chb { display: inline-flex; gap: 6px; }
+  .hs-index .hs-cp, .hs-index .hs-go { width: 15px; height: 15px; padding: 0; border: 0; background: transparent; color: var(--text-3); cursor: pointer; }
+  .hs-index .hs-cp:hover, .hs-index .hs-go:hover { color: var(--accent); }
+  .hs-text .hs-para.lit { background: var(--accent-soft); }
+  /* one storm at a time (Show row, map buttons) */
+  .hs-storms button { font: 600 11.5px var(--mono); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; color: var(--text-2); cursor: pointer; }
+  .hs-storms button i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; background: var(--lvl); vertical-align: 0; }
+  .hs-storms button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .hs-text .off, .hs-index .off { opacity: 0.3; }
+  .hs-text.hs-lay-cards .off, .hs-text.hs-lay-cards.hs-focusing .hs-plain { display: none; }
+  .hs-go.on { color: var(--accent) !important; opacity: 1 !important; }
+  .hs-steps button[hidden] { display: none; }
+  .hs-text mark { background: var(--accent-soft); color: var(--text); border-radius: 3px; }
+  .hs-legend { display: flex; gap: 12px; padding: 0 16px 8px; font-size: 11.5px; color: var(--text-2); flex-wrap: wrap; }
+  .hs-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+  .hs-haz { font: 600 11.5px var(--font); padding: 1px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; color: var(--text-2); cursor: pointer; }
+  .hs-haz[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .hs-haz i { background: transparent !important; border: 2px dashed; width: 8px; height: 8px; margin-left: 2px; }
+  .hs-basins { display: flex; gap: 4px; }
+  .hs-text .hs-ar { cursor: pointer; border-bottom: 1px dotted var(--text-3); }
+  .hs-text .hs-ar:hover, .hs-text .hs-ar.on { background: var(--accent-soft); color: var(--accent); border-bottom-color: var(--accent); }
+  .hs-cmp { padding: 0 16px 4px; font-size: 12px; color: var(--text-2); }
+  .hs-cmp table { border-collapse: collapse; width: 100%; font: 12px var(--mono); margin: 4px 0; }
+  .hs-cmp th, .hs-cmp td { text-align: right; padding: 2px 6px; border-bottom: 1px solid var(--border); }
+  .hs-cmp th:first-child, .hs-cmp td:first-child, .hs-cmp th:nth-child(2), .hs-cmp td:nth-child(2) { text-align: left; }
+  .hs-cmp p { margin: 4px 0; color: var(--text-3); font-size: 11.5px; }
+  .hs-cmp .hs-steps { padding: 4px 0; }
+  .hs-src { display: flex; align-items: center; gap: 8px; padding: 0 16px 8px; font-size: 11.5px; color: var(--text-3); flex-wrap: wrap; }
+  .hs-src nav { display: flex; gap: 4px; flex-wrap: wrap; }
+  .hs-src a { font: 600 12px var(--font); padding: 4px 9px; border-radius: var(--radius-sm); border: 1px solid var(--border); color: var(--text-2); text-decoration: none; }
+  .hs-src a[aria-current="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .hs-basins a[aria-current="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  @media (max-width: 760px) { .hs-card { top: auto; height: 48%; } .hs-text { font-size: 11px; } .brand p { display: none; } }
+</style>
+<script src="../globe-kit/lib/maplibre-gl.js?v=6f0a2646" defer></script>
+<script src="../globe-kit/globe-kit.js?v=6f0a2646" defer></script>
+<script src="app.js?v=6f0a2646" defer></script>
+</head>
+<body>
+<div id="app">
+  <div id="map" role="region" aria-label="Map of the draft's wind areas on a globe"></div>
+  <canvas id="overlay" aria-hidden="true"></canvas>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 12h12M10 17h12M10 22h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <div class="brand-text"><h1>High Seas Draft</h1><p><span id="basinName">Pacific</span> · first guess from the marine wind grids</p></div>
+    </div>
+    <div class="valid" aria-live="polite"><span class="eyebrow">Map valid</span><span id="validTime" class="valid-time">&mdash;</span><span id="validRel" class="valid-rel"></span></div>
+    <div class="topbar-actions">
+      <nav class="hs-basins" id="basins" aria-label="Basin"><a class="btn btn-ghost" data-basin="pac" href="?basin=pac">Pacific</a><a class="btn btn-ghost" data-basin="atl" href="?basin=atl">Atlantic</a></nav>
+      <a class="btn btn-ghost" href="../marine-wind/">Marine wind</a>
+      <a class="btn btn-ghost" href="../">All projects</a>
+    </div>
+  </header>
+  <section class="hs-card" aria-label="Draft text" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); backdrop-filter: blur(12px);">
+    <div class="hs-head">
+      <h2 id="runLine">Loading the draft&hellip;</h2>
+      <button type="button" class="btn" id="copyBtn" title="Copy the whole draft">Copy all</button>
+      <button type="button" class="btn" id="copyWarn" title="Copy the warning section: .WARNINGS. and every warning paragraph">Copy warnings</button>
+      <a class="btn btn-ghost" id="cmpLink" href="?view=compare">Compare with issued</a>
+      <a class="btn btn-ghost" id="plainLink" href="../marine-wind/data/hsf/pac.txt" target="_blank" rel="noopener">Plain text</a>
+    </div>
+    <div class="hs-src"><span>Wind grid</span><nav id="sources" aria-label="Wind grid the draft is written from"></nav></div>
+    <div class="hs-src"><span>Layout</span><nav id="layouts" aria-label="How the text is laid out"></nav></div>
+    <div class="hs-src" id="stormRow"><span>Show</span><nav id="storms" class="hs-storms" aria-label="Storm shown on the map"></nav></div>
+    <div class="hs-steps" id="steps" role="group" aria-label="Time shown on the map"></div>
+    <div class="hs-legend"><span><i style="background:#a855f7"></i>64+ kt</span><span><i style="background:#ef4444"></i>48-63</span><span><i style="background:#f59e0b"></i>34-47</span><span><i style="background:#38bdf8"></i>25-33</span><button type="button" class="hs-haz" id="hazBtn" aria-pressed="true" title="Show the fog and freezing spray areas"><i style="border-color:#d4d4d8"></i>Fog <i style="border-color:#67e8f9;border-style:dotted"></i>Spray</button><span>Shading: <span id="shadeName">Core Lifted wind</span> · outlines: draft areas · L: lows in the text · white line: warning low tracks · yellow dashed: High Seas forecast area</span></div>
+    <p class="hs-note">Written automatically by rules from the chosen wind grid (Core Lifted: the most likely wind, storm cores kept), the 3-model mean pressure and GFS-Wave seas. Fog (synopsis, 24 and 48 h): GFS surface visibility under 1 nm. Freezing spray: the Overland icing predictor from the wind, GFS air and sea temperature; heavy spray makes a warning. A draft for the forecaster to edit, not the official forecast.</p>
+    <div id="cmpBox" class="hs-cmp" hidden>
+      <p class="hs-cmp-key">White dotted: the issued forecast's areas · colours: the draft's areas</p>
+      <div id="cmpStats"></div>
+      <div class="hs-steps" id="textTabs" role="group" aria-label="Text shown"></div>
+    </div>
+    <div class="hs-index" id="index" hidden></div>
+    <pre class="hs-text" id="text"></pre>
+  </section>
+</div>
+</body>
+</html>
