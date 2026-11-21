@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Fetch Diagnostic</title>
+    <!-- Use the EXACT same CSP as index.html to test it -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://mesonet.agron.iastate.edu; font-src 'self'; connect-src 'self' https://api.weather.gov https://mesonet.agron.iastate.edu https://mapservices.weather.noaa.gov;">
+    <style>
+        body { font-family: monospace; padding: 20px; background: #f0f0f0; }
+        .log { background: white; padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; border-radius: 4px; }
+        .error { color: red; border-color: red; }
+        .success { color: green; border-color: green; }
+        .info { color: blue; }
+        #status { font-weight: bold; font-size: 1.2em; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Data Fetch Diagnostic</h1>
+    
+    <!-- Load Libraries to test them -->
+    <script src="lib/pmtiles/pmtiles.js"></script>
+    <script src="config.js"></script>
+
+    <div id="status">Initializing...</div>
+    <div id="logs"></div>
+
+    <script>
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            document.getElementById('logs').appendChild(div);
+            console.log(message);
+        }
+
+        function fail(message) {
+            log(message, 'error');
+            document.getElementById('status').textContent = 'TEST FAILED';
+            document.getElementById('status').style.color = 'red';
+        }
+
+        function pass(message) {
+            log(message, 'success');
+            document.getElementById('status').textContent = 'TEST PASSED';
+            document.getElementById('status').style.color = 'green';
+        }
+
+        // Test global error handler
+        window.onerror = function(msg, url, line) {
+            fail(`Global Error: ${msg} (${url}:${line})`);
+            return false;
+        };
+
+        log('Starting diagnostic test...');
+
+        // 1. Verify CSP settings
+        log('Checking CSP...');
+        // We can't really "read" the effective CSP from JS, but we can verify we are running
+        log('Script is running, so strict-dynamic (if used) or basic script-src is allowing inline scripts.');
+
+        // 1.5 Check if Libraries are loaded
+        log('Checking Libraries...');
+        if (typeof pmtiles !== 'undefined') {
+            pass('PMTiles reader is loaded.');
+        } else {
+            fail('PMTiles reader is NOT loaded. Check if lib/pmtiles/pmtiles.js exists and is accessible.');
+        }
+
+        import('./lib/maplibre/maplibre-gl.js')
+            .then(m => pass(`MapLibre GL ${m.getVersion ? m.getVersion() : ''} loaded as an ES module.`))
+            .catch(e => fail(`MapLibre GL failed to load (${e.message}). Check lib/maplibre/ and the server's MIME type for .js.`));
+
+        // The self-hosted basemap is read with HTTP range requests; the server must answer 206
+        fetch('basemap/us-core.pmtiles', { headers: { Range: 'bytes=0-15' } })
+            .then(async r => {
+                const magic = new TextDecoder().decode(new Uint8Array(await r.arrayBuffer()).slice(0, 7));
+                if (r.status === 206 && magic === 'PMTiles') {
+                    pass('Basemap file basemap/us-core.pmtiles answers range requests (HTTP 206).');
+                } else {
+                    fail(`Basemap range request returned HTTP ${r.status} (need 206). The server must support Range requests and must not compress .pmtiles.`);
+                }
+            })
+            .catch(e => fail(`Basemap file not reachable: ${e.message}`));
+
+        // Optional street-detail basemap configured in config.js
+        const streetsUrl = (typeof CONFIG !== 'undefined' && CONFIG.BASEMAP && CONFIG.BASEMAP.STREETS_URL) || '';
+        if (streetsUrl) {
+            fetch(streetsUrl, { headers: { Range: 'bytes=0-15' } })
+                .then(async r => {
+                    const magic = new TextDecoder().decode(new Uint8Array(await r.arrayBuffer()).slice(0, 7));
+                    if (r.status === 206 && magic === 'PMTiles') {
+                        pass(`Street-detail basemap ${streetsUrl} answers range requests (HTTP 206).`);
+                    } else {
+                        fail(`Street-detail basemap ${streetsUrl} returned HTTP ${r.status} (need 206); the map will use the core basemap.`);
+                    }
+                })
+                .catch(e => fail(`Street-detail basemap ${streetsUrl} not reachable (${e.message}); the map will use the core basemap.`));
+        } else {
+            log('No street-detail basemap configured (CONFIG.BASEMAP.STREETS_URL); using basemap/us-core.pmtiles.');
+        }
+
+        if (typeof CONFIG !== 'undefined') {
+            pass('CONFIG is loaded.');
+        } else {
+            fail('CONFIG is NOT loaded. Check if config.js exists and is accessible.');
+        }
+
+        // 2. Construct the URL (same as app uses)
+        // Last 24 hours
+        const now = new Date();
+        const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+        
+        function pad(n) { return n < 10 ? '0' + n : n; }
+        function formatDate(d) {
+            return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + 
+                   pad(d.getHours()) + pad(d.getMinutes());
+        }
+
+        const sts = formatDate(yesterday);
+        const ets = formatDate(now);
+
+        const url = `https://mesonet.agron.iastate.edu/geojson/lsr.php?sts=${sts}&ets=${ets}&wfos=`;
+
+        log(`Attempting to fetch data from: ${url}`);
+
+        // 3. Fetch data using fetch() API
+        try {
+            fetch(url, { headers: { 'Accept': 'application/json' } })
+                .then(response => {
+                    if (!response.ok) {
+                        fail(`HTTP error: ${response.status} ${response.statusText}`);
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.features) {
+                        pass(`Success! Received ${data.features.length} reports.`);
+                        log('First report: ' + JSON.stringify(data.features[0]));
+                    } else {
+                        fail('Received data but it has no features: ' + JSON.stringify(data));
+                    }
+                })
+                .catch(e => {
+                    fail('Fetch failed: ' + e.message + '. Check browser console for details.');
+                });
+            log('Fetch request initiated. Waiting for response...');
+        } catch (e) {
+            fail('Exception starting fetch: ' + e.message);
+        }
+
+        // Timeout
+        setTimeout(() => {
+            if (document.getElementById('status').textContent === 'Initializing...') {
+                fail('Timeout: No response after 10 seconds.');
+            }
+        }, 10000);
+
+    </script>
+</body>
+</html>

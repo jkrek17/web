@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a1120">
+    <meta name="description" content="Oceanic weather forecast: NDFD wave and wind grids with OPC surface fronts and isobars on a 3D globe.">
+    <title>Oceanic Forecast · NDFD &amp; OPC Surface</title>
+    <link rel="stylesheet" href="libs/maplibre/maplibre-gl.css">
+    <link rel="stylesheet" href="css/oceanic.css">
+</head>
+<body>
+    <div id="app">
+        <div id="map" role="region" aria-label="Forecast map. Click the ocean for point values."></div>
+        <div class="progress" id="progress" aria-hidden="true"></div>
+
+        <header class="topbar">
+            <div class="brand">
+                <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+                    <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M5 18c3-3 5-3 8 0s5 3 8 0 5-3 6-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M7 12c3-3 5-3 8 0s5 3 8 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+                </svg>
+                <div class="brand-text">
+                    <h1>Oceanic Forecast</h1>
+                    <p>NDFD grids · OPC surface analysis</p>
+                </div>
+            </div>
+
+            <div class="valid" aria-live="polite">
+                <span class="eyebrow">Valid</span>
+                <span id="validTime" class="valid-time">—</span>
+                <span id="validRel" class="valid-rel"></span>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="chips" aria-live="polite">
+                    <span class="chip" id="chipGrid" data-state="loading"><i></i><span>Grid</span></span>
+                    <span class="chip" id="chipFronts" data-state="loading"><i></i><span>Fronts</span></span>
+                    <span class="chip chip-demo" id="chipDemo" hidden title="Fronts, isobars and pressure centers on this page are synthetic sample data that demonstrates the renderer. NDFD grids and hazards are live NOAA data."><span>Demo fronts</span></span>
+                </div>
+                <a class="btn btn-ghost" id="homeLink" hidden></a>
+                <button type="button" class="icon-btn" id="btnLayers" aria-label="Layers" aria-controls="panel" aria-expanded="true" title="Layers (L)"></button>
+                <button type="button" class="icon-btn" id="btnHelp" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)"></button>
+            </div>
+        </header>
+
+        <div class="scrim" id="scrim" hidden></div>
+
+        <aside class="panel" id="panel" aria-label="Layers">
+            <div class="panel-head">
+                <h2>Layers</h2>
+                <button type="button" class="icon-btn icon-btn-sm" id="btnPanelClose" aria-label="Close layers"></button>
+            </div>
+
+            <section class="panel-section">
+                <h3>Base grid <span class="hint">NDFD</span></h3>
+                <div class="product-list" id="productList" role="radiogroup" aria-label="Base grid"></div>
+                <label class="slider-row">
+                    <span>Opacity</span>
+                    <input type="range" id="opacity" min="0.2" max="1" step="0.05" value="0.7">
+                    <output id="opacityOut">70%</output>
+                </label>
+            </section>
+
+            <section class="panel-section">
+                <h3>Overlays</h3>
+                <label class="switch-row"><span><i class="swatch swatch-fronts"></i>Fronts &amp; troughs</span><input type="checkbox" class="switch" data-overlay="fronts" checked><kbd>F</kbd></label>
+                <label class="switch-row"><span><i class="swatch swatch-isobars"></i>Isobars</span><input type="checkbox" class="switch" data-overlay="isobars" checked><kbd>I</kbd></label>
+                <label class="switch-row"><span><i class="swatch swatch-centers"></i>Highs, lows &amp; storms</span><input type="checkbox" class="switch" data-overlay="centers" checked><kbd>C</kbd></label>
+                <label class="switch-row"><span><i class="swatch swatch-barbs"></i>Wind barbs</span><input type="checkbox" class="switch" data-overlay="barbs"><kbd>B</kbd></label>
+                <div class="sub-row barb-color-row">
+                    <span>Barb color</span>
+                    <div class="segmented" role="radiogroup" aria-label="Barb color">
+                        <button type="button" role="radio" data-barb-color="black">Black</button>
+                        <button type="button" role="radio" data-barb-color="white">White</button>
+                    </div>
+                </div>
+                <label class="switch-row"><span><i class="swatch swatch-warnings"></i>Watches &amp; warnings</span><input type="checkbox" class="switch" data-overlay="warnings"><kbd>W</kbd></label>
+            </section>
+
+            <section class="panel-section">
+                <h3>Display</h3>
+                <label class="slider-row">
+                    <span>Symbol size</span>
+                    <input type="range" id="sizeSlider" min="0.75" max="2" step="0.25" value="1">
+                    <output id="sizeOut">1.0×</output>
+                </label>
+            </section>
+
+            <footer class="panel-foot">
+                Click the ocean for wave, wind and hazard details. Wind barbs can be layered over any base grid.<br>
+                Data: NOAA/NWS NDFD &amp; OPC · Basemap: Esri
+            </footer>
+        </aside>
+
+        <div class="legend" id="legend" aria-live="polite"></div>
+
+        <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+        <footer class="timeline" id="timeline">
+            <div class="tl-buttons">
+                <button type="button" class="icon-btn" id="btnPrev" aria-label="Previous step" title="Previous (←)"></button>
+                <button type="button" class="icon-btn icon-btn-primary" id="btnPlay" aria-label="Play" title="Play / pause (Space)"></button>
+                <button type="button" class="icon-btn" id="btnNext" aria-label="Next step" title="Next (→)"></button>
+                <button type="button" class="speed-btn" id="btnSpeed" aria-haspopup="true" aria-expanded="false" aria-controls="speedMenu" title="Loop speed ([ / ])">1×</button>
+                <div class="speed-menu" id="speedMenu" role="group" aria-label="Loop speed" hidden>
+                    <div class="speed-title">Loop speed</div>
+                    <div class="segmented speed-options" role="radiogroup">
+                        <button type="button" role="radio" data-speed="0.5">½×</button>
+                        <button type="button" role="radio" data-speed="1">1×</button>
+                        <button type="button" role="radio" data-speed="2">2×</button>
+                        <button type="button" role="radio" data-speed="4">4×</button>
+                    </div>
+                    <label class="speed-hold"><input type="checkbox" id="holdEnd" checked> Pause at last frame</label>
+                </div>
+            </div>
+            <div class="tl-readout">
+                <span id="tlHour" class="tl-hour">+0 h</span>
+                <span id="tlCycle" class="tl-cycle"></span>
+            </div>
+            <div class="tl-track">
+                <div class="tl-rail">
+                    <div class="tl-avail" id="tlAvail"></div>
+                    <div class="tl-cached" id="tlCached"></div>
+                    <div class="tl-ticks" id="tlTicks"></div>
+                    <div class="tl-now" id="tlNow" hidden><span>Now</span></div>
+                </div>
+                <input type="range" id="timeSlider" min="-12" max="96" step="3" value="0" aria-label="Forecast hour">
+            </div>
+            <div class="tl-key">
+                <span><i class="key-grid"></i>Grid <i class="key-fronts"></i>Fronts</span>
+                <span id="preloadStatus" class="preload-status" title="Forecast steps preloaded for instant scrubbing and playback"></span>
+                <span id="coords" class="coords"></span>
+            </div>
+        </footer>
+
+        <dialog id="helpDialog" class="dialog" aria-labelledby="helpTitle">
+            <div class="dialog-head">
+                <h2 id="helpTitle">Keyboard shortcuts</h2>
+                <button type="button" class="icon-btn icon-btn-sm" id="btnHelpClose" aria-label="Close"></button>
+            </div>
+            <dl class="shortcuts">
+                <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Previous / next forecast step</dd>
+                <dt><kbd>Space</kbd></dt><dd>Play / pause</dd>
+                <dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Slower / faster loop</dd>
+                <dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>First / last step</dd>
+                <dt><kbd>1</kbd>–<kbd>4</kbd></dt><dd>Waves, wind, gust, no base grid</dd>
+                <dt><kbd>B</kbd></dt><dd>Wind barbs on top of the grid</dd>
+                <dt><kbd>F</kbd> <kbd>I</kbd> <kbd>C</kbd> <kbd>W</kbd></dt><dd>Fronts, isobars, centers, warnings</dd>
+                <dt><kbd>L</kbd></dt><dd>Show / hide layers panel</dd>
+                <dt><kbd>R</kbd></dt><dd>Reset view</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close popup or panel</dd>
+            </dl>
+            <p class="dialog-note">Once the map stops moving, every forecast step is preloaded as a single image of the
+                view (the bright line under the timeline), so scrubbing and loops are instant. Grids are NDFD forecasts (3-hourly over the oceans, about 72 h ahead). Fronts follow the OPC
+                schedule: analyses every 6 h, and 24/48/72/96 h forecasts. The timeline marks which steps have each.</p>
+        </dialog>
+
+        <div class="fatal" id="fatal" hidden>
+            <h2>Map could not start</h2>
+            <p id="fatalMsg">This page needs a browser with WebGL enabled.</p>
+        </div>
+    </div>
+
+    <script>
+        window.OCEANIC_CONFIG = { homeLink: { href: '../', label: 'All projects' }, demoFrontsDir: 'fronts/' };
+    </script>
+    <script src="libs/maplibre/maplibre-gl.js"></script>
+    <script src="libs/turf/turf.min.js"></script>
+    <script src="js/oceanic-pgen.js"></script>
+    <script src="js/oceanic-ndfd.js"></script>
+    <script src="js/oceanic-frames.js"></script>
+    <script src="js/oceanic.js"></script>
+</body>
+</html>

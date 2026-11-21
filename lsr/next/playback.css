@@ -1,0 +1,513 @@
+/* ==========================================================================
+   Playback & Live page (playback.html). Builds on styles.css (theme
+   variables, header, popups, status toast).
+   ========================================================================== */
+
+:root {
+    --pb-bar-played: var(--primary-color);
+    --pb-bar-future: #cbd5e1;
+    --pb-recent: #f59e0b;
+    --pb-live: #dc2626;
+}
+
+[data-theme="dark"] {
+    --pb-bar-future: #475569;
+}
+
+/* The hidden attribute must win over the display rules below */
+.pb-app [hidden] {
+    display: none !important;
+}
+
+.pb-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.pb-header {
+    padding: 0.75rem 1.25rem;
+}
+
+.pb-header h1 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.pb-mode-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+}
+
+.pb-mode-title.live {
+    background: var(--pb-live);
+    border-color: var(--pb-live);
+}
+
+.pb-main {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    background: var(--bg-color);
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+/* ---- Settings panel ---------------------------------------------------- */
+
+.pb-panel {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 300px;
+    max-height: calc(100% - 9rem);
+    overflow-y: auto;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-lg);
+    z-index: 5;
+    font-size: 0.875rem;
+}
+
+.pb-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem;
+}
+
+.pb-panel.collapsed .pb-panel-body {
+    display: none;
+}
+
+.pb-panel-body {
+    padding: 0 0.85rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.pb-segmented {
+    flex: 1;
+    display: flex;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 2px;
+}
+
+.pb-segmented button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.pb-segmented button.active {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    box-shadow: var(--shadow);
+}
+
+#modeLive.active {
+    color: var(--pb-live);
+}
+
+.pb-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.pb-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.pb-presets {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.pb-presets button {
+    flex: 1;
+    min-width: 2.5rem;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-radius: 0.375rem;
+    padding: 0.3rem 0.4rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.pb-presets button.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.pb-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.pb-inline input,
+.pb-panel .form-control {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    padding: 0.35rem 0.45rem;
+    font: inherit;
+    font-size: 0.8rem;
+}
+
+.pb-inline input {
+    width: 190px;
+}
+
+.pb-checks {
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.pb-checks label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+}
+
+.pb-live-status {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+}
+
+.pb-load {
+    justify-content: center;
+}
+
+.pb-icon-btn {
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pb-icon-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* ---- Timeline ---------------------------------------------------------- */
+
+.pb-timeline {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 1rem 0.5rem;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 12px rgb(0 0 0 / 0.06);
+    z-index: 6;
+}
+
+.pb-transport {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.pb-play {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pb-play:hover {
+    filter: brightness(1.1);
+}
+
+.pb-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid var(--pb-live);
+    color: var(--pb-live);
+    background: transparent;
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+
+.pb-live-badge.following {
+    background: var(--pb-live);
+    color: white;
+}
+
+.pb-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.pb-live-badge.following .pb-dot {
+    animation: pb-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pb-pulse {
+    50% { opacity: 0.3; }
+}
+
+.pb-track-wrap {
+    min-width: 0;
+}
+
+.pb-track {
+    position: relative;
+    height: 44px;
+}
+
+#histogram {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#histogram .bar-played {
+    fill: var(--pb-bar-played);
+}
+
+#histogram .bar-future {
+    fill: var(--pb-bar-future);
+}
+
+#histogram .bar-hover {
+    opacity: 0.75;
+}
+
+#histogram .peak-label {
+    fill: var(--text-secondary);
+    font-size: 10px;
+}
+
+.pb-playhead {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 2px;
+    margin-left: -1px;
+    background: var(--text-primary);
+    pointer-events: none;
+}
+
+.pb-playhead::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -5px;
+    border: 6px solid transparent;
+    border-top-color: var(--text-primary);
+}
+
+/* Native range input on top of the histogram: drag, click and keyboard for free */
+#scrubber {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Keyboard focus only (not after a mouse click) */
+.pb-track:has(#scrubber:focus-visible) {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.pb-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--card-bg);
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.375rem;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.pb-axis {
+    position: relative;
+    height: 1.1rem;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.pb-axis span {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    top: 0.2rem;
+}
+
+.pb-readout {
+    min-width: 12rem;
+    text-align: right;
+}
+
+.pb-time {
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.pb-time-local,
+.pb-count {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.pb-options {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.pb-options select {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.3rem;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.2rem;
+}
+
+/* Radar opacity + reflectivity legend */
+#radarOpacity {
+    width: 100%;
+    accent-color: var(--primary-color);
+}
+
+.pb-legend {
+    margin-top: 0.15rem;
+}
+
+.pb-legend-bar {
+    height: 10px;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+}
+
+.pb-legend-ticks {
+    position: relative;
+    height: 0.95rem;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.pb-legend-ticks span {
+    position: absolute;
+    transform: translateX(-50%);
+    top: 0.1rem;
+}
+
+.pb-legend-caption {
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+}
+
+/* Recent-report halo legend dot used in the count line */
+.pb-recent-dot {
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    border: 2px solid var(--pb-recent);
+    vertical-align: -1px;
+}
+
+@media (max-width: 768px) {
+    .pb-header h1 > span:first-of-type {
+        display: none;
+    }
+
+    .pb-timeline {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "transport readout"
+            "track track";
+        gap: 0.5rem;
+    }
+
+    .pb-transport { grid-area: transport; }
+    .pb-track-wrap { grid-area: track; }
+    .pb-readout { grid-area: readout; min-width: 0; }
+
+    .pb-panel {
+        left: 0.5rem;
+        right: 0.5rem;
+        width: auto;
+        max-height: calc(100% - 1rem);
+    }
+}
