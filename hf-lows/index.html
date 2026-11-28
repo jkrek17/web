@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hurricane Force Extratropical Low Archive</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Archive and climatology of hurricane force extratropical lows in the North Atlantic and North Pacific.">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/charts.css">
+<link rel="stylesheet" href="assets/globe.css">
+<style>
+  /* Non-production environment marker (see #envBadge below). Kept here,
+     scoped to this one element, rather than in assets/app.css so it doesn't
+     collide with in-flight styling work on that file. Quiet by design: same
+     size as the Experimental badge, neutral colour (no alarm implied), and
+     gone entirely on print. */
+  .badge-env {
+    font-size: var(--fs-xs); font-weight: 650; letter-spacing: .04em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: var(--radius-pill);
+    color: var(--ink-2); background: var(--surface-sunk); border: 1px solid var(--border-strong);
+  }
+  @media print { .badge-env { display: none !important; } }
+  .badge-link { text-decoration: none; color: var(--accent); background: var(--accent-soft); border-color: var(--border-strong); font-weight: 600; }
+  .badge-link:hover { text-decoration: underline; }
+
+  /* Lat/lon readout under the cursor (globe.js). Scoped here rather than in
+     assets/app.css so it doesn't collide with in-flight styling work there;
+     tokens match the rest of the site so it reads correctly in both themes.
+     Top-left, so it never competes with the legend or the coastline credit,
+     which both live bottom-right (see assets/app.css). */
+  .globe-readout {
+    position: absolute; left: 10px; top: 8px; z-index: 1;
+    margin: 0; padding: 2px 7px; font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-2); background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    opacity: .9; pointer-events: none;
+  }
+</style>
+</head>
+<body class="map-active kpis-slim">
+<!-- map-active starts set because the Map tab is the default view above
+     (see .tab.is-active / #panel-map); app.js keeps this class in sync with
+     the active tab so the footer CSS rule can hide the footer only there. -->
+
+<div class="shell-sticky">
+<header class="topbar">
+  <div class="brand">
+    <h1>Hurricane Force Extratropical Low Archive</h1>
+    <p class="sub">North Atlantic &amp; North Pacific &middot; <span id="vintage">loading&hellip;</span></p>
+  </div>
+  <div class="topbar-actions">
+    <a class="badge badge-link" href="composites.html" title="ERA5 proxy composites: the typical pattern around an HF low, basin maps and storm-centred upper-air maps">Composites</a>
+    <a class="badge badge-link" href="storm-reviews.html" title="ERA5 proxy case studies of the 30 deepest lows: track, development, weather maps every 12 hours, gust swath">Storm reviews</a>
+    <a class="badge badge-link" href="environment-model.html" title="ERA5 proxy model of the chance a low reaches hurricane force within 24 hours">Storm model</a>
+    <a class="badge badge-link" href="bomb-environment.html" title="ERA5 proxy environment check: where a storm sits on jet-and-trough and jet-and-baroclinicity diagrams, and its 24-hour gale, storm and hurricane-force outlook">Environment check</a>
+    <a class="badge badge-link" href="tip-jets.html" title="Greenland tip jets at Cape Farewell: three common setups, where the low sits, and what goes with a hurricane-force gust rather than a storm-force one (ERA5 proxy)">Tip jets</a>
+    <a class="badge badge-link" href="what-we-learned.html" title="One-page summary for forecasters: what the research found usable, what came back empty, and why the scores stop where they do">What we learned</a>
+    <a class="badge badge-link" href="outlook-replay.html" title="Replays of past GFS runs, shaded by how often OPC agreed a hurricane-force or storm-force low was near, for forecast days 1 to 4">Outlook replay</a>
+    <a class="badge badge-link" href="outlook-live.html" title="Experimental: the latest GFS run, shaded by how often OPC agreed a hurricane-force or storm-force low was near, for forecast days 1 to 4. Not a warning.">Outlook live</a>
+    <span class="badge badge-warn" title="Not an official product. Derived from a hand-maintained archive.">Experimental</span>
+    <span class="badge badge-env" id="envBadge" hidden></span>
+    <button type="button" id="themeToggle" class="icon-btn" aria-label="Switch colour theme" title="Switch colour theme">
+      <span aria-hidden="true">◐</span>
+    </button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Views">
+  <button type="button" role="tab" class="tab is-active" data-panel="map" aria-selected="true">Map</button>
+  <button type="button" role="tab" class="tab" data-panel="clim" aria-selected="false">Climatology</button>
+  <button type="button" role="tab" class="tab" data-panel="events" aria-selected="false">Events</button>
+  <button type="button" role="tab" class="tab" data-panel="strong" aria-selected="false">Strongest storms</button>
+  <button type="button" role="tab" class="tab" data-panel="tele" aria-selected="false">Teleconnections</button>
+  <button type="button" role="tab" class="tab" data-panel="method" aria-selected="false">Method</button>
+  <button type="button" role="tab" class="tab" data-panel="qc" aria-selected="false" id="tab-qc-btn" hidden>QC</button>
+</nav>
+</div>
+
+<section class="filters" aria-label="Filters">
+  <div class="filter">
+    <label for="fBasin">Basin</label>
+    <select id="fBasin">
+      <option value="both">Both basins</option>
+      <option value="atl">Atlantic</option>
+      <option value="pac">Pacific</option>
+    </select>
+  </div>
+
+  <div class="filter">
+    <label for="fClass">Event type</label>
+    <select id="fClass">
+      <option value="all">All events</option>
+      <option value="low">Synoptic lows only</option>
+      <option value="nopres">No analyzed centre</option>
+      <option value="tipjet">Tip jet candidates</option>
+    </select>
+  </div>
+
+  <div class="filter">
+    <label for="fSeason0">Seasons</label>
+    <div class="range-pair">
+      <select id="fSeason0"></select>
+      <span class="range-dash" aria-hidden="true">to</span>
+      <select id="fSeason1"></select>
+    </div>
+  </div>
+
+  <i class="filter-break brk-1" aria-hidden="true"></i>
+
+  <div class="filter filter-grow">
+    <label id="monthsLabel">Months</label>
+    <div class="chips" id="fMonths" role="group" aria-labelledby="monthsLabel"></div>
+  </div>
+
+  <i class="filter-break brk-2" aria-hidden="true"></i>
+
+  <div class="filter">
+    <label for="fPressure">Min central pressure &le; <span id="fPressureOut">1060</span> hPa</label>
+    <input type="range" id="fPressure" min="900" max="1010" step="5" value="1010">
+  </div>
+
+  <div class="filter">
+    <label for="fSearch">Find</label>
+    <input type="search" id="fSearch" placeholder="Event ID or season" autocomplete="off">
+  </div>
+
+  <div class="filter filter-checks">
+    <label class="check"><input type="checkbox" id="fBomb"> Explosive only <abbr title="Maximum 24-hour deepening of at least 1 Bergeron, latitude-normalized, measured between hurricane-force fixes only">(&ge;1 B, at HF)</abbr></label>
+    <button type="button" id="fReset" class="btn">Reset</button>
+  </div>
+</section>
+
+<div id="activeFilters" class="active-filters" aria-live="polite"></div>
+
+<section class="kpis" id="kpis" aria-label="Summary statistics"></section>
+<div id="loading" class="loading" hidden aria-hidden="true"></div>
+<p id="resultCount" class="sr-only" aria-live="polite"></p>
+
+<main>
+  <!-- Map ------------------------------------------------------------- -->
+  <section class="panel is-active" id="panel-map" role="tabpanel">
+    <div class="panel-tools">
+      <div class="segmented" role="group" aria-label="Map layer">
+        <button type="button" class="seg is-active" data-layer="density" aria-pressed="true" title="Where hurricane-force lows happen: fix density, first fix or peak intensity">Where</button>
+        <button type="button" class="seg" data-layer="tracks" aria-pressed="false">Tracks</button>
+        <button type="button" class="seg" data-layer="genesis" aria-pressed="false" hidden>First fix</button>
+        <button type="button" class="seg" data-layer="peak" aria-pressed="false" hidden>Peak intensity</button>
+        <button type="button" class="seg" data-layer="prob" aria-pressed="false" title="Every scored ERA5 proxy track, each edge coloured by the model's probability of a hurricane-force-equivalent gust within 24 h">HF probability</button>
+        <button type="button" class="seg" data-layer="atlas" aria-pressed="false">Atlas</button>
+        <button type="button" class="seg" data-layer="bymonth" aria-pressed="false" title="All events of one calendar month, all seasons together; step through the months">By month</button>
+        <button type="button" class="seg" data-layer="playback" aria-pressed="false">Playback</button>
+      </div>
+      <select id="whereView" class="where-view" aria-label="Which view of where hurricane-force lows happen" hidden>
+        <option value="density">Fix density (where they spend time)</option>
+        <option value="genesis">First fix (where they first reach HF)</option>
+        <option value="peak">Peak intensity (where they are deepest)</option>
+      </select>
+      <!-- Independent of the layer switch above: a background context layer
+           that can sit under Tracks, Fix density, or either point layer, so
+           a forecaster can put it under Fix density and compare directly
+           (see Method tab for why). Off by default. -->
+      <label class="check" title="Mean OSCAR surface current speed/direction, drawn under the active layer as background context">
+        <input type="checkbox" id="fCurrents"> Ocean currents
+      </label>
+      <!-- ERA5 proxy tracks (pipeline A): a different dataset from the archive,
+           drawn in teal under the Tracks layer. The payload is 1.4 MB, so it
+           is fetched only when this box is first ticked (the script below is
+           type="text/plain": never run or loaded by the browser, only read
+           for its src). Before 2001-02 the gust index drifts, so the earlier
+           seasons are a second, explicit opt-in. -->
+      <details class="adv-layers">
+        <summary title="ERA5 proxy layers: a different dataset from the archive">Research layers (ERA5 proxy)</summary>
+        <div class="adv-body">
+        <label class="check" title="ERA5 reanalysis cyclones whose gust index is hurricane-force equivalent (pipeline A, a proxy), drawn under the archive's tracks on the Tracks layer">
+          <input type="checkbox" id="fEra5"> ERA5 proxy tracks
+        </label>
+        <label class="check" title="Matched null cases: ERA5 cyclones that stayed below the hurricane-force-equivalent threshold (4,154 tracks)">
+          <input type="checkbox" id="fEra5Null"> null-case tracks
+        </label>
+        <label class="check" title="Every ERA5 cyclone in the pipeline A population (75,087) as one dot at its peak position; the full tracks were never stored">
+          <input type="checkbox" id="fEra5Peaks"> all cyclones (peak positions)
+        </label>
+        <label class="check" title="Colour the ERA5 proxy tracks by the model's probability of a hurricane-force-equivalent gust within 24 h of each fix, instead of one flat colour (research/era5/hf_probability_tracks, a proxy)">
+          <input type="checkbox" id="fEra5Prob" disabled> colour tracks by P(HF within 24 h)
+        </label>
+        <label class="check" title="Seasons before 2001-02 are for comparison within that era only: the gust index drifts upward there">
+          <input type="checkbox" id="fEra5Pre" disabled> ERA5 before 2001-02 (within-era only)
+        </label>
+        </div>
+      </details>
+      <script type="text/plain" id="era5NullLoader" src="data/era5-null.js"></script>
+      <script type="text/plain" id="era5PeaksLoader" src="data/era5-peaks.js"></script>
+      <script type="text/plain" id="era5Loader" src="data/era5-tracks.js"></script>
+      <script type="text/plain" id="era5ProbLoader" src="data/era5-prob.js"></script>
+      <script type="text/plain" id="era5ListsLoader" src="data/era5-lists.js"></script>
+      <script type="text/plain" id="era5CmpLoader" src="data/era5-compare.js"></script>
+      <button type="button" class="btn" id="fitBounds">Fit to events</button>
+      <div class="atlas-tools" id="probTools" hidden>
+        <div class="filter">
+          <label for="probSeason">Season</label>
+          <select id="probSeason"></select>
+        </div>
+        <div class="filter">
+          <label for="probMin">Show edges at or above</label>
+          <select id="probMin">
+            <option value="1">All (including under 5 %)</option>
+            <option value="2">5 % and above</option>
+            <option value="3">20 % and above</option>
+            <option value="4" selected>50 % and above</option>
+          </select>
+        </div>
+        <script type="text/plain" id="allpLoader" src="data/era5-allprob.js"></script>
+      </div>
+      <div class="atlas-tools" id="atlasTools" hidden>
+        <label for="atlasView">Atlas view</label>
+        <select id="atlasView">
+          <option value="boxes">HF-centre hours per season (boxes)</option>
+          <option value="motion">Mean motion while HF (arrows)</option>
+          <option value="historic">1979-2003 candidates (ERA5 proxy)</option>
+          <option value="gust">ERA5 gust climatology and gale / storm / HF hours (proxy)</option>
+        </select>
+        <label for="atlasField" id="atlasFieldLabel" hidden>Field</label>
+        <select id="atlasField" hidden>
+          <option value="g38">Gale-class gust hours (≥ 38 kt), pick months</option>
+          <option value="g54">Storm-class gust hours (≥ 54 kt), pick months</option>
+          <option value="g717">Hurricane-force-class gust hours (≥ 71.7 kt), pick months</option>
+          <option value="annmax">Mean annual maximum gust</option>
+          <option value="f50">Share of times at or above 50 kt</option>
+          <option value="f64">Share of times at or above 64 kt</option>
+          <option value="f717">Share of times at or above 71.7 kt</option>
+        </select>
+        <label for="atlasPeriod" id="atlasPeriodLabel" hidden>Period</label>
+        <select id="atlasPeriod" hidden>
+          <option value="now">2004-05 to 2025-26, all months</option>
+          <option value="old">1979-2003, Oct to Apr (proxy, within-era)</option>
+        </select>
+        <label for="atlasSrc">Source</label>
+        <select id="atlasSrc">
+          <option value="archive">OPC archive (2004-05 to 2025-26)</option>
+          <option value="proxy">ERA5 proxy, pipeline A (2004-05 to 2025-26)</option>
+        </select>
+      </div>
+      <script type="text/plain" id="atlasLoader" src="data/atlas.js"></script>
+      <script type="text/plain" id="gustLoader" src="data/gust-climo.js"></script>
+      <script type="text/plain" id="gustClassLoader" src="data/gust-classes.js"></script>
+      <script type="text/plain" id="gustClass1979Loader" src="data/gust-classes-1979.js"></script>
+      <p class="tool-note" id="mapNote"></p>
+      <div id="probPanel" class="prob-panel" hidden></div>
+      <button type="button" class="btn" id="focusBack" hidden>Back to all tracks</button>
+      <a class="btn btn-link" id="focusEnv" href="bomb-environment.html" hidden>Environment check for this storm</a>
+      <button type="button" class="btn" id="era5FocusClear" hidden>Clear highlighted storm</button>
+    </div>
+
+    <!-- "What this shows": a plain-language note for the layer or view on
+         screen, written by app.js (renderExplain) from the EXPLAIN table, so
+         it sits at the top of the Map tab and follows every layer, atlas
+         view, playback mode and By month shading. -->
+    <aside class="explain" id="mapExplain" aria-labelledby="explainTitle">
+      <h2 class="explain-title" id="explainTitle">What this shows</h2>
+      <p class="explain-view" id="explainView"></p>
+      <dl class="explain-list">
+        <div><dt>Reading it</dt><dd id="explainRead"></dd></div>
+        <div><dt>Data</dt><dd id="explainData"></dd></div>
+        <div><dt>Caution</dt><dd id="explainCaution"></dd></div>
+      </dl>
+      <details class="explain-more" id="explainMoreWrap" hidden>
+        <summary>More</summary>
+        <div id="explainMore"></div>
+      </details>
+    </aside>
+
+    <!-- Playback transport. Shown only while the Playback layer is active
+         (app.js toggles [hidden]). Every control is a native element - radio
+         inputs, selects, a button and a range input - so keyboard and
+         screen-reader behaviour is the browser's own, not reimplemented. -->
+    <div class="transport" id="pbBar" role="group" aria-label="Playback controls" hidden>
+      <div class="transport-row">
+        <fieldset class="filter pb-modes" id="pbModeWrap">
+          <legend>Mode</legend>
+          <div class="pb-mode-set">
+            <label class="pb-mode"><input type="radio" name="pbMode" value="composite"><span>Composite</span></label>
+            <label class="pb-mode"><input type="radio" name="pbMode" value="season" checked><span>Season replay</span></label>
+            <label class="pb-mode"><input type="radio" name="pbMode" value="step"><span>Step</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="filter pb-modes" id="pbUnitWrap" hidden>
+          <legend>Step by</legend>
+          <div class="pb-mode-set">
+            <label class="pb-mode"><input type="radio" name="pbUnit" value="month" checked><span>Month</span></label>
+            <label class="pb-mode"><input type="radio" name="pbUnit" value="season"><span>Season</span></label>
+            <label class="pb-mode"><input type="radio" name="pbUnit" value="moy"><span>Month, all years</span></label>
+          </div>
+        </fieldset>
+        <div class="filter" id="pbMonthWrap" hidden>
+          <label for="pbMonth">Month</label>
+          <select id="pbMonth"></select>
+        </div>
+        <div class="filter" id="pbSeasonWrap" hidden>
+          <label for="pbSeason">Season</label>
+          <select id="pbSeason"></select>
+        </div>
+        <div class="filter" id="pbTailWrap">
+          <label for="pbTail">Tail length</label>
+          <select id="pbTail">
+            <option value="24">1 day</option>
+            <option value="48">2 days</option>
+            <option value="96" selected>4 days</option>
+            <option value="inf">Whole track so far</option>
+          </select>
+        </div>
+        <div class="filter">
+          <label for="pbSpeed" id="pbSpeedLabel">Speed</label>
+          <select id="pbSpeed"></select>
+        </div>
+      </div>
+      <div class="transport-row transport-main">
+        <button type="button" class="btn pb-step" id="pbPrev" hidden><span aria-hidden="true">&lsaquo;</span> <span id="pbPrevText">Previous</span></button>
+        <button type="button" class="btn pb-step" id="pbNext" hidden><span id="pbNextText">Next</span> <span aria-hidden="true">&rsaquo;</span></button>
+        <button type="button" class="btn pb-play" id="pbPlay"><span class="pb-glyph" aria-hidden="true"></span><span id="pbPlayText">Play</span></button>
+        <div class="pb-scrub-wrap">
+          <input type="range" class="pb-scrub" id="pbScrub" min="0" max="1" step="1" value="0" aria-label="Playback position" aria-describedby="pbHint">
+          <div class="pb-ticks" id="pbTicks" aria-hidden="true"></div>
+        </div>
+        <p class="pb-readout"><span class="pb-date" id="pbDate">&ndash;</span> <span class="pb-count" id="pbCount"></span></p>
+      </div>
+      <div class="pb-shade" id="pbShadeWrap" hidden>
+        <label class="pb-shade-item">Shading
+          <select id="pbShade" title="Heat map of where the track points of the hurricane-force events sit in the month, or the density of all lows, or no shading">
+            <option value="heat">HF event heat map</option>
+            <option value="all">Density of all lows (2004-05 on)</option>
+            <option value="off">None</option>
+          </select>
+        </label>
+        <label class="pb-shade-item" id="pbHeatSrcWrap">Events
+          <select id="pbHeatSrc" title="The archive's events (2004-05 on by default), or the ERA5 proxy hurricane-force-equivalent storms of 1979-80 to 2003-04">
+            <option value="archive">Archive events (2004-05 on)</option>
+            <option value="era5">ERA5 proxy storms, 1979-2003 (not direct observation)</option>
+          </select>
+        </label>
+        <label class="check pb-shade-item"><input type="checkbox" id="pbTracks"> Draw event tracks</label>
+      </div>
+      <label class="check pb-era5opt" id="pbEra5Wrap" hidden title="ERA5 reanalysis hurricane-force-equivalent storms (pipeline A, a proxy) for the seasons before the archive range on screen, back to 1979-80, drawn in teal under the archive's tracks">
+        <input type="checkbox" id="pbEra5" checked> ERA5 proxy storms from earlier seasons, 1979 on (teal; not direct observation)
+      </label>
+      <p class="transport-hint" id="pbHint">Arrow keys move the position by one day; Shift+arrow by six hours; Page Up and Page Down by a week; Home and End jump to the ends.</p>
+      <p class="transport-status" id="pbStatus"></p>
+    </div>
+    <!-- Polite live region for the playback position. Kept outside the
+         transport so it is in the document before it first speaks; app.js
+         throttles what is written to it (see announcePlayback). -->
+    <p id="pbLive" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+    <div class="map-wrap">
+      <div id="globeWrap" class="globe-wrap">
+        <canvas id="globe"></canvas>
+        <p class="globe-readout" id="globeReadout" hidden aria-hidden="true"></p>
+        <p class="globe-attrib" id="globeAttrib">Coastlines: Natural Earth (public domain)</p>
+      </div>
+      <div class="map-legend" id="mapLegend" aria-hidden="false"></div>
+    </div>
+  </section>
+
+  <!-- Climatology ------------------------------------------------------ -->
+  <section class="panel" id="panel-clim" role="tabpanel">
+    <!-- "What this shows" for this tab: same component and styling as the Map
+         tab's #mapExplain, but fixed text (nothing here depends on a filter). -->
+    <aside class="explain" aria-label="What the Climatology tab shows">
+      <h2 class="explain-title">What this shows</h2>
+      <p class="explain-view">Climatology: when, how deep and how far north the archive&rsquo;s hurricane-force lows are. Use it to see the typical season, which months are busiest, and how deep these storms get.</p>
+      <dl class="explain-list">
+        <div><dt>Reading it</dt><dd>Each card is one chart of the events the filters above select: events per season, the share that deepen explosively (&ldquo;bomb&rdquo; storms), the calendar-month cycle, lowest central pressure, time at hurricane force, fastest 24-hour deepening, events with no analyzed centre (mostly Greenland tip jets), and peak intensity by latitude. The cards are independent of each other.</dd></div>
+        <div><dt>Data</dt><dd>OPC&rsquo;s own archive of hurricane-force lows, kept by hand, in June&ndash;May seasons. The basin, season, month and pressure filters above apply.</dd></div>
+        <div><dt>Caution</dt><dd>These count archive events, not all storms. The first seasons are short-counted, not quiet. Analysts began logging developing-stage positions in 2013&ndash;14 (Pacific) and 2017&ndash;18 (Atlantic), which lengthens tracks without changing the weather: see <button type="button" class="link-btn" data-goto-practice>the Method tab</button>. Season-to-season changes rest on roughly 60 to 115 events a season, so read them as rough.</dd></div>
+      </dl>
+    </aside>
+    <div class="chart-grid">
+      <figure class="card chart-card chart-wide">
+        <figcaption>
+          <h2>Events per season</h2>
+          <p>
+            Each bar is one cool season (June&ndash;May); the dashed line is the
+            period mean. Coverage begins part-way through the record &mdash;
+            Pacific entries start in February&nbsp;2002 and Atlantic in
+            September&nbsp;2003 &mdash; so the first seasons are short-counted,
+            not quiet.
+          </p>
+        </figcaption>
+        <div class="chart" id="chartSeason"></div>
+      </figure>
+
+      <figure class="card chart-card chart-wide">
+        <figcaption>
+          <h2>Explosive share by season</h2>
+          <p>
+            The share of events that deepen by at least 1&nbsp;Bergeron in 24&nbsp;h,
+            measured at hurricane-force fixes only, which is comparable across the
+            whole record. Tick the box to add the line that uses every fix logged:
+            it steps up where analysts began logging fixes around the
+            hurricane-force period, so that step is the recording, not the weather.
+            <button type="button" class="link-btn" id="practiceLink">How the recording changed</button>
+          </p>
+          <label class="check"><input type="checkbox" id="practiceAll"> Also show the every-fix line and the logging changes</label>
+        </figcaption>
+        <div class="chart" id="chartPractice"></div>
+        <details class="tele-table" id="practiceDetails">
+          <summary>Show as a table</summary>
+          <div class="table-wrap">
+            <table class="data-table" id="practiceTable">
+              <caption class="sr-only">Explosive share and extra fixes per event, by season</caption>
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </details>
+      </figure>
+
+      <figure class="card chart-card">
+        <figcaption>
+          <h2>Seasonal cycle</h2>
+          <p>Events by calendar month of first fix, ordered June&ndash;May.</p>
+        </figcaption>
+        <div class="chart" id="chartMonth"></div>
+      </figure>
+
+      <figure class="card chart-card">
+        <figcaption>
+          <h2>Minimum central pressure</h2>
+          <p>Lowest analyzed pressure per event, 5&nbsp;hPa bins.</p>
+        </figcaption>
+        <div class="chart" id="chartPressure"></div>
+      </figure>
+
+      <figure class="card chart-card">
+        <figcaption>
+          <h2>Time at hurricane force</h2>
+          <p>Hurricane force fixes &times; 6&nbsp;h. An interval estimate, not a measured duration.</p>
+        </figcaption>
+        <div class="chart" id="chartDuration"></div>
+      </figure>
+
+      <figure class="card chart-card">
+        <figcaption>
+          <h2>Maximum 24-hour deepening</h2>
+          <p>
+            Largest pressure fall over any 18&ndash;24&nbsp;h window between
+            hurricane-force fixes, scaled to 24&nbsp;h and latitude-normalized.
+            Only events with that much hurricane-force data qualify; a negative
+            value means the low filled throughout the window. Hurricane-force
+            fixes only, so every season is measured through the same window.
+          </p>
+        </figcaption>
+        <div class="chart" id="chartBergeron"></div>
+      </figure>
+
+      <figure class="card chart-card">
+        <figcaption>
+          <h2>Events with no analyzed centre</h2>
+          <p>
+            Hurricane force with no central pressure anywhere in the track.
+            Most sit within 550&nbsp;km of Cape Farewell &mdash; Greenland tip
+            jets, not cyclone centres.
+          </p>
+        </figcaption>
+        <div class="chart" id="chartNoCentre"></div>
+      </figure>
+
+      <figure class="card chart-card chart-wide">
+        <figcaption>
+          <h2>Peak intensity by latitude</h2>
+          <p>Minimum central pressure against the latitude at which it occurred.</p>
+        </figcaption>
+        <div class="chart" id="chartScatter"></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Events ----------------------------------------------------------- -->
+  <section class="panel" id="panel-events" role="tabpanel">
+    <!-- "What this shows" for this tab: same component and styling as the Map
+         tab's #mapExplain, but fixed text (nothing here depends on a filter). -->
+    <aside class="explain" aria-label="What the Events tab shows">
+      <h2 class="explain-title">What this shows</h2>
+      <p class="explain-view">Events: how the project&rsquo;s ERA5 storm model rated each OPC hurricane-force storm before OPC called it, then the full list of archive events. Use it to see how much warning the model gave and which storms it missed. <span class="explain-proxy">ERA5 proxy, not direct observation.</span></p>
+      <dl class="explain-list">
+        <div><dt>Reading it</dt><dd>The top table, switched by the menu, shows either each OPC storm with the highest model chance of hurricane force (within 24 hours) before OPC&rsquo;s first hurricane-force fix, and how many hours ahead the chance first reached 50% (0.5), or ERA5 storms the model rated highly that OPC never listed. Each row has a link to show that storm on the map. The lower table lists every archive event the filters select; the button downloads it as CSV.</dd></div>
+        <div><dt>Data</dt><dd>OPC archive events from 2004&ndash;05 on for the model comparison, matched to ERA5 storm tracks (pipeline A) within about 270 nm of OPC&rsquo;s peak; storms with no matching track are counted but not scored.</dd></div>
+        <div><dt>Caution</dt><dd>The comparison is descriptive, not a forecast verification, and the model is run on ERA5, a stand-in for observations. A storm the model never rated is often one ERA5 never took to hurricane force. An ERA5 storm absent from OPC&rsquo;s list is not evidence that OPC missed it: that would need scatterometer, ship or buoy winds. &ldquo;Recorded&rdquo; columns in the lower table change with logging practice; &ldquo;HF&rdquo; columns compare across seasons.</dd></div>
+      </dl>
+    </aside>
+    <!-- Model against the OPC storms (ERA5 proxy P(HF), see app.js renderCompare) -->
+    <div class="panel-tools">
+      <div class="filter">
+        <label for="cmpView">Model against OPC</label>
+        <select id="cmpView">
+          <option value="opc">OPC hurricane-force storms: what P(HF) said</option>
+          <option value="unl">High-P proxy storms OPC never listed</option>
+        </select>
+      </div>
+      <p class="tool-note" id="cmpNote"></p>
+    </div>
+    <p class="table-basis" id="cmpSummary" role="status"></p>
+    <div class="table-wrap cmp-wrap">
+      <table class="data-table" id="cmpTable">
+        <caption class="sr-only">OPC hurricane-force storms and the ERA5 proxy model P(HF)</caption>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="table-basis" id="cmpBasis"></p>
+    <h2 class="sr-only">All archive events</h2>
+    <div class="panel-tools">
+      <p class="tool-note" id="tableNote"></p>
+      <button type="button" class="btn" id="moreCols" aria-pressed="false">More columns</button>
+      <button type="button" class="btn" id="exportCsv">Download filtered CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="eventsTable">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="table-more" id="tableMore"></p>
+    <p class="table-basis" id="tableBasis">
+      Red numbers are explosive deepening (1 Bergeron or more in 24 h). <strong>HF</strong> columns cover the hurricane-force period and compare across seasons.
+      <strong>Recorded</strong> columns cover every fix logged, which grew when the archive began
+      logging fixes around that period (2013&ndash;14 Pacific, 2017&ndash;18 Atlantic), so they
+      are not comparable across it.
+      <button type="button" class="link-btn" id="tableBasisLink">Read why</button>
+    </p>
+  </section>
+
+  <!-- Strongest storms ------------------------------------------------- -->
+  <!-- The strongest ERA5 proxy storms (pipeline A), from research/era5/hf_probability_tracks
+       (by pressure and by depth against the monthly norm, 1979-2025) and
+       research/era5/gust_climo (by gust index, ranked WITHIN era only). The
+       filters bar does not apply: these are fixed top-25 lists. Rows with a
+       track on the map link to it. The data file is fetched when the tab is
+       first opened. -->
+  <section class="panel" id="panel-strong" role="tabpanel">
+    <!-- "What this shows" for this tab: same component and styling as the Map
+         tab's #mapExplain, but fixed text (nothing here depends on a filter). -->
+    <aside class="explain" aria-label="What the Strongest storms tab shows">
+      <h2 class="explain-title">What this shows</h2>
+      <p class="explain-view">Strongest storms: the most extreme lows in ERA5, ranked three ways. Use it to find the benchmark storms for each basin. <span class="explain-proxy">ERA5 proxy, not direct observation.</span></p>
+      <dl class="explain-list">
+        <div><dt>Reading it</dt><dd>Pick a ranking: lowest central pressure, how far below the month&rsquo;s normal pressure, or the gust index (the strongest ERA5 gust over the ocean within about 430 nm). Pressure and depth show the top 25 per basin; the gust list shows the top 25 in each era. Select a date to show that storm on the map; storms with a written review link to it. The filters bar does not apply here.</dd></div>
+        <div><dt>Data</dt><dd>ERA5 reanalysis (a weather model re-run over past years with observations blended in), pipeline A storm tracks, 1979&ndash;2025. The pressure and depth lists run across the whole period; the gust list is ranked within 1979&ndash;2000 and within 2004&ndash;2025 only.</dd></div>
+        <div><dt>Caution</dt><dd>ERA5 reads low in the most intense storms and fewer observations went into it in the 1980s, so a 1980s storm and a 2010s storm are not directly comparable, and the gust ranks never cross 2001. Tropical-cyclone-linked storms are included and flagged. Storm names are inferred from date and position, not recorded in the data.</dd></div>
+      </dl>
+    </aside>
+    <div class="panel-tools">
+      <div class="filter">
+        <label for="strongList">Ranked by</label>
+        <select id="strongList">
+          <option value="minp">Lowest central pressure, 1979-2025</option>
+          <option value="depth">Depth against the monthly norm, 1979-2025</option>
+          <option value="gust">Gust index, within each era</option>
+        </select>
+      </div>
+      <div class="filter">
+        <label for="strongBasin">Basin</label>
+        <select id="strongBasin">
+          <option value="all">Both basins</option>
+          <option value="atl">Atlantic</option>
+          <option value="pac">Pacific</option>
+        </select>
+      </div>
+      <p class="tool-note" id="strongNote"></p>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="strongTable">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="table-basis" id="strongBasis"></p>
+  </section>
+
+  <!-- Teleconnections ------------------------------------------------- -->
+  <!-- Composite of the storm track under a chosen climate state (ENSO phase,
+       NAO/PNA/AO tercile, MJO state and lag) against the whole archive, with
+       the statistics beside it. The Filters bar above does not apply here
+       (app.js hides it on this tab): a composite is always the full archive's
+       complete seasons against the subset, never a hand-narrowed slice, so
+       the sample sizes printed in the statistics are the real ones. Every
+       control is a native element; the statistics card is a polite live
+       region by way of #teleLive (see app.js, announceTele). -->
+  <section class="panel" id="panel-tele" role="tabpanel">
+    <!-- "What this shows" for this tab: same component and styling as the Map
+         tab's #mapExplain, but fixed text (nothing here depends on a filter). -->
+    <aside class="explain" aria-label="What the Teleconnections tab shows">
+      <h2 class="explain-title">What this shows</h2>
+      <p class="explain-view">Teleconnections: whether a large-scale climate state (ENSO, NAO, PNA, AO, MJO) goes with a different pattern of hurricane-force lows. In short: mostly no clear link was found, and the page shows how large an effect could have been seen.</p>
+      <dl class="explain-list">
+        <div><dt>Reading it</dt><dd>Start with the table of standard comparisons: a marked cell means part of the storm track differs from the usual by more than chance. The composite map shows where storm density differs; the regression uses the index as a number and asks whether it shifts the storms, and how large an effect this archive could have detected. A null result is a result, not a missing one.</dd></div>
+        <div><dt>Data</dt><dd>The OPC archive&rsquo;s complete seasons, against the climate indices on the page. The filters bar does not apply: the samples shown are the real ones.</dd></div>
+        <div><dt>Caution</dt><dd>A climate index changes slowly, so there are only as many independent samples as seasons (22), not storms, and only large shifts can be found (low power is marked). With many comparisons some cells pass by chance: treat an isolated hit as a lead, not a finding.</dd></div>
+      </dl>
+    </aside>
+    <!-- Two ways of asking one question of the same events. The composite
+         bins an index into thirds and tests ~150 map cells ("where does the
+         density differ?"); the regression keeps the index continuous and
+         asks one question of one number ("does it move the whole
+         distribution, and could this archive have seen an effect of that
+         size?"). Neither is a different dataset. Both views stay in the DOM;
+         app.js shows one. -->
+    <section class="card tele-card tele-viewcard" aria-labelledby="teleViewH">
+      <h2 id="teleViewH">Two ways of asking</h2>
+      <fieldset class="filter tele-field">
+        <legend>Method</legend>
+        <div class="pb-mode-set">
+          <label class="pb-mode"><input type="radio" name="teleView" value="composite" checked><span>Composite map</span></label>
+          <label class="pb-mode"><input type="radio" name="teleView" value="regress"><span>Regression</span></label>
+        </div>
+      </fieldset>
+      <p class="tele-note" id="teleViewNote"></p>
+    </section>
+
+    <div id="teleCompView">
+    <section class="card tele-card tele-summary" id="teleSummary" aria-labelledby="teleSummaryH">
+      <h2 id="teleSummaryH">At a glance: does any climate state change where HF lows go?</h2>
+      <p class="tele-note" id="teleSummaryNote">Computing the 15 standard comparisons&hellip;</p>
+      <div class="table-wrap">
+        <table class="data-table tele-sumtable" id="teleSumTable">
+          <caption class="sr-only">Composite test result for every climate index and state, tested one at a time</caption>
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="tele-hint" id="teleSumBasis"></p>
+    </section>
+    <div class="tele-grid">
+      <div class="tele-side">
+        <section class="card tele-card tele-controls" aria-labelledby="teleSelH">
+          <h2 id="teleSelH">Climate state</h2>
+          <fieldset class="filter tele-field">
+            <legend>Index</legend>
+            <div class="pb-mode-set">
+              <label class="pb-mode"><input type="radio" name="teleIndex" value="enso" checked><span>ENSO</span></label>
+              <label class="pb-mode"><input type="radio" name="teleIndex" value="nao"><span>NAO</span></label>
+              <label class="pb-mode"><input type="radio" name="teleIndex" value="pna"><span>PNA</span></label>
+              <label class="pb-mode"><input type="radio" name="teleIndex" value="ao"><span>AO</span></label>
+              <label class="pb-mode"><input type="radio" name="teleIndex" value="mjo"><span>MJO</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter tele-field" id="teleEnsoWrap">
+            <legend>Phase</legend>
+            <div class="pb-mode-set">
+              <label class="pb-mode"><input type="radio" name="teleEnso" value="E" checked><span>El Ni&ntilde;o</span></label>
+              <label class="pb-mode"><input type="radio" name="teleEnso" value="N"><span>Neutral</span></label>
+              <label class="pb-mode"><input type="radio" name="teleEnso" value="L"><span>La Ni&ntilde;a</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter tele-field" id="teleTercWrap" hidden>
+            <legend>Tercile</legend>
+            <div class="pb-mode-set">
+              <label class="pb-mode"><input type="radio" name="teleTerc" value="upper" checked><span>Upper</span></label>
+              <label class="pb-mode"><input type="radio" name="teleTerc" value="middle"><span>Middle</span></label>
+              <label class="pb-mode"><input type="radio" name="teleTerc" value="lower"><span>Lower</span></label>
+            </div>
+          </fieldset>
+
+          <div class="tele-mjo" id="teleMjoWrap" hidden>
+            <div class="filter tele-field">
+              <label for="teleLon">Longitude</label>
+              <select id="teleLon"></select>
+            </div>
+            <fieldset class="filter tele-field">
+              <legend>State</legend>
+              <div class="pb-mode-set">
+                <label class="pb-mode"><input type="radio" name="teleMjoState" value="enhanced" checked><span>Enhanced</span></label>
+                <label class="pb-mode"><input type="radio" name="teleMjoState" value="suppressed"><span>Suppressed</span></label>
+                <label class="pb-mode"><input type="radio" name="teleMjoState" value="neutral"><span>Neutral</span></label>
+              </div>
+            </fieldset>
+            <div class="filter tele-field tele-lag">
+              <label for="teleLag">Lag: <span id="teleLagOut"></span></label>
+              <input type="range" id="teleLag" min="0" max="6" step="1" value="2" aria-describedby="teleLagHint">
+              <p class="tele-hint" id="teleLagHint">How many pentads (5-day steps) before the storm the index is read. The extratropical response is thought to lag the tropics by about 5&ndash;15 days, so 1&ndash;3 pentads is the usual place to look.</p>
+            </div>
+          </div>
+
+          <p class="tele-defn" id="teleDefn"></p>
+        </section>
+
+        <section class="card tele-card tele-stats" id="teleStats" aria-labelledby="teleStatsH" aria-busy="false">
+          <h2 id="teleStatsH">Does the storm track differ?</h2>
+          <p class="tele-pending" id="telePending" hidden></p>
+          <div id="teleStatsBody"></div>
+        </section>
+      </div>
+
+      <section class="card tele-card tele-mapcard" id="teleMapCardWrap" aria-labelledby="teleMapH">
+        <h2 id="teleMapH">Composite anomaly map</h2>
+        <fieldset class="filter tele-field tele-fieldsel">
+          <legend>Map shows</legend>
+          <div class="pb-mode-set">
+            <label class="pb-mode"><input type="radio" name="teleField" value="rate" checked><span>Activity rate</span></label>
+            <label class="pb-mode"><input type="radio" name="teleField" value="shape"><span>Track shape</span></label>
+          </div>
+          <p class="tele-hint" id="teleFieldHint"></p>
+        </fieldset>
+        <p class="tele-mapcap" id="teleMapCap"></p>
+        <!-- app.js moves the globe (.map-wrap) here while this tab is
+             active, and back to the Map tab afterwards: there is one
+             canvas and one HF.globe, and two copies would mean two
+             drawing states to keep in step. -->
+        <div class="tele-map" id="teleMapSlot"></div>
+        <div class="tele-legend" id="teleLegend"></div>
+      </section>
+    </div>
+
+    <figure class="card chart-card chart-wide tele-series" id="teleSeriesCard">
+      <figcaption>
+        <h2 id="teleSeriesH">Index and storm activity</h2>
+        <p id="teleSeriesCap"></p>
+      </figcaption>
+      <div class="chart" id="chartTele"></div>
+      <details class="tele-table" id="teleTable">
+        <summary>Table view: one row per season</summary>
+        <div class="table-wrap">
+          <table class="data-table" id="teleTableEl">
+            <caption class="sr-only" id="teleTableCap"></caption>
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </figure>
+
+    <section class="card prose tele-method" id="teleMethod" aria-labelledby="teleMethodH">
+      <h2 id="teleMethodH">How to read this tab</h2>
+      <div id="teleMethodBody"></div>
+    </section>
+
+    </div><!-- #teleCompView -->
+
+    <!-- Regression view -------------------------------------------------
+         HF.regress.fit on the same decoded events. One model per basin (the
+         API enforces it), month as a fixed effect, the index entered
+         continuously, season-block bootstrap intervals, and next to every
+         interval the smallest effect this sample could have detected. The
+         coefficient plot is drawn by HF.charts.coefPlot; everything it
+         shows is also in the table view and the plain-language list. -->
+    <div id="teleRegView" hidden>
+      <section class="card tele-card reg-controls" aria-labelledby="regSelH">
+        <h2 id="regSelH">Model</h2>
+        <div class="reg-controls-row">
+          <fieldset class="filter tele-field">
+            <legend>Basin</legend>
+            <div class="pb-mode-set">
+              <label class="pb-mode"><input type="radio" name="regBasin" value="atl" checked><span>Atlantic</span></label>
+              <label class="pb-mode"><input type="radio" name="regBasin" value="pac"><span>Pacific</span></label>
+            </div>
+            <p class="tele-hint" id="regBasinHint">Each basin is its own model. The Atlantic track is expected to respond to the NAO and the Pacific to the PNA, and a shared model would assume the two respond alike.</p>
+          </fieldset>
+
+          <div class="filter tele-field">
+            <label for="regResponse">Response</label>
+            <select id="regResponse" aria-describedby="regRespHint">
+              <option value="lat">Track latitude (degrees N)</option>
+              <option value="lon">Track longitude (degrees E)</option>
+              <option value="minP">Minimum central pressure (hPa)</option>
+              <option value="hfH">Time at hurricane force (hours)</option>
+            </select>
+            <p class="tele-hint" id="regRespHint"></p>
+          </div>
+
+          <div class="filter tele-field">
+            <label class="check"><input type="checkbox" id="regInter" aria-describedby="regInterHint"> Interactions</label>
+            <p class="tele-hint" id="regInterHint">Adds NAO&times;PNA, NAO&times;ONI and PNA&times;ONI: does one index change how strongly another acts? Each carries its own detection floor.</p>
+          </div>
+
+          <div class="filter tele-field">
+            <label class="check"><input type="checkbox" id="regMjo" aria-describedby="regMjoHint"> MJO</label>
+            <p class="tele-hint" id="regMjoHint">Adds the MJO phase and amplitude from the CPC velocity-potential field (a local derivation, not Wheeler&ndash;Hendon RMM). Runs a permutation test, about half a second.</p>
+          </div>
+        </div>
+        <div class="filter tele-field tele-lag reg-lag" id="regLagWrap" hidden>
+          <label for="regLag">MJO lag: <span id="regLagOut"></span></label>
+          <input type="range" id="regLag" min="0" max="6" step="1" value="0" aria-describedby="regLagHint">
+          <p class="tele-hint" id="regLagHint">How many pentads (5-day steps) before the storm&rsquo;s first fix the MJO is read. 0 is the pentad the storm begins in. The answer can change a great deal between lags, so this is not a cosmetic control: compare them all below, and read what that does to a single p-value.</p>
+          <button type="button" class="btn" id="regSweep">Compare lags 0 to 6</button>
+          <div id="regSweepOut" class="reg-sweep" tabindex="-1"></div>
+        </div>
+      </section>
+
+      <section class="card tele-card reg-main" id="regMain" aria-labelledby="regPlotH" aria-busy="false">
+        <h2 id="regPlotH">Effect of each index</h2>
+        <p class="tele-pending" id="regPending" hidden></p>
+        <div id="regBody">
+          <p class="tele-showing" id="regShowing"></p>
+          <p class="reg-headline" id="regHeadline"></p>
+          <div class="chart reg-plot" id="regPlot"></div>
+          <details class="tele-table" id="regTable">
+            <summary>Table view: every number in the plot</summary>
+            <div class="table-wrap">
+              <table class="data-table" id="regTableEl">
+                <caption class="sr-only" id="regTableCap"></caption>
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <div class="reg-grid" id="regLower">
+        <section class="card tele-card" aria-labelledby="regReadH">
+          <h2 id="regReadH">In plain language</h2>
+          <div id="regReading"></div>
+        </section>
+        <div class="tele-side">
+          <section class="card tele-card" aria-labelledby="regFitH">
+            <h2 id="regFitH">Sample and fit</h2>
+            <div id="regFit"></div>
+          </section>
+          <section class="card tele-card" aria-labelledby="regMjoH" id="regMjoCard" hidden>
+            <h2 id="regMjoH">The MJO</h2>
+            <div id="regMjoBody"></div>
+          </section>
+          <section class="card tele-card" aria-labelledby="regWarnH">
+            <h2 id="regWarnH">Warnings from the fit</h2>
+            <div id="regWarn"></div>
+          </section>
+        </div>
+      </div>
+
+      <section class="card prose tele-method" aria-labelledby="regMethodH">
+        <h2 id="regMethodH">How to read the regression</h2>
+        <div id="regMethodBody"></div>
+      </section>
+    </div>
+
+    <!-- Polite live region for the finished result. Outside the card so it
+         is in the document before it first speaks; written once per
+         completed computation, never while one is pending. -->
+    <p id="teleLive" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+  </section>
+
+  <!-- Method ----------------------------------------------------------- -->
+  <!-- QC ----------------------------------------------------------------
+       Only present when the page is opened with ?qc (assets/js/qc.js removes
+       this panel and its tab otherwise). Lists suspect archive data and saves
+       corrections to the Google Sheet through web/HFArchiveExport. -->
+  <section class="panel" id="panel-qc" role="tabpanel">
+    <div id="qcRoot"></div>
+  </section>
+
+  <section class="panel" id="panel-method" role="tabpanel">
+    <div class="card prose">
+      <p class="jump"><strong>Jump to:</strong> <a href="#method-archive">What is in the archive</a> &middot; <a href="#practiceH">A change in recording practice</a> &middot; <a href="#method-codes">Category codes</a> &middot; <a href="#method-nocentre">Events with no analyzed central pressure</a> &middot; <a href="#method-derived">Derived quantities</a> &middot; <a href="#method-limits">Known limitations</a> &middot; <a href="#method-currents">Ocean currents layer</a> &middot; <a href="#method-rebuild">Rebuilding</a> &middot; <a href="#method-credits">Credits</a></p>
+      <p class="muted">This tab is the technical reference: what the OPC archive holds, how it was recorded, how each number on the other tabs is worked out, and what to be careful about. If you read only one part, read &ldquo;What is in the archive&rdquo; and &ldquo;A change in recording practice&rdquo;.</p>
+      <h2 id="method-archive">What is in the archive</h2>
+      <p>
+        Each event is an extratropical low tracked at 6-hourly synoptic times
+        while it was at, or developing toward, hurricane force. Tracking
+        generally starts at or shortly before the low reaches that intensity
+        and ends when it weakens below storm force, is absorbed, or moves out
+        of the forecast area &mdash; so these are <em>not</em> full cyclone
+        life cycles, and the archive says nothing about lows that never
+        reached hurricane force.
+      </p>
+
+      <h2 id="practiceH" tabindex="-1">A change in recording practice</h2>
+      <p>
+        Partway through the record, analysts began logging
+        <strong>developing-hurricane-force</strong> (DHF) fixes <em>before</em>
+        each storm&rsquo;s first hurricane-force fix, and
+        <strong>storm-force</strong> (S) fixes <em>after</em> its last. This
+        began with the 2013&ndash;14 Pacific season and the 2017&ndash;18
+        Atlantic season. It makes each event&rsquo;s recorded track longer
+        without making the storm any different, and any statistic measured over
+        the whole recorded track moves with it.
+      </p>
+      <div id="practiceNote"></div>
+
+      <h2 id="method-codes">Category codes</h2>
+      <dl class="defs" id="catDefs"></dl>
+
+      <h2 id="method-nocentre">Events with no analyzed central pressure</h2>
+      <p>
+        A little over 2&nbsp;% of Atlantic fixes carry
+        <code>NOPRES</code> instead of a pressure, and their median position is
+        60.0&deg;N, 42.1&deg;W &mdash; Cape Farewell, the southern tip of
+        Greenland. These are overwhelmingly <strong>tip jet</strong> and
+        barrier jet events: the flow accelerates around and along the Greenland
+        terrain and produces hurricane force winds with no closed low centre to
+        analyze. They peak in December&ndash;February, run short (a median of
+        two fixes), and are frequent enough &mdash; a few per season, more in
+        recent ones &mdash; that ignoring them would misstate the climatology.
+      </p>
+      <p>
+        Because a missing pressure here means &ldquo;there is no centre&rdquo;
+        rather than &ldquo;the centre was not measured&rdquo;, these events are
+        given their own class instead of being mixed into pressure statistics:
+      </p>
+      <dl class="defs" id="classDefs"></dl>
+      <p>
+        The classification needs <em>both</em> conditions. Location alone is not
+        diagnostic: 185 ordinary pressure-bearing lows also track through the
+        same region. Treat the tip jet label as a well-supported candidate flag,
+        not a verified classification &mdash; confirming one takes the surface
+        analysis and a wind field, which this archive does not carry.
+      </p>
+      <p>
+        Every pressure-based figure on this page &mdash; the median, the
+        distribution, the deepening rates &mdash; is computed over events with
+        an analyzed centre. The event counts, seasonal cycle and maps include
+        every class, so counts and pressure statistics deliberately describe
+        slightly different populations. Use the <strong>Event type</strong>
+        filter to isolate either one.
+      </p>
+
+      <h2 id="method-derived">Derived quantities</h2>
+      <dl class="defs">
+        <dt>Minimum central pressure</dt>
+        <dd>
+          The lowest analyzed pressure over the tracked fixes. It is the
+          minimum <em>within the tracked window</em>, which may not be the
+          cyclone's true lifetime minimum.
+        </dd>
+        <dt>Time at hurricane force</dt>
+        <dd>
+          Count of hurricane force fixes &times; 6&nbsp;h. With 6-hourly
+          analyses the true duration is only resolved to &plusmn;6&nbsp;h, and
+          a low that peaked between synoptic times can be missed entirely.
+        </dd>
+        <dt>Maximum 24-hour deepening (Bergerons)</dt>
+        <dd>
+          The largest pressure fall over any 18&ndash;24&nbsp;h window between
+          <strong>hurricane-force fixes</strong>, scaled to 24&nbsp;h and
+          normalized by latitude (the version over every recorded fix is kept
+          alongside it; see <em>A change in recording practice</em>):
+          <code>B = (&Delta;p / 24 hPa) &times; sin 60&deg; / sin &phi;</code>,
+          following Sanders and Gyakum (1980). <code>B &ge; 1</code> is the
+          classic &ldquo;bomb&rdquo; threshold. Most hurricane-force periods
+          last less than 18&nbsp;h, so this can be measured for only about a
+          third of events &mdash; and those are biased toward the longer-lived,
+          more intense ones. The headline explosive share is taken over
+          <em>all</em> events, counting those that cannot be measured as not
+          explosive, so it is a lower bound rather than a property of the
+          measurable minority.
+        </dd>
+        <dt>Translation speed</dt>
+        <dd>
+          Great-circle distance between consecutive fixes divided by elapsed
+          time, in knots; reported as the mean from the first to the last
+          hurricane-force fix, with the whole-track figure kept alongside.
+        </dd>
+        <dt>Season</dt>
+        <dd>
+          June&ndash;May, labelled by the starting year: an event on
+          2&nbsp;January&nbsp;2015 belongs to season 2014&ndash;15. This keeps
+          a single cool season in one bucket.
+        </dd>
+      </dl>
+
+      <h2 id="method-limits">Known limitations</h2>
+      <ul>
+        <li>
+          The default view starts at the 2004&ndash;05 season. Pacific entries
+          begin in February&nbsp;2002 and Atlantic in September&nbsp;2003, so
+          earlier seasons are partial; they are still in the data and can be
+          selected, but they are marked provisional and are excluded from the
+          default period of record.
+        </li>
+        <li>Positions and pressures are analyst estimates recorded to the nearest tenth of a degree and whole hPa; no reanalysis has been applied.</li>
+        <li>Counts per season reflect both real variability and changes in analysis practice over 20+ years. A trend here is not necessarily a climate signal. The clearest case is described under <em>A change in recording practice</em>, above: durations, track lengths and deepening measured over the whole recorded track are not comparable across 2013 (Pacific) or 2017 (Atlantic).</li>
+        <li>Where one archive ID covered two unrelated lows, the build split it into lettered events (<code>&hellip;a</code>, <code>&hellip;b</code>) &mdash; noted in that event's detail drawer.</li>
+        <li>Pressures outside 880&ndash;1060&nbsp;hPa and non-numeric sentinels (<code>NOPRES</code>, <code>XXX</code>, <code>NA</code>) are treated as &ldquo;not analyzed&rdquo;, not as zero.</li>
+      </ul>
+
+      <h2 id="method-currents">Ocean currents layer</h2>
+      <p>
+        This archive&rsquo;s fix-density and pressure-ramp maxima sit almost
+        exactly over the Gulf Stream and the Kuroshio. That is not
+        decoration: the sharp sea-surface-temperature gradient across those
+        western boundary currents supplies the low-level baroclinicity and
+        surface heat flux that feeds explosive cyclogenesis. The optional
+        <strong>Ocean currents</strong> layer on the Map tab (off by default)
+        draws a multi-year mean surface current field underneath the tracks,
+        fix density, or point layers so that relationship can be checked by
+        eye &mdash; put it under Fix density and see whether the storm track
+        belt actually lines up with the current, rather than assuming it
+        does. Co-location shown this way is not proof of causation, and the
+        field is a historical mean (see Credits), not the conditions during
+        any specific event.
+      </p>
+
+      <h2 id="method-rebuild">Rebuilding</h2>
+      <p>
+        Export each basin tab of the source workbook to
+        <code>data/hf_lows/</code> and run
+        <code>python3 tools/build_hf_lows.py</code>. The script regenerates
+        everything under <code>docs/data/</code>; committing the result
+        publishes the GitHub Pages preview. The production copy on the NOAA
+        web server is separate: it is updated with <code>tools/publish.py</code>,
+        which does not go through GitHub at all. See the root
+        <code>README.md</code> for both.
+      </p>
+      <p class="muted" id="sourceLine"></p>
+      <p class="muted" id="buildProvenance"></p>
+
+      <h2 id="method-credits">Credits</h2>
+      <dl class="defs">
+        <dt>Coastlines</dt>
+        <dd>Natural Earth, public domain. Drawn on a hand-rolled orthographic globe (Canvas 2D, no mapping library or basemap tiles) &mdash; the page makes no network requests once loaded.</dd>
+        <dt>Event data</dt>
+        <dd>The hurricane force low archive workbook &mdash; see Rebuilding, above.</dd>
+        <dt>Ocean surface currents</dt>
+        <dd>
+          OSCAR sea surface velocity, NASA/JPL, obtained via NOAA CoastWatch
+          ERDDAP (dataset <code>jplOscar</code>); U.S. Government work, public
+          domain. The map layer shows the vector mean (u/v averaged
+          separately, not an average of instantaneous speeds) of every field
+          this ERDDAP mirror holds, <span id="currentsPeriod">period
+          unavailable</span> &mdash; a historical mean current field, not
+          current conditions.
+        </dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<aside class="drawer" id="detail" hidden aria-label="Event detail">
+  <div class="drawer-head">
+    <h2 id="detailTitle">Event</h2>
+    <button type="button" class="icon-btn" id="detailClose" aria-label="Close detail">&times;</button>
+  </div>
+  <div class="drawer-body" id="detailBody"></div>
+</aside>
+
+<div class="tooltip" id="tooltip" hidden></div>
+
+<!-- Hidden on the Map tab (app.js toggles body.map-active; see assets/app.css)
+     so the globe gets the full panel height there; shown on the rest. -->
+<footer class="footer">
+  <p>
+    Experimental &mdash; not an official forecast product. Coastlines:
+    Natural Earth (public domain) &middot;
+    <a href="data/hf-lows.json">JSON payload</a>
+  </p>
+</footer>
+
+<script src="data/hf-lows.js"></script>
+<script src="data/teleconnections.js"></script>
+<script src="data/era5-probtable.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/teleconnect.js"></script>
+<script src="assets/js/composite.js"></script>
+<script src="assets/js/regress.js"></script>
+<script src="assets/js/playback.js"></script>
+<script src="assets/js/era5.js"></script>
+<script src="assets/js/charts.js"></script>
+<script src="data/coastlines.js"></script>
+<script src="data/currents.js"></script>
+<script src="assets/js/globe.js"></script>
+<script src="assets/js/qc.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
